@@ -5,27 +5,27 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             controller: 'agencySearchCtrl'
         })
         .when('/home', {
-            templateUrl: 'app/views/home.html',
+            templateUrl: 'app/html/auth/home.html',
             controller: 'HomeController'
         })
         .when('/login', {
-            templateUrl: 'app/views/login.html',
+            templateUrl: 'app/html/auth/login.html',
             controller: 'LoginController'
         })
         .when('/users', {
-            templateUrl: 'app/views/users.html',
+            templateUrl: 'app/html/auth/users.html',
             controller: 'UsersController'
         })
         .when('/page-not-found', {
-            templateUrl: 'app/views/page-not-found.html',
+            templateUrl: 'app/html/auth/page-not-found.html',
             controller: 'PageNotFoundController'
         })
         .when('/access-denied', {
-            templateUrl: 'app/views/access-denied.html',
+            templateUrl: 'app/html/auth/access-denied.html',
             controller: 'AccessDeniedController'
         })
         .when('/register', {
-            templateUrl: 'app/views/register.html',
+            templateUrl: 'app/html/auth/register.html',
             controller: 'RegisterController'
         })
         .when('/agencies', {
