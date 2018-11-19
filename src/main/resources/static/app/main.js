@@ -1,0 +1,1 @@
+var rentAVehicleApp = angular.module('rentAVehicleApp', ['ngRoute']);

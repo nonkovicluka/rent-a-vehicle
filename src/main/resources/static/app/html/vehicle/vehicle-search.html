@@ -1,0 +1,46 @@
+<div>
+    <div class="page-header">
+        <h2>Vehicles by {{agency.name}}</h2>
+    </div>
+    <br><br>
+    <div ng-show="agency.ownerId === user.id"
+         class="btn-group pull-left">
+        <button ng-click="addVehicle()" type="button" class="btn btn-primary">Add new vehicle</button>
+    </div>
+    <div class="form-inline pull-right">
+        <form>
+            <div class="form-group">
+                <label for="filteredVehicleName">Name:</label> <input
+                    ng-model="filteredVehicle.name" type="text" class="form-control"
+                    id="filteredVehicleName">
+            </div>
+
+            <div class="form-group">
+                <label for="filteredVehicleType">Tim:</label> <select ng-model="filteredVehicle.vehicleTypeId"
+                                                                      class="form-control" id="filteredVehicleType">
+                <option value=""></option>
+                <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
+            </select>
+            </div>
+
+            <button ng-click="search()" type="button" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <th>Name</th>
+        <th>Description</th>
+        <th>Specification</th>
+        <th>Type</th>
+        <th>Available</th>
+        <tr ng-repeat="v in vehicles">
+            <td>{{v.name}}</td>
+            <td>{{v.description}}</td>
+            <td>{{v.specification}}</td>
+            <td>{{v.vehicleTypeName}}</td>
+            <td ng-show="v.available === true">Available</td>
+            <td ng-show="v.available === false">Not available</td>
+        </tr>
+    </table>
+</div>

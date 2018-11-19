@@ -1,0 +1,28 @@
+<div>
+
+    <div class="page-header">
+        <h2>Branches</h2>
+    </div>
+
+    <div class="btn pull-left">
+        <button ng-click="register()" type="button" class="btn btn-primary">Register branch</button>
+    </div>
+    <div class="btn-group pull-right">
+        <button class="btn btn-primary" ng-click="go(-1)"
+                ng-disabled="pageNum == 0">Previous
+        </button>
+        <button class="btn btn-primary" ng-click="go(1)"
+                ng-disabled="pageNum == totalPages - 1">Next
+        </button>
+    </div>
+    <table class="table table-bordered table-striped">
+        <th>Branch address</th>
+        <th>Phone number</th>
+        <th>Agency</th>
+        <tr ng-repeat="b in branches">
+            <td>{{b.address}}</td>
+            <td>{{b.phoneNumber}}</td>
+            <td>{{b.agencyName}}</td>
+        </tr>
+    </table>
+</div>

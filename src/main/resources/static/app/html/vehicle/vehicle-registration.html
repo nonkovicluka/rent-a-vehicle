@@ -1,0 +1,37 @@
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>New vehicle</h4>
+        </div>
+        <div class="panel-body">
+            <form class="col-md-4 col-md-offset-4">
+                <div class="form-group">
+                    <label for="vehicleName">Name</label> <input
+                        ng-model="newVehicle.name" type="text" class="form-control"
+                        id="vehicleName">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleDescription">Description</label> <input
+                        ng-model="newVehicle.description" type="text" class="form-control"
+                        id="vehicleDescription">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleSpecification">Specification</label> <input
+                        ng-model="newVehicle.specification" type="text" class="form-control"
+                        id="vehicleSpecification">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleTypes">Type</label> <select
+                        ng-model="newVehicle.vehicleTypeId" class="form-control" id="vehicleTypes">
+                    <option ng-repeat="vt in vehicleTypes" ng-value="vt.id">{{vt.name}}</option>
+                </select>
+                </div>
+
+                <br>
+                <button ng-click="addVehicle()" type="button"
+                        class="btn btn-primary">Add vehicle
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
