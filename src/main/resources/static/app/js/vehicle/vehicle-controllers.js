@@ -104,13 +104,6 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
         }
     );
 
-    $scope.resList = $scope.vehicles.map(function(value, index) {
-        return {
-            vehicle: value,
-            priceLi: $scope.priceList[index]
-        }
-    });
-
 });
 
 rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService) {
