@@ -87,7 +87,7 @@ public class ApiVehicleController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{agencyId}v")
+    @RequestMapping(value = "/{agencyId}v", method = RequestMethod.GET)
     public List<VehicleDTO> agencyVehicles(@PathVariable Long agencyId) {
         List<Vehicle> vehicles = vehicleService.findByAgencyId(agencyId);
 

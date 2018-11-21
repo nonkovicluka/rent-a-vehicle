@@ -1,128 +1,125 @@
 package com.rentavehicle.model;
 
-import java.time.LocalDateTime;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
 public class Reservation {
 
-	// attributes
-	
-	@Id
-	@GeneratedValue
-	@Column
-	private Long id;
+    // attributes
 
-	@Column
-	private LocalDateTime startDate;
+    @Id
+    @GeneratedValue
+    @Column
+    private Long id;
 
-	@Column
-	private LocalDateTime endDate;
+    @Column
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime startDate;
 
-	@Column
-	private double totalPrice;
+    @Column
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime endDate;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private User user;
+    @Column
+    private double totalPrice;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Vehicle vehicle;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Branch branchPickup;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Vehicle vehicle;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Branch branchDelivery;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Branch branchPickup;
 
-	
-	// getters and setters
-	
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Branch branchDelivery;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public LocalDateTime getStartDate() {
-		return startDate;
-	}
+    // getters and setters
 
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public LocalDateTime getEndDate() {
-		return endDate;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEndDate(LocalDateTime endDate) {
-		this.endDate = endDate;
-	}
+    public DateTime getStartDate() {
+        return startDate;
+    }
 
-	public double getTotalPrice() {
-		return totalPrice;
-	}
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    public DateTime getEndDate() {
+        return endDate;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 
-		if (user != null && !user.getReservations().contains(this)) {
-			user.getReservations().add(this);
-		}
-	}
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
+    public void setUser(User user) {
+        this.user = user;
 
-		if (vehicle != null && !vehicle.getReservations().contains(this)) {
-			vehicle.getReservations().add(this);
-		}
-	}
+        if (user != null && !user.getReservations().contains(this)) {
+            user.getReservations().add(this);
+        }
+    }
 
-	public Branch getBranchPickup() {
-		return branchPickup;
-	}
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
 
-	public void setBranchPickup(Branch branchPickup) {
-		this.branchPickup = branchPickup;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
 
-		if (branchPickup != null && !branchPickup.getReservations().contains(this)) {
-			branchPickup.getReservations().add(this);
-		}
-	}
+        if (vehicle != null && !vehicle.getReservations().contains(this)) {
+            vehicle.getReservations().add(this);
+        }
+    }
 
-	public Branch getBranchDelivery() {
-		return branchDelivery;
-	}
+    public Branch getBranchPickup() {
+        return branchPickup;
+    }
 
-	public void setBranchDelivery(Branch branchDelivery) {
-		this.branchDelivery = branchDelivery;
+    public void setBranchPickup(Branch branchPickup) {
+        this.branchPickup = branchPickup;
 
-		if (branchDelivery != null && !branchDelivery.getReservations().contains(this)) {
-			branchDelivery.getReservations().add(this);
-		}
-	}
+        if (branchPickup != null && !branchPickup.getReservations().contains(this)) {
+            branchPickup.getReservations().add(this);
+        }
+    }
+
+    public Branch getBranchDelivery() {
+        return branchDelivery;
+    }
+
+    public void setBranchDelivery(Branch branchDelivery) {
+        this.branchDelivery = branchDelivery;
+
+        if (branchDelivery != null && !branchDelivery.getReservations().contains(this)) {
+            branchDelivery.getReservations().add(this);
+        }
+    }
 
 }

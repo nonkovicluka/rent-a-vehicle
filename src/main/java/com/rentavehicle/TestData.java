@@ -2,6 +2,7 @@ package com.rentavehicle;
 
 import com.rentavehicle.model.*;
 import com.rentavehicle.service.*;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,12 @@ public class TestData {
     @Autowired
     private VehicleTypeService vehicleTypeService;
 
+    @Autowired
+    private PriceListService priceListService;
+
+    @Autowired
+    private PriceListItemService priceListItemService;
+
     @PostConstruct
     public void init() {
 
@@ -47,6 +54,7 @@ public class TestData {
         List<String> authorities3 = new ArrayList<>();
         authorities3.add(au3);
 
+
         // User test data
 
         User u1 = new User();
@@ -61,17 +69,11 @@ public class TestData {
         u2.setRoles(authorities2); // MANAGER
         userService.save(u2);
 
-		 User u3 = new User();
-		 u3.setUsername("user3");
-		 u3.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
-		 u3.setRoles(authorities3); // USER
-		 userService.save(u3);
-//
-//		 User u4 = new User();
-//		 u4.setUsername("user4");
-//		 u4.setPassword("$2a$10$SqUusgiyVZUqWODzQ7YTJuV0bXaspxxyXqxU/mQGuLl2XVEXA0.JS");
-//		 u4.setUserRole(ur1);
-//		 userService.save(u4);
+        User u3 = new User();
+        u3.setUsername("user3");
+        u3.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
+        u3.setRoles(authorities3); // USER
+        userService.save(u3);
 
 
         // Agency test data
@@ -160,6 +162,7 @@ public class TestData {
         vt3.setName("Bicycle");
         vehicleTypeService.save(vt3);
 
+
         // Vehicle test data
 
         Vehicle v1 = new Vehicle();
@@ -216,7 +219,47 @@ public class TestData {
         v6.setVehicleType(vt3);
         vehicleService.save(v6);
 
+
+        // PriceList test data
+
+        PriceList pl1 = new PriceList();
+        pl1.setAgency(a1);
+        pl1.setStartDate(new LocalDate(2018, 1, 1));
+        pl1.setEndDate(new LocalDate(2018, 12, 31));
+        priceListService.save(pl1);
+
+        PriceList pl2 = new PriceList();
+        pl2.setAgency(a1);
+        pl2.setStartDate(new LocalDate(2019, 1, 1));
+        pl2.setEndDate(new LocalDate(2019, 12, 31));
+        priceListService.save(pl2);
+
+
+        // PriceListItem test data
+
+        PriceListItem pli1 = new PriceListItem();
+        pli1.setPricePerHour(5);
+        pli1.setVehicle(v1);
+        pli1.setPriceList(pl1);
+        priceListItemService.save(pli1);
+
+        PriceListItem pli2 = new PriceListItem();
+        pli2.setPricePerHour(10);
+        pli2.setVehicle(v2);
+        pli2.setPriceList(pl1);
+        priceListItemService.save(pli2);
+
+        PriceListItem pli3 = new PriceListItem();
+        pli3.setPricePerHour(1);
+        pli3.setVehicle(v3);
+        pli3.setPriceList(pl1);
+        priceListItemService.save(pli3);
+
+        PriceListItem pli4 = new PriceListItem();
+        pli4.setPricePerHour(0.5);
+        pli4.setVehicle(v4);
+        pli4.setPriceList(pl1);
+        priceListItemService.save(pli4);
+
     }
-
-
 }

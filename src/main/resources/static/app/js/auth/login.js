@@ -16,7 +16,6 @@ rentAVehicleApp.controller('LoginController', function ($http, $scope, $location
                 $scope.message = '';
                 // setting the Authorization Bearer token with JWT token
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + res.token;
-
                 // setting the user in AuthService
                 AuthService.user = res.user;
                 $rootScope.$broadcast('LoginSuccessful');

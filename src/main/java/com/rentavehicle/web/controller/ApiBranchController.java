@@ -79,8 +79,7 @@ public class ApiBranchController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{agencyId}b")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @RequestMapping(value = "/{agencyId}b", method = RequestMethod.GET)
     public ResponseEntity<List<BranchDTO>> agencyBranches(@PathVariable Long agencyId,
                                                           @RequestParam(defaultValue = "0") int pageNum) {
         Page<Branch> branches = branchService.findByAgencyId(pageNum, agencyId);

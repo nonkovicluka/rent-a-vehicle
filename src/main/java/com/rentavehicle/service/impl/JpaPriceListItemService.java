@@ -13,25 +13,32 @@ import java.util.List;
 @Transactional
 public class JpaPriceListItemService implements PriceListItemService {
 
-	@Autowired
-	private PriceListItemRepository priceListItemRepository;
+    @Autowired
+    private PriceListItemRepository priceListItemRepository;
 
-	@Override
-	public PriceListItem findOne(Long id) {
+    @Override
+    public PriceListItem findOne(Long id) {
 
-		return priceListItemRepository.findOne(id);
-	}
+        return priceListItemRepository.findOne(id);
+    }
 
-	@Override
-	public List<PriceListItem> findAll() {
-		// TODO Auto-generated method stub
-		return priceListItemRepository.findAll();
-	}
+    @Override
+    public List<PriceListItem> findAll() {
+        // TODO Auto-generated method stub
+        return priceListItemRepository.findAll();
+    }
 
-	@Override
-	public void save(PriceListItem priceListItem) {
-		// TODO Auto-generated method stub
-		priceListItemRepository.save(priceListItem);
-	}
+    @Override
+    public void save(PriceListItem priceListItem) {
+        // TODO Auto-generated method stub
+        priceListItemRepository.save(priceListItem);
+    }
+
+    @Override
+    public PriceListItem currentPriceLIstItem(Long priceListId, Long vehicleId) {
+        return priceListItemRepository.currentPriceLIstItem(priceListId, vehicleId);
+    }
+
+
 
 }

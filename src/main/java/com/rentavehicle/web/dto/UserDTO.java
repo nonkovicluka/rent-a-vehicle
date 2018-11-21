@@ -1,88 +1,89 @@
 package com.rentavehicle.web.dto;
 
-import java.time.LocalDate;
+
+import org.joda.time.LocalDate;
 
 public class UserDTO {
-	
-	private Long id;
-	
-	private String username;
-	
-	private String password;
-	
-	private String profileImage;
-	
-	private boolean approved;
-	
-	private boolean banned;
-	
-	private LocalDate birthDate;
-	
-	private boolean deleted;
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+    private Long id;
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+    private String username;
 
-	public Long getId() {
-		return id;
-	}
+    private String password;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String profileImage;
 
-	public String getUsername() {
-		return username;
-	}
+    private boolean approved;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    private boolean banned;
 
-	public String getPassword() {
-		return password;
-	}
+    private LocalDate birthDate;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    private boolean deleted;
 
-	public String getProfileImage() {
-		return profileImage;
-	}
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
-	public boolean isApproved() {
-		return approved;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public boolean isBanned() {
-		return banned;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setBanned(boolean banned) {
-		this.banned = banned;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+
 }

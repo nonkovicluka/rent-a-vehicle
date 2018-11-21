@@ -79,10 +79,10 @@ public class ApiAgencyController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}u")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<List<AgencyDTO>> agencyBranches(@PathVariable Long userId,
+    @RequestMapping(value = "/{userId}u", method = RequestMethod.GET)
+    public ResponseEntity<List<AgencyDTO>> ownerAgencies(@PathVariable Long userId,
                                                           @RequestParam(defaultValue = "0") int pageNum) {
+
         Page<Agency> agencies = agencyService.findByOwnerId(pageNum, userId);
 
         HttpHeaders headers = new HttpHeaders();

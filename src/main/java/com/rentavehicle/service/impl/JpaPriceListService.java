@@ -35,4 +35,10 @@ public class JpaPriceListService implements PriceListService {
         priceListRepository.save(priceList);
     }
 
+    @Override
+    public PriceList currentPriceList(Long agencyId) {
+
+        return priceListRepository.currentPriceList(agencyId);
+    }
+
 }

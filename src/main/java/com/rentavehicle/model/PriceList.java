@@ -1,93 +1,89 @@
 package com.rentavehicle.model;
 
-import java.time.LocalDateTime;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table
 public class PriceList {
-	
-	// attributes
 
-	@Id
-	@GeneratedValue
-	@Column
-	private Long id;
+    // attributes
 
-	@Column
-	private LocalDateTime startDate;
+    @Id
+    @GeneratedValue
+    @Column
+    private Long id;
 
-	@Column
-	private LocalDateTime endDate;
+    @Column
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate startDate;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Agency agency;
+    @Column
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    private LocalDate endDate;
 
-	@OneToMany(targetEntity=PriceListItem.class, fetch=FetchType.LAZY)
-	private List<PriceListItem> priceListItems = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Agency agency;
 
-	
-	// getters and setters
-	
-	public Long getId() {
-		return id;
-	}
+    @OneToMany(targetEntity = PriceListItem.class, fetch = FetchType.LAZY)
+    private List<PriceListItem> priceListItems = new ArrayList<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public LocalDateTime getStartDate() {
-		return startDate;
-	}
+    // getters and setters
 
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public LocalDateTime getEndDate() {
-		return endDate;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEndDate(LocalDateTime endDate) {
-		this.endDate = endDate;
-	}
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
-	public List<PriceListItem> getPriceListItems() {
-		return priceListItems;
-	}
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setPriceListItems(List<PriceListItem> priceListItems) {
-		this.priceListItems = priceListItems;
-	}
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-	public Agency getAgency() {
-		return agency;
-	}
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 
-	public void setAgency(Agency agency) {
-		this.agency = agency;
+    public List<PriceListItem> getPriceListItems() {
+        return priceListItems;
+    }
 
-		if (agency != null && !agency.getPriceLists().contains(this)) {
-			agency.getPriceLists().add(this);
-		}
-	}
+    public void setPriceListItems(List<PriceListItem> priceListItems) {
+        this.priceListItems = priceListItems;
+    }
 
-	public void addPriceListItem(PriceListItem priceListItem) {
-		this.priceListItems.add(priceListItem);
+    public Agency getAgency() {
+        return agency;
+    }
 
-		if (!this.equals(priceListItem.getPriceList())) {
-			priceListItem.setPriceList(this);
-		}
-	}
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+
+        if (agency != null && !agency.getPriceLists().contains(this)) {
+            agency.getPriceLists().add(this);
+        }
+    }
+
+    public void addPriceListItem(PriceListItem priceListItem) {
+        this.priceListItems.add(priceListItem);
+
+        if (!this.equals(priceListItem.getPriceList())) {
+            priceListItem.setPriceList(this);
+        }
+    }
 }

@@ -1,13 +1,17 @@
 package com.rentavehicle.service;
 
 import com.rentavehicle.model.PriceList;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface PriceListService {
-	
-	PriceList findOne(Long id);
-	List<PriceList> findAll();
-	void save(PriceList priceList);
-	
+
+    PriceList findOne(Long id);
+
+    List<PriceList> findAll();
+
+    void save(PriceList priceList);
+
+    PriceList currentPriceList(@Param("agencyId") Long agencyId);
 }

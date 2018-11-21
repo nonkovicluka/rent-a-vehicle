@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label for="filteredVehicleType">Type:</label> <select ng-model="filteredVehicle.vehicleTypeId"
-                                                                      class="form-control" id="filteredVehicleType">
+                                                                       class="form-control" id="filteredVehicleType">
                 <option value=""></option>
                 <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
             </select>
@@ -34,13 +34,20 @@
         <th>Specification</th>
         <th>Type</th>
         <th>Available</th>
-        <tr ng-repeat="v in vehicles">
+        <th>Price per hour</th>
+
+        <tr ng-repeat="v in PriceList">
             <td>{{v.name}}</td>
             <td>{{v.description}}</td>
             <td>{{v.specification}}</td>
             <td>{{v.vehicleTypeName}}</td>
             <td ng-show="v.available === true">Available</td>
             <td ng-show="v.available === false">Not available</td>
+            <td>
+                <a href="#/agencies/{{v.agencyId}}/vehicles/{{v.id}}/reserve">
+                    <span class="btn btn-primary">Reserve</span>
+                </a>
+            </td>
         </tr>
     </table>
 </div>

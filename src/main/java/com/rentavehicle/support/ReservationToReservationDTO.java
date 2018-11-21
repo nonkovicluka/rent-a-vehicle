@@ -21,8 +21,11 @@ public class ReservationToReservationDTO implements Converter<Reservation, Reser
 		ReservationDTO dto = new ReservationDTO();
 		
 		dto.setId(reservation.getId());
-		dto.setStartDate(reservation.getStartDate());
-		dto.setEndDate(reservation.getEndDate());
+
+
+
+		dto.setStartDate(reservation.getStartDate().toString());
+		dto.setEndDate(reservation.getEndDate().toString());
 		dto.setTotalPrice(reservation.getTotalPrice());
 		dto.setUserId(reservation.getUser().getId());
 		dto.setUsername(reservation.getUser().getUsername());

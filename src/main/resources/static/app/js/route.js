@@ -56,6 +56,10 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "/app/html/vehicle/vehicle-registration.html",
             controller: "addVehicleCtrl"
         })
+        .when('/agencies/:agencyId/vehicles/:vehicleId/reserve', {
+            templateUrl: "/app/html/vehicle/vehicle-reservation.html",
+            controller: "reserveVehicleCtrl"
+        })
         .otherwise({
             redirectTo: '/page-not-found'
         });
