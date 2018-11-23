@@ -43,9 +43,9 @@
             <td ng-show="v.available === true">Available</td>
             <td ng-show="v.available === false">Not available</td>
             <td>
-                <a href="#/agencies/{{v.agencyId}}/vehicles/{{v.id}}/reserve">
-                    <span class="btn btn-primary">Reserve</span>
-                </a>
+                <button class="btn btn-primary" ng-click="reserve(v.id)"
+                        ng-disabled="!v.available">Reserve
+                </button>
             </td>
         </tr>
     </table>

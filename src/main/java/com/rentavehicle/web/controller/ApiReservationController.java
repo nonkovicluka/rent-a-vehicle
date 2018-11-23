@@ -1,10 +1,12 @@
 package com.rentavehicle.web.controller;
 
 import com.rentavehicle.model.Reservation;
+import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.ReservationService;
 import com.rentavehicle.support.ReservationDTOToReservation;
 import com.rentavehicle.support.ReservationToReservationDTO;
 import com.rentavehicle.web.dto.ReservationDTO;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +43,23 @@ public class ApiReservationController {
     public ResponseEntity<ReservationDTO> add(@Validated @RequestBody ReservationDTO reservationDTO) {
 
         Reservation reservation = toReservation.convert(reservationDTO);
-        try {
+
+
+        DateTime startDate = reservation.getStartDate();
+        DateTime endDate = reservation.getEndDate();
+
+        Vehicle vehicle = reservation.getVehicle();
+
+
+        List<Reservation> overlappingReservations = reservationService.findOverlappingReservations(startDate, endDate, vehicle.getId());
+
+
+        if (vehicle.isAvailable() && reservation.getTotalPrice() > 0 && overlappingReservations.size() == 0) {
+
             reservationService.save(reservation);
-        } catch (Exception e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         }
 
         return new ResponseEntity<>(toDTO.convert(reservation), HttpStatus.CREATED);

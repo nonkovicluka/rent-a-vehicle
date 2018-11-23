@@ -1,24 +1,20 @@
 package com.rentavehicle.service.impl;
 
 import com.rentavehicle.model.Reservation;
+import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.repository.ReservationRepository;
-import com.rentavehicle.repository.VehicleRepository;
 import com.rentavehicle.service.ReservationService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class JpaReservationService implements ReservationService {
 
     @Autowired
     private ReservationRepository reservationRepository;
-
-    @Autowired
-    private VehicleRepository vehicleRepository;
 
     @Override
     public Reservation findOne(Long id) {
@@ -36,8 +32,6 @@ public class JpaReservationService implements ReservationService {
     @Override
     public void save(Reservation reservation) {
 
-        reservation.getVehicle().setAvailable(false);
-
         reservationRepository.save(reservation);
     }
 
@@ -45,6 +39,12 @@ public class JpaReservationService implements ReservationService {
     public List<Reservation> findByVehicleId(Long vehicleId) {
 
         return reservationRepository.findByVehicleId(vehicleId);
+    }
+
+    @Override
+    public List<Reservation> findOverlappingReservations(DateTime startDate, DateTime endDate, Long vehicleId) {
+
+        return reservationRepository.findOverlappingReservations(startDate, endDate, vehicleId);
     }
 
 }

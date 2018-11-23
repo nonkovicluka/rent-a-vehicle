@@ -2,6 +2,7 @@ package com.rentavehicle;
 
 import com.rentavehicle.model.*;
 import com.rentavehicle.service.*;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,9 @@ public class TestData {
     @Autowired
     private PriceListItemService priceListItemService;
 
+    @Autowired
+    private ReservationService reservationService;
+
     @PostConstruct
     public void init() {
 
@@ -59,7 +63,7 @@ public class TestData {
 
         User u1 = new User();
         u1.setUsername("user1");
-        u1.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
+        u1.setPassword("$2a$10$dChX5BFdvueSIvxs/x7SfuO6g.tqzuzI1YS3DST/3AULnFczc5JxK"); // pass
         u1.setRoles(authorities1); // ADMIN
         userService.save(u1);
 
@@ -176,7 +180,7 @@ public class TestData {
 
         Vehicle v2 = new Vehicle();
         v2.setName("Audi A6");
-        v2.setAvailable(true);
+        v2.setAvailable(false);
         v2.setDescription("Neki random opis");
         v2.setSpecification("It is a version of S6 Avant with increased engine power to 560 PS (412 kW; 552 hp) at 5700–6700 rpm and 700 N⋅m (516.3 lbf⋅ft) at 1750–5500 rpm.");
         v2.setAgency(a1);
@@ -261,5 +265,20 @@ public class TestData {
         pli4.setPriceList(pl1);
         priceListItemService.save(pli4);
 
+
+        // reservation test data
+
+        DateTime startDate1 = new DateTime(2018, 11, 1, 1, 33, 0);
+        DateTime endDate1 = new DateTime(2018, 11, 30, 1, 33, 0);
+
+        Reservation res1 = new Reservation();
+        res1.setVehicle(v1);
+        res1.setBranchPickup(b2);
+        res1.setBranchDelivery(b2);
+        res1.setUser(u1);
+        res1.setStartDate(startDate1);
+        res1.setEndDate(endDate1);
+        res1.setTotalPrice(5433.50);
+        reservationService.save(res1);
     }
 }

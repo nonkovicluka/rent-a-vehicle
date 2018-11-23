@@ -104,6 +104,11 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
         }
     );
 
+    $scope.reserve = function (vehicleId) {
+
+        $location.path("/agencies/" + $routeParams.agencyId + "/vehicles/" + vehicleId + "/reserve");
+    };
+
 });
 
 rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService) {

@@ -1,5 +1,6 @@
 package com.rentavehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.LocalDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,6 +45,7 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Reservation> reservations = new ArrayList<>();
 
     @OneToMany(targetEntity = Agency.class, fetch = FetchType.LAZY)
