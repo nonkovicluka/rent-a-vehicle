@@ -34,16 +34,18 @@
         <th>Specification</th>
         <th>Type</th>
         <th>Available</th>
+        <th>Price per hour</th>
 
-        <tr ng-repeat="v in vehicles">
+        <tr ng-repeat="v in vehiclesAndPrice">
             <td>{{v.name}}</td>
             <td>{{v.description}}</td>
             <td>{{v.specification}}</td>
             <td>{{v.vehicleTypeName}}</td>
             <td ng-show="v.available === true">Available</td>
             <td ng-show="v.available === false">Not available</td>
+            <td>{{v.pricePerHour}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="reserve(v.id)"
+                <button class="btn btn-primary" ng-click="reserve(v.id); getPricePerHour(v.pricePerHour)"
                         ng-disabled="!v.available">Reserve
                 </button>
             </td>

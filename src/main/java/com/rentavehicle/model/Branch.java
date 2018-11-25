@@ -1,147 +1,155 @@
 package com.rentavehicle.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table
 public class Branch {
 
-	// attributes
+    // attributes
 
-	@Id
-	@GeneratedValue
-	@Column
-	private Long id;
+    @Id
+    @GeneratedValue
+    @Column
+    private Long id;
 
-	@Column(nullable = false)
-	private String address;
+    @Column(nullable = false)
+    private String address;
 
-	@Column
-	private String phoneNumber;
+    @Column
+    private String phoneNumber;
 
-	@Column
-	private double latitude;
+    @Column
+    private double latitude;
 
-	@Column
-	private double longitude;
+    @Column
+    private double longitude;
 
-	@OneToMany(targetEntity=Reservation.class, fetch=FetchType.LAZY)
-	private List<Reservation> reservations = new ArrayList<Reservation>();
+    @OneToMany(mappedBy = "branchPickup", fetch = FetchType.LAZY)
+    private List<Reservation> reservationsPickup = new ArrayList<Reservation>();
 
-	@OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
-	private List<BranchImage> branchImages = new ArrayList<BranchImage>();
+    @OneToMany(mappedBy = "branchDelivery", fetch = FetchType.LAZY)
+    private List<Reservation> reservationsDelivery = new ArrayList<Reservation>();
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Agency agency;
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
+    private List<BranchImage> branchImages = new ArrayList<BranchImage>();
 
-	@Column
-	private boolean deleted;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Agency agency;
 
-	// getters and setters
+    @Column
+    private boolean deleted;
 
-	public Long getId() {
-		return id;
-	}
+    // getters and setters
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public double getLatitude() {
-		return latitude;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
-	public double getLongitude() {
-		return longitude;
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+    public double getLongitude() {
+        return longitude;
+    }
 
-	public List<BranchImage> getBranchImages() {
-		return branchImages;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setBranchImages(List<BranchImage> branchImages) {
-		this.branchImages = branchImages;
-	}
+    public List<BranchImage> getBranchImages() {
+        return branchImages;
+    }
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+    public void setBranchImages(List<BranchImage> branchImages) {
+        this.branchImages = branchImages;
+    }
 
-	public List<Reservation> getReservations() {
-		return reservations;
-	}
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-	public void setReservations(List<Reservation> reservations) {
-		this.reservations = reservations;
-	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
-	public Agency getAgency() {
-		return agency;
-	}
+    public Agency getAgency() {
+        return agency;
+    }
 
-	public void setAgency(Agency agency) {
-		this.agency = agency;
+    public void setAgency(Agency agency) {
+        this.agency = agency;
 
-		if (agency != null && !agency.getBranches().contains(this)) {
-			agency.getBranches().add(this);
-		}
-	}
+        if (agency != null && !agency.getBranches().contains(this)) {
+            agency.getBranches().add(this);
+        }
+    }
 
-	public void addBranchImage(BranchImage branchImage) {
-		this.branchImages.add(branchImage);
+    public void addBranchImage(BranchImage branchImage) {
+        this.branchImages.add(branchImage);
 
-		if (!this.equals(branchImage.getBranch())) {
-			branchImage.setBranch(this);
-		}
-	}
+        if (!this.equals(branchImage.getBranch())) {
+            branchImage.setBranch(this);
+        }
+    }
 
-	public void addReservation(Reservation reservation) {
-		this.reservations.add(reservation);
+    public void addReservationPickup(Reservation reservation) {
+        this.reservationsPickup.add(reservation);
 
-//		if (!this.equals(reservation.getBranchDelivery())) {
-//			reservation.setBranchDelivery(this);
-//		}
-		if (!this.equals(reservation.getBranchPickup())) {
-			reservation.setBranchPickup(this);
-		}
-	}
+        if (!this.equals(reservation.getBranchPickup())) {
+            reservation.setBranchPickup(this);
+        }
+    }
 
+    public void addReservationDelivery(Reservation reservation) {
+        this.reservationsDelivery.add(reservation);
+
+        if (!this.equals(reservation.getBranchDelivery())) {
+            reservation.setBranchDelivery(this);
+        }
+    }
+
+    public List<Reservation> getReservationsPickup() {
+        return reservationsPickup;
+    }
+
+    public void setReservationsPickup(List<Reservation> reservationsPickup) {
+        this.reservationsPickup = reservationsPickup;
+    }
+
+    public List<Reservation> getReservationsDelivery() {
+        return reservationsDelivery;
+    }
+
+    public void setReservationsDelivery(List<Reservation> reservationsDelivery) {
+        this.reservationsDelivery = reservationsDelivery;
+    }
 }

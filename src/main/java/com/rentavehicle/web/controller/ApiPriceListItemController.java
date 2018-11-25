@@ -1,16 +1,21 @@
 package com.rentavehicle.web.controller;
 
 import com.rentavehicle.model.PriceListItem;
+import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.PriceListItemService;
 import com.rentavehicle.support.PriceListItemDTOToPriceListItem;
 import com.rentavehicle.support.PriceListItemToPriceListItemDTO;
+import com.rentavehicle.support.VehiclePliToVehiclePliDTO;
 import com.rentavehicle.web.dto.PriceListItemDTO;
+import com.rentavehicle.web.dto.VehiclePriceListItem;
+import com.rentavehicle.web.dto.VehiclePriceListItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +30,9 @@ public class ApiPriceListItemController {
 
     @Autowired
     private PriceListItemToPriceListItemDTO toDTO;
+
+    @Autowired
+    private VehiclePliToVehiclePliDTO toVehiclePliDTO;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<PriceListItemDTO> get(@PathVariable Long id) {
@@ -65,13 +73,14 @@ public class ApiPriceListItemController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{priceListId}pli/{vehicleId}v", method = RequestMethod.GET)
-    public PriceListItemDTO currentPriceListItem(@PathVariable Long priceListId, @PathVariable Long vehicleId) {
+    @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
+    public List<VehiclePriceListItemDTO> currentPriceListItem(@RequestParam Long agencyId, @RequestParam(required = false) String name,
+                                                              @RequestParam(required = false) Long vehicleTypeId) {
 
-        PriceListItem priceListItem = priceListItemService.currentPriceLIstItem(priceListId, vehicleId);
+        List<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.currentPriceLIstItem(agencyId, name, vehicleTypeId);
 
 
-        return toDTO.convert(priceListItem);
+        return toVehiclePliDTO.convert(vehiclesAndPrices);
     }
 
 

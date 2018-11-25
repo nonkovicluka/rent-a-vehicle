@@ -1,22 +1,18 @@
-rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, AuthService, priceListService) {
+rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
 
     $scope.user = AuthService.user;
 
-    $scope.vehicles = [];
+    var priceListItemVehiclesUrl = "api/pricelistitems/vehicles";
 
-    $scope.agency = {};
-
-    var filteredVehicleUrl = "api/vehicles/" + $routeParams.agencyId + "/all";
-
+    $scope.vehiclesAndPrice = [];
 
     $scope.filteredVehicle = {};
     $scope.filteredVehicle.name = '';
     $scope.filteredVehicle.vehicleTypeId = '';
 
-    var getVehicles = function () {
+    var getVehiclesAndPrice = function () {
 
         var config = {params: {}};
-
 
         if ($scope.filteredVehicle.name != "") {
             config.params.name = $scope.filteredVehicle.name;
@@ -29,13 +25,19 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
         config.params.agencyId = $routeParams.agencyId;
 
-
-        $http.get(filteredVehicleUrl, config)
+        $http.get(priceListItemVehiclesUrl, config)
             .then(function success(data) {
-                $scope.vehicles = data.data;
-            })
+                    $scope.vehiclesAndPrice = data.data;
+                },
+                function error(data) {
+                    alert("Vehicles and price list item failed to get.");
+
+                });
 
     };
+
+    getVehiclesAndPrice();
+
 
     var baseUrlVehicleType = "/api/vehicleTypes/all";
 
@@ -52,7 +54,8 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     getVehicleTypes();
 
-    getVehicles();
+
+    $scope.agency = {};
 
     var getAgency = function () {
 
@@ -70,7 +73,7 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
     getAgency();
 
     $scope.search = function () {
-        getVehicles();
+        getVehiclesAndPrice();
     };
 
     $scope.addVehicle = function () {
@@ -78,31 +81,13 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     };
 
-    $scope.priceList = {};
-    var currentPriceListUrl = "api/pricelists/" + $routeParams.agencyId + "pl";
 
-    var getPriceList = function () {
+    $scope.getPricePerHour = function (pricePerHour) {
 
-        $http.get(currentPriceListUrl)
-            .then(function success(data) {
-                    $scope.priceList = data.data;
-                },
-                function error(data) {
-                    alert("Current price list failed");
-
-                }
-            );
+        pricePerHourService.pricePerHour = pricePerHour;
 
     };
 
-    getPriceList();
-
-
-    $scope.$watch("priceList", function () {
-
-            priceListService.priceList = $scope.priceList;
-        }
-    );
 
     $scope.reserve = function (vehicleId) {
 
@@ -161,7 +146,7 @@ rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location,
     };
 });
 
-rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService, priceListService) {
+rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
 
     // redirect
 
@@ -179,7 +164,7 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     var branchesUrl = "/api/branches/" + $routeParams.agencyId + "b";
     var reservationsUrl = "/api/reservations/add";
 
-    $scope.priceList = priceListService.priceList;
+    $scope.pricePerHour = pricePerHourService.pricePerHour;
 
 
     // new reservation
@@ -208,28 +193,6 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
     getBranches();
 
-    // get priceListItem
-
-    $scope.priceListItem = {};
-
-    var currentPriceListItemUrl = "api/pricelistitems/" + $scope.priceList.id + "pli/" + $routeParams.vehicleId + "v";
-
-    var getPriceListItem = function () {
-
-        $http.get(currentPriceListItemUrl)
-            .then(function success(data) {
-                    $scope.priceListItem = data.data;
-                }
-                , function error(data) {
-                    alert("Current price list item failed.");
-
-                }
-            );
-
-    };
-
-    getPriceListItem();
-
 
     $scope.startDateMs = null;
     $scope.endDateMs = null;
@@ -244,12 +207,13 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
             $scope.startDateMs = $scope.startDate;
             $scope.endDateMs = $scope.endDate;
             $scope.dif = ($scope.endDateMs.getTime() - $scope.startDateMs.getTime()) / 3.6e+6;
-            $scope.newReservation.totalPrice = Math.round($scope.dif) * $scope.priceListItem.pricePerHour;
+            $scope.newReservation.totalPrice = Math.ceil($scope.dif) * $scope.pricePerHour;
             $scope.newReservation.startDate = $scope.startDate.toISOString();
             $scope.newReservation.endDate = $scope.endDate.toISOString();
         }
 
     };
+
 
     $scope.reserveVehicle = function () {
         $http.post(reservationsUrl, $scope.newReservation)

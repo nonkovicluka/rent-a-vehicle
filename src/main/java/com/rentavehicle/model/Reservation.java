@@ -34,9 +34,11 @@ public class Reservation {
     private Vehicle vehicle;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "branch_pickup_id")
     private Branch branchPickup;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "branch_delivery_id")
     private Branch branchDelivery;
 
 
@@ -105,8 +107,8 @@ public class Reservation {
     public void setBranchPickup(Branch branchPickup) {
         this.branchPickup = branchPickup;
 
-        if (branchPickup != null && !branchPickup.getReservations().contains(this)) {
-            branchPickup.getReservations().add(this);
+        if (branchPickup != null && !branchPickup.getReservationsPickup().contains(this)) {
+            branchPickup.getReservationsPickup().add(this);
         }
     }
 
@@ -117,8 +119,8 @@ public class Reservation {
     public void setBranchDelivery(Branch branchDelivery) {
         this.branchDelivery = branchDelivery;
 
-        if (branchDelivery != null && !branchDelivery.getReservations().contains(this)) {
-            branchDelivery.getReservations().add(this);
+        if (branchDelivery != null && !branchDelivery.getReservationsDelivery().contains(this)) {
+            branchDelivery.getReservationsDelivery().add(this);
         }
     }
 

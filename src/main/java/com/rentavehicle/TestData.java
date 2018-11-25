@@ -134,21 +134,21 @@ public class TestData {
 //        // Branch test data
 
         Branch b1 = new Branch();
-        b1.setAddress("Adress 1");
+        b1.setAddress("Address 1");
         b1.setPhoneNumber("Number1");
-        b1.setAgency(a4);
+        b1.setAgency(a2);
         branchService.save(b1);
 
         Branch b2 = new Branch();
-        b2.setAddress("Adress 2");
+        b2.setAddress("Address 2");
         b2.setPhoneNumber("Number2");
         b2.setAgency(a1);
         branchService.save(b2);
 
         Branch b3 = new Branch();
-        b3.setAddress("Adress 3");
+        b3.setAddress("Address 3");
         b3.setPhoneNumber("Number3");
-        b3.setAgency(a5);
+        b3.setAgency(a2);
         branchService.save(b3);
 
 
@@ -219,7 +219,7 @@ public class TestData {
         v6.setAvailable(true);
         v6.setDescription("Neki random opis");
         v6.setSpecification("The Spark Pro 700 is the ideal next step for any aspiring athlete who wants to compete with the best.");
-        v6.setAgency(a3);
+        v6.setAgency(a2);
         v6.setVehicleType(vt3);
         vehicleService.save(v6);
 
@@ -237,6 +237,12 @@ public class TestData {
         pl2.setStartDate(new LocalDate(2019, 1, 1));
         pl2.setEndDate(new LocalDate(2019, 12, 31));
         priceListService.save(pl2);
+
+        PriceList pl3 = new PriceList();
+        pl3.setAgency(a2);
+        pl3.setStartDate(new LocalDate(2018, 1, 1));
+        pl3.setEndDate(new LocalDate(2018, 12, 31));
+        priceListService.save(pl3);
 
 
         // PriceListItem test data
@@ -264,6 +270,37 @@ public class TestData {
         pli4.setVehicle(v4);
         pli4.setPriceList(pl1);
         priceListItemService.save(pli4);
+
+
+        PriceListItem pli5 = new PriceListItem();
+        pli5.setPricePerHour(7);
+        pli5.setVehicle(v1);
+        pli5.setPriceList(pl2);
+        priceListItemService.save(pli5);
+
+        PriceListItem pli6 = new PriceListItem();
+        pli6.setPricePerHour(11);
+        pli6.setVehicle(v2);
+        pli6.setPriceList(pl2);
+        priceListItemService.save(pli6);
+
+        PriceListItem pli7 = new PriceListItem();
+        pli7.setPricePerHour(2.5);
+        pli7.setVehicle(v3);
+        pli7.setPriceList(pl2);
+        priceListItemService.save(pli7);
+
+        PriceListItem pli8 = new PriceListItem();
+        pli8.setPricePerHour(4);
+        pli8.setVehicle(v5);
+        pli8.setPriceList(pl3);
+        priceListItemService.save(pli8);
+
+        PriceListItem pli9 = new PriceListItem();
+        pli9.setPricePerHour(1.25);
+        pli9.setVehicle(v6);
+        pli9.setPriceList(pl3);
+        priceListItemService.save(pli9);
 
 
         // reservation test data

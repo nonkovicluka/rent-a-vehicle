@@ -1,5 +1,7 @@
 package com.rentavehicle.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,15 +47,18 @@ public class Agency {
 	private boolean approved;
 
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Branch> branches = new ArrayList<Branch>();
 
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY)
 	private List<Rating> ratings = new ArrayList<Rating>();
 
 	@OneToMany(mappedBy = "agency", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<PriceList> priceLists = new ArrayList<PriceList>();
 
 	@ManyToOne(fetch = FetchType.EAGER)

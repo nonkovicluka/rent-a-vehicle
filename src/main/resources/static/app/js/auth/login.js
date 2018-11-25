@@ -31,4 +31,10 @@ rentAVehicleApp.controller('LoginController', function ($http, $scope, $location
             $scope.message = 'Authetication Failed !';
         });
     };
+
+    $scope.register = function () {
+
+        $location.path("register")
+
+    }
 });

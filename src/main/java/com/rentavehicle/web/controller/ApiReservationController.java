@@ -54,7 +54,7 @@ public class ApiReservationController {
         List<Reservation> overlappingReservations = reservationService.findOverlappingReservations(startDate, endDate, vehicle.getId());
 
 
-        if (vehicle.isAvailable() && reservation.getTotalPrice() > 0 && overlappingReservations.size() == 0) {
+        if (vehicle.isAvailable() && reservation.getTotalPrice() > 0 && overlappingReservations.size() == 0 && startDate.isAfterNow()) {
 
             reservationService.save(reservation);
         } else {

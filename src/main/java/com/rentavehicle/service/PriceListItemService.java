@@ -1,6 +1,7 @@
 package com.rentavehicle.service;
 
 import com.rentavehicle.model.PriceListItem;
+import com.rentavehicle.web.dto.VehiclePriceListItem;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface PriceListItemService {
 
     void save(PriceListItem priceListItem);
 
-    PriceListItem currentPriceLIstItem(@Param("priceListId") Long priceListId, @Param("vehicleId") Long vehicleId);
+    List<VehiclePriceListItem> currentPriceLIstItem(@Param("agencyId") Long agencyId, @Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId);
 
 
 }
