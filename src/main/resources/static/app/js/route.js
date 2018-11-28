@@ -33,7 +33,7 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             controller: "agencySearchCtrl"
         })
         .when('/agencies/register', {
-            templateUrl: "/app/html/agency/agency-registration.html",
+            templateUrl: "/app/manager/html/agency-registration.html",
             controller: "registerAgencyCtrl"
         })
         .when('/branches', {
@@ -53,12 +53,24 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             controller: "vehicleSearchCtrl"
         })
         .when('/agencies/:agencyId/vehicles/add', {
-            templateUrl: "/app/html/vehicle/vehicle-registration.html",
+            templateUrl: "/app/manager/html/vehicle-registration.html",
             controller: "addVehicleCtrl"
         })
         .when('/agencies/:agencyId/vehicles/:vehicleId/reserve', {
             templateUrl: "/app/html/vehicle/vehicle-reservation.html",
             controller: "reserveVehicleCtrl"
+        })
+        .when('/my-agencies/:agencyId/manage/add-price-list', {
+            templateUrl: "/app/manager/html/price-list-registration.html",
+            controller: "addPriceList"
+        })
+        .when('/my-agencies/:agencyId/manage', {
+            templateUrl: "/app/manager/html/agency-vehicle-manage.html",
+            controller: "agencyVehicleCtrl"
+        })
+        .when('/my-agencies', {
+            templateUrl: "/app/manager/html/my-agencies.html",
+            controller: "myAgenciesCtrl"
         })
         .otherwise({
             redirectTo: '/page-not-found'

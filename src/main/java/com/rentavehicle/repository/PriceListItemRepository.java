@@ -22,4 +22,14 @@ public interface PriceListItemRepository extends JpaRepository<PriceListItem, Lo
     )
     List<VehiclePriceListItem> currentPriceLIstItem(@Param("agencyId") Long agencyId, @Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId);
 
+
+    @Query(
+            "SELECT new com.rentavehicle.web.dto.VehiclePriceListItem(v, pli) FROM PriceListItem pli LEFT JOIN pli.vehicle v " +
+                    "INNER JOIN pli.priceList WHERE pli.priceList.id = :priceListId " +
+                    "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId)"
+
+
+    )
+    List<VehiclePriceListItem> selectedPriceListItem(@Param("priceListId") Long priceListId, @Param("agencyId") Long agencyId, @Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId);
+
 }

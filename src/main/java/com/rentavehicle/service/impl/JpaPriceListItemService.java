@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class JpaPriceListItemService implements PriceListItemService {
 
     @Autowired
@@ -36,13 +35,22 @@ public class JpaPriceListItemService implements PriceListItemService {
     }
 
     @Override
-    public List<VehiclePriceListItem> currentPriceLIstItem(Long agencyId, String name, Long vehicleId) {
+    public List<VehiclePriceListItem> currentPriceLIstItem(Long agencyId, String name, Long vehicleTypeId) {
 
         if (name != null) {
             name = "%" + name + "%";
         }
 
-        return priceListItemRepository.currentPriceLIstItem(agencyId, name, vehicleId);
+        return priceListItemRepository.currentPriceLIstItem(agencyId, name, vehicleTypeId);
+    }
+
+    @Override
+    public List<VehiclePriceListItem> selectedPriceListItem(Long priceListId, Long agencyId, String name, Long vehicleTypeId) {
+        if (name != null) {
+            name = "%" + name + "%";
+        }
+
+        return priceListItemRepository.selectedPriceListItem(priceListId, agencyId, name, vehicleTypeId);
     }
 
 

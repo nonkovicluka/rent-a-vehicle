@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class JpaPriceListService implements PriceListService {
 
     @Autowired
@@ -33,6 +32,12 @@ public class JpaPriceListService implements PriceListService {
     public void save(PriceList priceList) {
         // TODO Auto-generated method stub
         priceListRepository.save(priceList);
+    }
+
+    @Override
+    public List<PriceList> findByAgencyId(Long agencyId) {
+
+        return priceListRepository.findByAgencyId(agencyId);
     }
 
     @Override

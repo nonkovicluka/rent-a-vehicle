@@ -13,5 +13,7 @@ public interface PriceListService {
 
     void save(PriceList priceList);
 
+    List<PriceList> findByAgencyId(Long agencyId);
+
     PriceList currentPriceList(@Param("agencyId") Long agencyId);
 }

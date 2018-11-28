@@ -83,5 +83,14 @@ public class ApiPriceListItemController {
         return toVehiclePliDTO.convert(vehiclesAndPrices);
     }
 
+    @RequestMapping(value = "/priceListVehicles", method = RequestMethod.GET)
+    public List<VehiclePriceListItemDTO> selectedPriceListItem(@RequestParam Long priceListId, @RequestParam Long agencyId, @RequestParam(required = false) String name,
+                                                               @RequestParam(required = false) Long vehicleTypeId) {
+
+        List<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.selectedPriceListItem(priceListId, agencyId, name, vehicleTypeId);
+
+
+        return toVehiclePliDTO.convert(vehiclesAndPrices);
+    }
 
 }

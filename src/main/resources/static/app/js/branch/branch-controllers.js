@@ -152,7 +152,6 @@ rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $locat
     var baseUrlBranch = "/api/branches/add";
     var baseUrlAgency = "/api/agencies/" + $scope.user.id + "u";
 
-    $scope.branches = [];
     $scope.agencies = [];
 
     $scope.newBranch = {};

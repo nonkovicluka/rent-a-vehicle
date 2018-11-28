@@ -16,5 +16,7 @@ public interface PriceListItemService {
 
     List<VehiclePriceListItem> currentPriceLIstItem(@Param("agencyId") Long agencyId, @Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId);
 
+    List<VehiclePriceListItem> selectedPriceListItem(@Param("priceListId") Long priceListId, @Param("agencyId") Long agencyId, @Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId);
+
 
 }

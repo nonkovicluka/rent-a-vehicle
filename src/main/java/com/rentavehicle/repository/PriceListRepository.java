@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface PriceListRepository extends JpaRepository<PriceList, Long> {
 
+    List<PriceList> findByAgencyId(Long agencyId);
+
     @Query(
             "SELECT pl FROM PriceList pl WHERE"
                     + " pl.agency.id =:agencyId AND " +

@@ -10,7 +10,7 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
     $scope.filteredVehicle.name = '';
     $scope.filteredVehicle.vehicleTypeId = '';
 
-    var getVehiclesAndPrice = function () {
+    $scope.getVehiclesAndPrice = function () {
 
         var config = {params: {}};
 
@@ -36,7 +36,7 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     };
 
-    getVehiclesAndPrice();
+    $scope.getVehiclesAndPrice();
 
 
     var baseUrlVehicleType = "/api/vehicleTypes/all";
@@ -72,10 +72,6 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     getAgency();
 
-    $scope.search = function () {
-        getVehiclesAndPrice();
-    };
-
     $scope.addVehicle = function () {
         $location.path("agencies/" + $routeParams.agencyId + "/vehicles/add");
 
@@ -94,56 +90,6 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
         $location.path("/agencies/" + $routeParams.agencyId + "/vehicles/" + vehicleId + "/reserve");
     };
 
-});
-
-rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService) {
-
-    $scope.user = AuthService.user;
-
-    var redirect = function () {
-        if ($scope.user == null) {
-            $location.path("/login");
-        }
-    };
-
-    redirect();
-
-    var baseUrlVehicle = "/api/vehicles/add";
-    var baseUrlVehicleType = "/api/vehicleTypes/all";
-
-    $scope.vehicleTypes = [];
-
-    $scope.newVehicle = {};
-    $scope.newVehicle.name = "";
-    $scope.newVehicle.description = "";
-    $scope.newVehicle.sepcification = "";
-    $scope.newVehicle.vehicleTypeId = "";
-    $scope.newVehicle.available = true;
-    $scope.newVehicle.agencyId = $routeParams.agencyId;
-
-    var getVehicleTypes = function () {
-
-        $http.get(baseUrlVehicleType)
-            .then(function success(data) {
-                $scope.vehicleTypes = data.data;
-            });
-
-    };
-
-    getVehicleTypes();
-
-    $scope.addVehicle = function () {
-        $http.post(baseUrlVehicle, $scope.newVehicle)
-            .then(
-                function success(data) {
-                    alert("Registration was successful.");
-                    $location.path("/");
-                },
-                function error(data) {
-                    alert("Registration failed. Try again.");
-                }
-            );
-    };
 });
 
 rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
@@ -194,8 +140,7 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     getBranches();
 
 
-    $scope.startDateMs = null;
-    $scope.endDateMs = null;
+
     $scope.dif = 0;
 
     $scope.startDate = null;
@@ -204,9 +149,8 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     $scope.calculateTotalPrice = function () {
 
         if ($scope.newReservation.startDate != null && $scope.newReservation.endDate != null) {
-            $scope.startDateMs = $scope.startDate;
-            $scope.endDateMs = $scope.endDate;
-            $scope.dif = ($scope.endDateMs.getTime() - $scope.startDateMs.getTime()) / 3.6e+6;
+
+            $scope.dif = ($scope.endDate.getTime() - $scope.startDate.getTime()) / 3.6e+6;
             $scope.newReservation.totalPrice = Math.ceil($scope.dif) * $scope.pricePerHour;
             $scope.newReservation.startDate = $scope.startDate.toISOString();
             $scope.newReservation.endDate = $scope.endDate.toISOString();

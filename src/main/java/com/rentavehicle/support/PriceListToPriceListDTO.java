@@ -11,33 +11,33 @@ import java.util.List;
 @Component
 public class PriceListToPriceListDTO implements Converter<PriceList, PriceListDTO> {
 
-	@Override
-	public PriceListDTO convert(PriceList priceList) {
+    @Override
+    public PriceListDTO convert(PriceList priceList) {
 
-		if (priceList == null) {
-			return null;
-		}
+        if (priceList == null) {
+            return null;
+        }
 
-		PriceListDTO dto = new PriceListDTO();
+        PriceListDTO dto = new PriceListDTO();
 
-		dto.setId(priceList.getId());
-		dto.setStartDate(priceList.getStartDate());
-		dto.setEndDate(priceList.getEndDate());
-		dto.setAgencyId(priceList.getAgency().getId());
-		dto.setAgencyName(priceList.getAgency().getName());
+        dto.setId(priceList.getId());
+        dto.setStartDate(priceList.getStartDate().toString());
+        dto.setEndDate(priceList.getEndDate().toString());
+        dto.setAgencyId(priceList.getAgency().getId());
+        dto.setAgencyName(priceList.getAgency().getName());
 
-		return dto;
+        return dto;
 
-	}
+    }
 
-	public List<PriceListDTO> convert(List<PriceList> priceLists) {
-		List<PriceListDTO> ret = new ArrayList<>();
+    public List<PriceListDTO> convert(List<PriceList> priceLists) {
+        List<PriceListDTO> ret = new ArrayList<>();
 
-		for (PriceList priceList : priceLists) {
-			ret.add(convert(priceList));
-		}
+        for (PriceList priceList : priceLists) {
+            ret.add(convert(priceList));
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
 }

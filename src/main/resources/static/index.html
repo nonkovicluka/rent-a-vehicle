@@ -54,8 +54,8 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li ng-show="user.username"><a> <span class="user">Hi,
-							{{user.username}}</span> <span ng-click="logout()" href=""
+                    <li ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'"><a><span ng-click="myAgencies()" href="" class="logout">My agencies</span></a></li>
+                    <li ng-show="user.username"><a> <span class="user">Hi, {{user.username}}</span> <span ng-click="logout()" href=""
                                                            class="logout">Logout</span>
                     </a></li>
                     <li ng-show="!user.username"><a href="#/login">Login</a></li>
@@ -101,5 +101,10 @@
 <script type="text/javascript" src="app/js/agency/agency-controllers.js"></script>
 <script type="text/javascript" src="app/js/branch/branch-controllers.js"></script>
 <script type="text/javascript" src="app/js/vehicle/vehicle-controllers.js"></script>
+<script type="text/javascript" src="app/manager/js/price-list-controllers-manager.js"></script>
+<script type="text/javascript" src="app/manager/js/vehicle-controllers-manager.js"></script>
+<script type="text/javascript" src="app/manager/js/agency-controllers-manager.js"></script>
+
+
 </body>
 </html>

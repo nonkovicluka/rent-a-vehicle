@@ -10,20 +10,20 @@
     <div class="form-inline pull-right">
         <form>
             <div class="form-group">
-                <label for="filteredVehicleName">Name:</label> <input
-                    ng-model="filteredVehicle.name" type="text" class="form-control"
-                    id="filteredVehicleName">
+                <label for="filteredVehicleName">Name:</label> <input ng-change="getVehiclesAndPrice()"
+                                                                      ng-model="filteredVehicle.name" type="text"
+                                                                      class="form-control"
+                                                                      id="filteredVehicleName">
             </div>
 
             <div class="form-group">
-                <label for="filteredVehicleType">Type:</label> <select ng-model="filteredVehicle.vehicleTypeId"
+                <label for="filteredVehicleType">Type:</label> <select ng-change="getVehiclesAndPrice()"
+                                                                       ng-model="filteredVehicle.vehicleTypeId"
                                                                        class="form-control" id="filteredVehicleType">
                 <option value=""></option>
                 <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
             </select>
             </div>
-
-            <button ng-click="search()" type="button" class="btn btn-primary">Search</button>
         </form>
     </div>
 
@@ -35,6 +35,7 @@
         <th>Type</th>
         <th>Available</th>
         <th>Price per hour</th>
+        <th></th>
 
         <tr ng-repeat="v in vehiclesAndPrice">
             <td>{{v.name}}</td>
@@ -45,7 +46,7 @@
             <td ng-show="v.available === false">Not available</td>
             <td>{{v.pricePerHour}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="reserve(v.id); getPricePerHour(v.pricePerHour)"
+                <button class="btn btn-primary" ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
                         ng-disabled="!v.available">Reserve
                 </button>
             </td>

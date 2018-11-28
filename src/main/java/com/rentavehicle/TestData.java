@@ -95,7 +95,7 @@ public class TestData {
         a2.setDescription("Description 2");
         a2.setPhoneNumber("Number 2");
         a2.setEmial("mail2@mail.com");
-        a2.setOwner(u1);
+        a2.setOwner(u2);
         agencyService.save(a2);
 
         Agency a3 = new Agency();
@@ -103,7 +103,7 @@ public class TestData {
         a3.setDescription("Description 3");
         a3.setPhoneNumber("Number 3");
         a3.setEmial("mail3@mail.com");
-        a3.setOwner(u1);
+        a3.setOwner(u2);
         agencyService.save(a3);
 
         Agency a4 = new Agency();
@@ -119,7 +119,7 @@ public class TestData {
         a5.setDescription("Description 5");
         a5.setPhoneNumber("Number 5");
         a5.setEmial("mail5@mail.com");
-        a5.setOwner(u1);
+        a5.setOwner(u2);
         agencyService.save(a5);
 
         Agency a6 = new Agency();
@@ -150,6 +150,12 @@ public class TestData {
         b3.setPhoneNumber("Number3");
         b3.setAgency(a2);
         branchService.save(b3);
+
+        Branch b4 = new Branch();
+        b4.setAddress("Address 4");
+        b4.setPhoneNumber("Number4");
+        b4.setAgency(a1);
+        branchService.save(b4);
 
 
         // VehicleType test data

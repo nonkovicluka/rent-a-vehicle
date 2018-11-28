@@ -1,12 +1,17 @@
 package com.rentavehicle.web.controller;
 
+import com.rentavehicle.model.PriceListItem;
 import com.rentavehicle.model.Vehicle;
+import com.rentavehicle.service.PriceListItemService;
 import com.rentavehicle.service.VehicleService;
 import com.rentavehicle.support.VehicleDTOToVehicle;
+import com.rentavehicle.support.VehiclePliDTOToVehiclePli;
+import com.rentavehicle.support.VehiclePliToVehiclePliDTO;
 import com.rentavehicle.support.VehicleToVehicleDTO;
 import com.rentavehicle.web.dto.VehicleDTO;
+import com.rentavehicle.web.dto.VehiclePriceListItem;
+import com.rentavehicle.web.dto.VehiclePriceListItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,10 +27,19 @@ public class ApiVehicleController {
     private VehicleService vehicleService;
 
     @Autowired
+    private PriceListItemService priceListItemService;
+
+    @Autowired
     private VehicleDTOToVehicle toVehicle;
 
     @Autowired
     private VehicleToVehicleDTO toDTO;
+
+    @Autowired
+    private VehiclePliDTOToVehiclePli toVehiclePli;
+
+    @Autowired
+    private VehiclePliToVehiclePliDTO toPliDTO;
 
     @RequestMapping(value = "/{agencyId}/all", method = RequestMethod.GET)
     public List<VehicleDTO> get(@RequestParam(required = false) String name,
@@ -61,16 +75,41 @@ public class ApiVehicleController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<VehicleDTO> add(@Validated @RequestBody VehicleDTO vehicleDTO) {
+    public ResponseEntity<VehiclePriceListItemDTO> add(@Validated @RequestBody VehiclePriceListItemDTO vehiclePliDTO) {
 
-        Vehicle vehicle = toVehicle.convert(vehicleDTO);
-        try {
+        VehiclePriceListItem vehiclePriceListItem = toVehiclePli.convert(vehiclePliDTO);
+
+        Vehicle vehicle = vehiclePriceListItem.getVehicle();
+        PriceListItem priceListItem = vehiclePriceListItem.getPriceListItem();
+
+        if (priceListItem != null && vehicle != null) {
             vehicleService.save(vehicle);
-        } catch (Exception e) {
+            priceListItemService.save(priceListItem);
+
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(toDTO.convert(vehicle), HttpStatus.CREATED);
+        return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public ResponseEntity<VehiclePriceListItemDTO> edit(@Validated @RequestBody VehiclePriceListItemDTO vehiclePliDTO) {
+
+        VehiclePriceListItem vehiclePriceListItem = toVehiclePli.convert(vehiclePliDTO);
+
+        Vehicle vehicle = vehiclePriceListItem.getVehicle();
+        PriceListItem priceListItem = vehiclePriceListItem.getPriceListItem();
+
+        if (priceListItem != null && vehicle != null) {
+            vehicleService.save(vehicle);
+            priceListItemService.save(priceListItem);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

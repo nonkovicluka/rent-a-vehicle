@@ -10,4 +10,8 @@ rentAVehicleApp.controller('NavController', function ($http, $scope, AuthService
         $rootScope.$broadcast('LogoutSuccessful');
         $location.path('login');
     };
+    $scope.myAgencies = function () {
+        $location.path("/my-agencies")
+
+    }
 });

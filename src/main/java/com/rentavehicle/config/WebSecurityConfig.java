@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/index.html", "/app/**", "/api/agencies/all", "/api/agencies/{agencyId}",
                         "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all",
                         "/api/branches/{agencyId}b", "/api/branches/all", "/assets/**", "/register", "/authenticate",
-                        "/api/pricelistitems/vehicles ",
+                        "/api/pricelistitems/vehicles",
                         "/favicon.ico");
     }
 
