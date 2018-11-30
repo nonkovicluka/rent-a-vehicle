@@ -25,5 +25,11 @@ public interface PriceListRepository extends JpaRepository<PriceList, Long> {
             @Param("agencyId") Long agencyId);
 
 
+    @Query(
+            "SELECT pl FROM PriceList pl WHERE pl.id = (SELECT MAX(pl.id) FROM pl WHERE pl.agency.id =:agencyId)"
+    )
+    PriceList lastAddedPriceList(
+            @Param("agencyId") Long agencyId);
+
 
 }

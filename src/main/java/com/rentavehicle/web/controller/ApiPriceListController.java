@@ -2,13 +2,13 @@ package com.rentavehicle.web.controller;
 
 import com.rentavehicle.model.PriceList;
 import com.rentavehicle.model.PriceListItem;
-import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.PriceListItemService;
 import com.rentavehicle.service.PriceListService;
 import com.rentavehicle.support.PriceListDTOToPriceList;
 import com.rentavehicle.support.PriceListToPriceListDTO;
 import com.rentavehicle.web.dto.PriceListDTO;
 import com.rentavehicle.web.dto.VehiclePriceListItem;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,26 +49,40 @@ public class ApiPriceListController {
     public ResponseEntity<PriceListDTO> add(@Validated @RequestBody PriceListDTO priceListDTO) {
 
         PriceList priceList = toPriceList.convert(priceListDTO);
-        String name = null;
-        Long vehicleTypeId = null;
-        List<VehiclePriceListItem> vehiclePriceListItems = priceListItemService.currentPriceLIstItem(priceListDTO.getAgencyId(), name, vehicleTypeId);
-        List<PriceListItem> priceListItems = new ArrayList<>();
+        LocalDate startDate = priceList.getStartDate().plusDays(1);
+        LocalDate endDate = priceList.getEndDate().plusDays(1);
+        PriceList currentPriceList = priceListService.currentPriceList(priceListDTO.getAgencyId());
 
-        for (VehiclePriceListItem vehiclePli : vehiclePriceListItems) {
-            PriceListItem pli = new PriceListItem();
-            pli.setPricePerHour(vehiclePli.getPriceListItem().getPricePerHour());
-            pli.setPriceList(priceList);
-            pli.setVehicle(vehiclePli.getPriceListItem().getVehicle());
-//            priceListItemService.save(pli);
-            priceListItems.add(pli);
-        }
 
-        priceList.setPriceListItems(priceListItems);
+        LocalDate now = new LocalDate().minusDays(1);
 
-        try {
+        if (startDate.isBefore(endDate) && startDate.isAfter(now)) {
+
+            if (startDate.isBefore(currentPriceList.getEndDate())) {
+
+                currentPriceList.setEndDate(startDate.minusDays(1));
+            }
+            String name = null;
+            Long vehicleTypeId = null;
+            List<VehiclePriceListItem> vehiclePriceListItems = priceListItemService.currentPriceLIstItem(priceListDTO.getAgencyId(), name, vehicleTypeId);
+            List<PriceListItem> priceListItems = new ArrayList<>();
+
+            for (VehiclePriceListItem vehiclePli : vehiclePriceListItems) {
+                PriceListItem pli = new PriceListItem();
+                pli.setPricePerHour(vehiclePli.getPriceListItem().getPricePerHour());
+                pli.setPriceList(priceList);
+                pli.setVehicle(vehiclePli.getPriceListItem().getVehicle());
+                priceListItems.add(pli);
+            }
+
+
+            priceList.setPriceListItems(priceListItems);
+
             priceListService.save(priceList);
-        } catch (Exception e) {
+
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         }
 
         return new ResponseEntity<>(toDTO.convert(priceList), HttpStatus.CREATED);
@@ -100,9 +114,17 @@ public class ApiPriceListController {
 
     @RequestMapping(value = "/{agencyId}pl", method = RequestMethod.GET)
     public List<PriceListDTO> agencyPriceLists(@PathVariable Long agencyId) {
-        List<PriceList> pricelists = priceListService.findByAgencyId(agencyId);
+        List<PriceList> priceLists = priceListService.findByAgencyId(agencyId);
 
 
-        return toDTO.convert(pricelists);
+        return toDTO.convert(priceLists);
+    }
+
+    @RequestMapping(value = "/last-price-list", method = RequestMethod.GET)
+    public PriceListDTO lastAddedPriceList(@RequestParam Long agencyId) {
+        PriceList priceList = priceListService.lastAddedPriceList(agencyId);
+
+
+        return toDTO.convert(priceList);
     }
 }

@@ -14,6 +14,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByVehicleId(Long vehicleId);
 
+
     @Query(
             "SELECT r FROM Reservation r WHERE"
                     + "(:startDate < r.endDate) " +
@@ -25,5 +26,23 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findOverlappingReservations(@Param("startDate") DateTime startDate,
                                                   @Param("endDate") DateTime endDate,
                                                   @Param("vehicleId") Long vehicleId);
+
+
+    @Query(
+            "SELECT res FROM Reservation res LEFT JOIN res.vehicle v " +
+                    "INNER JOIN v.agency WHERE v.agency.id = :agencyId ORDER BY v.name"
+
+
+    )
+    List<Reservation> agencyReservations(@Param("agencyId") Long agencyId);
+
+
+    @Query(
+            "SELECT SUM(res.totalPrice) FROM Reservation res LEFT JOIN res.vehicle v " +
+                    "INNER JOIN v.agency WHERE v.agency.id = :agencyId"
+
+
+    )
+    double getTotalEarningsByAgency(@Param("agencyId") Long agencyId);
 
 }

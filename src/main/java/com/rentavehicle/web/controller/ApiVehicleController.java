@@ -134,4 +134,11 @@ public class ApiVehicleController {
         return toDTO.convert(vehicles);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<VehicleDTO> delete(@PathVariable Long id) {
+
+        vehicleService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

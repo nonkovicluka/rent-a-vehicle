@@ -1,7 +1,6 @@
 package com.rentavehicle.service.impl;
 
 import com.rentavehicle.model.Reservation;
-import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.repository.ReservationRepository;
 import com.rentavehicle.service.ReservationService;
 import org.joda.time.DateTime;
@@ -45,6 +44,18 @@ public class JpaReservationService implements ReservationService {
     public List<Reservation> findOverlappingReservations(DateTime startDate, DateTime endDate, Long vehicleId) {
 
         return reservationRepository.findOverlappingReservations(startDate, endDate, vehicleId);
+    }
+
+    @Override
+    public List<Reservation> agencyReservations(Long agencyId) {
+
+        return reservationRepository.agencyReservations(agencyId);
+    }
+
+    @Override
+    public double getTotalEarningsByAgency(Long agencyId) {
+
+        return reservationRepository.getTotalEarningsByAgency(agencyId);
     }
 
 }

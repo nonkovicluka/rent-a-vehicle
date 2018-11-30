@@ -314,6 +314,10 @@ public class TestData {
         DateTime startDate1 = new DateTime(2018, 11, 1, 1, 33, 0);
         DateTime endDate1 = new DateTime(2018, 11, 30, 1, 33, 0);
 
+
+        DateTime startDate2 = new DateTime(2019, 11, 1, 1, 33, 0);
+        DateTime endDate2 = new DateTime(2019, 11, 30, 1, 33, 0);
+
         Reservation res1 = new Reservation();
         res1.setVehicle(v1);
         res1.setBranchPickup(b2);
@@ -323,5 +327,47 @@ public class TestData {
         res1.setEndDate(endDate1);
         res1.setTotalPrice(5433.50);
         reservationService.save(res1);
+
+        Reservation res2 = new Reservation();
+        res2.setVehicle(v2);
+        res2.setBranchPickup(b2);
+        res2.setBranchDelivery(b2);
+        res2.setUser(u2);
+        res2.setStartDate(startDate2);
+        res2.setEndDate(endDate2);
+        res2.setTotalPrice(2225.35);
+        reservationService.save(res2);
+
+        Reservation res3 = new Reservation();
+        res3.setVehicle(v5);
+        res3.setBranchPickup(b1);
+        res3.setBranchDelivery(b1);
+        res3.setUser(u3);
+        res3.setStartDate(startDate1);
+        res3.setEndDate(endDate1);
+        res3.setTotalPrice(112.55);
+        reservationService.save(res3);
+
+
+        Reservation res4 = new Reservation();
+        res4.setVehicle(v1);
+        res4.setBranchPickup(b2);
+        res4.setBranchDelivery(b2);
+        res4.setUser(u1);
+        res4.setStartDate(startDate2);
+        res4.setEndDate(endDate2);
+        res4.setTotalPrice(1299.25);
+        reservationService.save(res4);
+
+        Reservation res5 = new Reservation();
+        res5.setVehicle(v3);
+        res5.setBranchPickup(b2);
+        res5.setBranchDelivery(b2);
+        res5.setUser(u2);
+        res5.setStartDate(startDate2);
+        res5.setEndDate(endDate2);
+        res5.setTotalPrice(2225.35);
+        reservationService.save(res5);
+
     }
 }

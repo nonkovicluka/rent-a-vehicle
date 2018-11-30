@@ -36,10 +36,10 @@ public class Vehicle {
     @ManyToOne(fetch = FetchType.EAGER)
     private Agency agency;
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<VehicleImage> vehicleImages = new ArrayList<VehicleImage>();
 
-    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Reservation> reservations = new ArrayList<Reservation>();
 

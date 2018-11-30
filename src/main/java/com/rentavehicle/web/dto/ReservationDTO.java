@@ -16,9 +16,15 @@ public class ReservationDTO {
 
     private Long vehicleId;
 
+    private String vehicleName;
+
     private Long branchPickupId;
 
+    private String branchPickupAddress;
+
     private Long branchDeliveryId;
+
+    private String branchDeliveryAddress;
 
     public Long getId() {
         return id;
@@ -92,4 +98,27 @@ public class ReservationDTO {
         this.branchDeliveryId = branchDeliveryId;
     }
 
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
+    public void setVehicleName(String vehicleName) {
+        this.vehicleName = vehicleName;
+    }
+
+    public String getBranchPickupAddress() {
+        return branchPickupAddress;
+    }
+
+    public void setBranchPickupAddress(String branchPickupAddress) {
+        this.branchPickupAddress = branchPickupAddress;
+    }
+
+    public String getBranchDeliveryAddress() {
+        return branchDeliveryAddress;
+    }
+
+    public void setBranchDeliveryAddress(String branchDeliveryAddress) {
+        this.branchDeliveryAddress = branchDeliveryAddress;
+    }
 }

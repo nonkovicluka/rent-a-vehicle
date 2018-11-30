@@ -6,7 +6,6 @@ import com.rentavehicle.service.PriceListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -44,6 +43,12 @@ public class JpaPriceListService implements PriceListService {
     public PriceList currentPriceList(Long agencyId) {
 
         return priceListRepository.currentPriceList(agencyId);
+    }
+
+    @Override
+    public PriceList lastAddedPriceList(Long agencyId) {
+
+        return priceListRepository.lastAddedPriceList(agencyId);
     }
 
 }

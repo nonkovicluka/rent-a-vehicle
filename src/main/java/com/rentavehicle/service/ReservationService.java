@@ -18,4 +18,8 @@ public interface ReservationService {
 
     List<Reservation> findOverlappingReservations(@Param("startDate") DateTime startDate, @Param("endDate") DateTime endDate, @Param("vehicleId") Long vehicleId);
 
+    List<Reservation> agencyReservations(@Param("agencyId") Long agencyId);
+
+    double getTotalEarningsByAgency(@Param("agencyId") Long agencyId);
+
 }

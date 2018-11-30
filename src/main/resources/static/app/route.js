@@ -72,6 +72,10 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "/app/manager/html/my-agencies.html",
             controller: "myAgenciesCtrl"
         })
+        .when('/my-agencies/:agencyId/reservations', {
+            templateUrl: "/app/manager/html/reservation-search.html",
+            controller: "reservationsCtrl"
+        })
         .otherwise({
             redirectTo: '/page-not-found'
         });

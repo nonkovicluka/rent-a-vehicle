@@ -13,6 +13,8 @@ public interface VehicleService {
 
     void save(Vehicle vehicle);
 
+    void delete(Long id);
+
     List<Vehicle> findByAgencyId(Long agencyId);
 
     List<Vehicle> search(@Param("name") String name, @Param("vehicleTypeId") Long vehicleTypeId, @Param("agencyId") Long agencyId);

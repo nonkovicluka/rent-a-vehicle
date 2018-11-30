@@ -63,7 +63,6 @@ public class ReservationDTOToReservation implements Converter<ReservationDTO, Re
 
         DateTime dtEnd = formatter.parseDateTime(inputEnd);
 
-
         reservation.setStartDate(dtStart);
         reservation.setEndDate(dtEnd);
         reservation.setTotalPrice(dto.getTotalPrice());

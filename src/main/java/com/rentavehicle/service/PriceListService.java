@@ -16,4 +16,6 @@ public interface PriceListService {
     List<PriceList> findByAgencyId(Long agencyId);
 
     PriceList currentPriceList(@Param("agencyId") Long agencyId);
+
+    PriceList lastAddedPriceList(@Param("agencyId") Long agencyId);
 }

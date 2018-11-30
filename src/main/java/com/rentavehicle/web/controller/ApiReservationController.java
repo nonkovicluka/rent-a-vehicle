@@ -87,4 +87,20 @@ public class ApiReservationController {
         return toDTO.convert(reservations);
     }
 
+    @RequestMapping(value = "/agencyReservations", method = RequestMethod.GET)
+    public List<ReservationDTO> getAgencyReservations(@RequestParam Long agencyId) {
+
+        List<Reservation> reservations = reservationService.agencyReservations(agencyId);
+
+
+        return toDTO.convert(reservations);
+    }
+
+    @RequestMapping(value = "/agencyTotalEarnings", method = RequestMethod.GET)
+    public double getAgencyTotalEarning(@RequestParam Long agencyId) {
+
+
+        return reservationService.getTotalEarningsByAgency(agencyId);
+    }
+
 }
