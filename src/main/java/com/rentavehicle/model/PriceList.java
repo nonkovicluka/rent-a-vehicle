@@ -19,17 +19,17 @@ public class PriceList {
     private Long id;
 
     @Column
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate startDate;
 
     @Column
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Agency agency;
 
-    @OneToMany(targetEntity = PriceListItem.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "priceList", fetch = FetchType.LAZY)
     private List<PriceListItem> priceListItems = new ArrayList<>();
 
 

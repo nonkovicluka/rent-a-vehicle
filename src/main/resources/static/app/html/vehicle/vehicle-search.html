@@ -1,13 +1,17 @@
 <div>
     <div class="page-header">
-        <h2>Vehicles by {{agency.name}}</h2>
+        <h4>Vehicles by {{agency.name}}
+            <span class="pull-right">Rating: <span class="text-warning">{{avgRating}}</span>
+        </span>
+        </h4>
     </div>
-    <br><br>
-    <div ng-show="agency.ownerId === user.id"
-         class="btn-group pull-left">
-        <button ng-click="addVehicle()" type="button" class="btn btn-primary">Add new vehicle</button>
+    <div class="pull-right">
+        <button ng-click="rateAgency()" type="button"
+                class="btn btn-primary">Rate
+        </button>
     </div>
-    <div class="form-inline pull-right">
+    <br><br><br><br>
+    <div class="form-inline pull-left">
         <form>
             <div class="form-group">
                 <label for="filteredVehicleName">Name:</label> <input ng-change="getVehiclesAndPrice()"
@@ -15,7 +19,6 @@
                                                                       class="form-control"
                                                                       id="filteredVehicleName">
             </div>
-
             <div class="form-group">
                 <label for="filteredVehicleType">Type:</label> <select ng-change="getVehiclesAndPrice()"
                                                                        ng-model="filteredVehicle.vehicleTypeId"

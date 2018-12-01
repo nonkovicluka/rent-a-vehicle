@@ -45,4 +45,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     )
     double getTotalEarningsByAgency(@Param("agencyId") Long agencyId);
 
+
+    @Query(
+            "SELECT r FROM Reservation r " +
+                    " LEFT JOIN r.vehicle v WHERE"
+                    + " :agencyId = v.agency.id AND :userId = r.user.id " +
+                    "AND r.endDate < current_time"
+
+
+    )
+    List<Reservation> findFinishedReservation(@Param("agencyId") Long agencyId, @Param("userId") Long userId);
+
 }

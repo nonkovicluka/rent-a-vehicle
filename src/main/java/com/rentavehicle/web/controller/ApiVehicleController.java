@@ -112,20 +112,6 @@ public class ApiVehicleController {
         return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<VehicleDTO> edit(@PathVariable Long id, @Validated @RequestBody VehicleDTO editedVehicle) {
-
-        if (id == null || !id.equals(editedVehicle.getId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        Vehicle converted = toVehicle.convert(editedVehicle);
-
-        vehicleService.save(converted);
-
-        return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/{agencyId}v", method = RequestMethod.GET)
     public List<VehicleDTO> agencyVehicles(@PathVariable Long agencyId) {
         List<Vehicle> vehicles = vehicleService.findByAgencyId(agencyId);
@@ -134,11 +120,22 @@ public class ApiVehicleController {
         return toDTO.convert(vehicles);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<VehicleDTO> delete(@PathVariable Long id) {
+    @RequestMapping(value = "/delete", method = RequestMethod.PUT)
+    public ResponseEntity<VehiclePriceListItemDTO> delete(@Validated @RequestBody VehiclePriceListItemDTO vehiclePliDTO) {
 
-        vehicleService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        VehiclePriceListItem vehiclePriceListItem = toVehiclePli.convert(vehiclePliDTO);
+
+        Vehicle vehicle = vehiclePriceListItem.getVehicle();
+
+        if (vehicle != null) {
+            vehicle.setDeleted(true);
+            vehicleService.save(vehicle);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.OK);
     }
 
 }

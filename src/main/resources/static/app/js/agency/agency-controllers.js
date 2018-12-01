@@ -42,3 +42,43 @@ rentAVehicleApp.controller("agencySearchCtrl", function ($scope, $http, $locatio
 
 
 });
+
+rentAVehicleApp.controller("rateAgencyCtrl", function ($scope, $location, $http, $routeParams, AuthService) {
+
+    $scope.user = AuthService.user;
+
+    var redirect = function () {
+        if (!$scope.user) {
+            $location.path("/login")
+        }
+    };
+
+    redirect();
+
+    $scope.newRating = {};
+    $scope.newRating.score = "";
+    $scope.newRating.comment = "";
+    $scope.newRating.agencyId = $routeParams.agencyId;
+    $scope.message = null;
+
+    var baseUrlRating = "api/ratings/add";
+
+    $scope.addRating = function () {
+
+        var config = {params: {}};
+
+        config.params.userId = $scope.user.id;
+        config.params.agencyId = $routeParams.agencyId;
+
+        $http.post(baseUrlRating, $scope.newRating, config)
+            .then(
+                function success(data) {
+                    $location.path("/agencies/" + $routeParams.agencyId + "/vehicles");
+                },
+                function error(data) {
+                    $scope.message = "Invalid rate."
+                }
+            );
+    };
+
+});

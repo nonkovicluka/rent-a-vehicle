@@ -58,4 +58,10 @@ public class JpaReservationService implements ReservationService {
         return reservationRepository.getTotalEarningsByAgency(agencyId);
     }
 
+    @Override
+    public List<Reservation> findFinishedReservation(Long agencyId, Long userId) {
+
+        return reservationRepository.findFinishedReservation(agencyId, userId);
+    }
+
 }

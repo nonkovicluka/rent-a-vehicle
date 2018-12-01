@@ -22,4 +22,6 @@ public interface ReservationService {
 
     double getTotalEarningsByAgency(@Param("agencyId") Long agencyId);
 
+    List<Reservation> findFinishedReservation(@Param("agencyId") Long agencyId, @Param("userId") Long userId);
+
 }

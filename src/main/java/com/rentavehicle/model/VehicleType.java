@@ -19,7 +19,7 @@ public class VehicleType {
 	@Column
 	private String name;
 
-	@OneToMany(targetEntity=Vehicle.class, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "vehicleType", fetch=FetchType.LAZY)
 	private List<Vehicle> vehicles = new ArrayList<>();
 
 	// getters and setters

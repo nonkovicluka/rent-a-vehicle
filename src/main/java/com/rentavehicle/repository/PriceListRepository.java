@@ -21,8 +21,7 @@ public interface PriceListRepository extends JpaRepository<PriceList, Long> {
 
 
     )
-    PriceList currentPriceList(
-            @Param("agencyId") Long agencyId);
+    PriceList currentPriceList(@Param("agencyId") Long agencyId);
 
 
     @Query(

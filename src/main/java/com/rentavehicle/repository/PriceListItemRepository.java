@@ -16,7 +16,7 @@ public interface PriceListItemRepository extends JpaRepository<PriceListItem, Lo
     @Query(
             "SELECT new com.rentavehicle.web.dto.VehiclePriceListItem(v, pli) FROM PriceListItem pli LEFT JOIN pli.vehicle v " +
                     "INNER JOIN pli.priceList WHERE pli.priceList.startDate <= current_date AND pli.priceList.endDate >= current_date " +
-                    "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId)"
+                    "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId) AND v.deleted = false"
 
 
     )
@@ -26,7 +26,7 @@ public interface PriceListItemRepository extends JpaRepository<PriceListItem, Lo
     @Query(
             "SELECT new com.rentavehicle.web.dto.VehiclePriceListItem(v, pli) FROM PriceListItem pli LEFT JOIN pli.vehicle v " +
                     "INNER JOIN pli.priceList WHERE pli.priceList.id = :priceListId " +
-                    "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId)"
+                    "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId) AND v.deleted = false"
 
 
     )

@@ -48,7 +48,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Reservation> reservations = new ArrayList<>();
 
-    @OneToMany(targetEntity = Agency.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Agency> agencies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

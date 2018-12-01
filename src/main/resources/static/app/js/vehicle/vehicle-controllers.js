@@ -90,6 +90,32 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
         $location.path("/agencies/" + $routeParams.agencyId + "/vehicles/" + vehicleId + "/reserve");
     };
 
+    $scope.rateAgency = function () {
+
+        $location.path("/agencies/" + $routeParams.agencyId + "/rate")
+
+    };
+
+    $scope.avgRating = 0.0;
+
+    var getAverageRating = function () {
+
+        var config = {params: {}};
+        config.params.agencyId = $routeParams.agencyId;
+
+        $http.get("api/ratings/avgScore", config)
+            .then(
+                function success(data) {
+                    $scope.avgRating = Math.round(data.data * 100) / 100;
+                },
+                function error(data) {
+                }
+            );
+
+    };
+
+    getAverageRating();
+
 });
 
 rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
@@ -138,7 +164,6 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     };
 
     getBranches();
-
 
 
     $scope.dif = 0;

@@ -35,12 +35,6 @@ public class JpaVehicleService implements VehicleService {
     }
 
     @Override
-    public void delete(Long id) {
-
-        vehicleRepository.delete(id);
-    }
-
-    @Override
     public List<Vehicle> findByAgencyId(Long agencyId) {
 
         return vehicleRepository.findByAgencyId(agencyId);
