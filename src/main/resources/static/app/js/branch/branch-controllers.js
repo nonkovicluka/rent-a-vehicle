@@ -1,58 +1,3 @@
-rentAVehicleApp.controller("branchSearchCtrl", function ($scope, $http, $location) {
-
-    var baseUrlBranch = "/api/branches/all";
-    var baseUrlAgency = "/api/agencies/all";
-
-    $scope.pageNum = 0;
-    $scope.totalPages = 1;
-
-    $scope.branches = [];
-    $scope.agencies = [];
-
-    var getBranches = function () {
-
-        var config = {params: {}};
-
-        config.params.pageNum = $scope.pageNum;
-
-
-        $http.get(baseUrlBranch, config)
-            .then(function success(data) {
-                $scope.branches = data.data;
-                $scope.totalPages = data.headers('totalPages');
-
-            })
-
-    };
-
-    var getAgencies = function () {
-
-        $http.get(baseUrlAgency)
-            .then(function success(data) {
-                $scope.agencies = data.data;
-            });
-
-    };
-
-    getAgencies();
-    getBranches();
-
-
-    $scope.go = function (direction) {
-        $scope.pageNum = $scope.pageNum + direction;
-        getBranches();
-
-    };
-
-
-    $scope.register = function () {
-        $location.path("/branches/register");
-
-    };
-
-
-});
-
 rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $routeParams, $location, AuthService) {
 
     $scope.user = AuthService.user;
@@ -170,15 +115,16 @@ rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $locat
 
     getAgencies();
 
+    $scope.message = null;
+
     $scope.registerBranch = function () {
         $http.post(baseUrlBranch, $scope.newBranch)
             .then(
                 function success(data) {
-                    alert("Registration was successful.")
-                    $location.path("/branches");
+                    $location.path("/my-agencies");
                 },
                 function error(data) {
-                    alert("Registration failed. Try again.");
+                    $scope.message = "Branch registration failed. Try again."
                 }
             );
     };

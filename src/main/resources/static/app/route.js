@@ -36,10 +36,6 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "/app/manager/html/agency-registration.html",
             controller: "registerAgencyCtrl"
         })
-        .when('/branches', {
-            templateUrl: "/app/html/branch/branch-search.html",
-            controller: "branchSearchCtrl"
-        })
         .when('/branches/register', {
             templateUrl: "/app/html/branch/branch-registration.html",
             controller: "registerBranchCtrl"

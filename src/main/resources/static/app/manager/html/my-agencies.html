@@ -1,9 +1,9 @@
 <div>
     <br>
-    <h2>Agencies</h2>
+    <h2>My agencies</h2>
     <br><br>
-    <div ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'" class="btn-group float-left">
-        <button ng-click="register()" type="button" class="btn btn-primary">Register agency</button>
+    <div ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'" class="btn-group pull-left">
+        <button ng-click="registerAgency()" type="button" class="btn btn-primary">Register agency</button>
     </div>
     <div class="btn-group float-right">
         <button class="page-link" ng-click="go(-1)"
@@ -13,20 +13,17 @@
                 ng-disabled="pageNum == totalPages - 1">&raquo;
         </button>
     </div>
-
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered table-striped">
         <th>Agency name</th>
         <th>Description</th>
         <th>Phone number</th>
         <th>E-mail</th>
-        <th>Owner</th>
         <th>Branches</th>
         <tr ng-repeat="a in agencies">
-            <td><a href="#/agencies/{{a.id}}/vehicles">{{a.name}}</a></td>
+            <td><a href="#/my-agencies/{{a.id}}/manage">Manage {{a.name}}</a></td>
             <td>{{a.description}}</td>
             <td>{{a.phoneNumber}}</td>
             <td>{{a.email}}</td>
-            <td>{{a.ownerUsername}}</td>
             <td><a href="#/agencies/{{a.id}}/branches">Click here</a></td>
         </tr>
     </table>

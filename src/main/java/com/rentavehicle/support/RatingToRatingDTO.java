@@ -11,32 +11,34 @@ import java.util.List;
 @Component
 public class RatingToRatingDTO implements Converter<Rating, RatingDTO> {
 
-	@Override
-	public RatingDTO convert(Rating rating) {
+    @Override
+    public RatingDTO convert(Rating rating) {
 
-		if (rating == null) {
-			return null;
-		}
+        if (rating == null) {
+            return null;
+        }
 
-		RatingDTO dto = new RatingDTO();
+        RatingDTO dto = new RatingDTO();
 
-		dto.setId(rating.getId());
-		dto.setScore(rating.getScore());
-		dto.setComment(rating.getComment());
-		dto.setAgencyId(rating.getAgency().getId());
-		dto.setAgencyName(rating.getAgency().getName());
+        dto.setId(rating.getId());
+        dto.setScore(rating.getScore());
+        dto.setComment(rating.getComment());
+        dto.setAgencyId(rating.getAgency().getId());
+        dto.setAgencyName(rating.getAgency().getName());
+        dto.setUserId(rating.getUser().getId());
+        dto.setUserUsername(rating.getUser().getUsername());
 
-		return dto;
-	}
+        return dto;
+    }
 
-	public List<RatingDTO> convert(List<Rating> ratings) {
-		List<RatingDTO> ret = new ArrayList<>();
+    public List<RatingDTO> convert(List<Rating> ratings) {
+        List<RatingDTO> ret = new ArrayList<>();
 
-		for (Rating rating : ratings) {
-			ret.add(convert(rating));
-		}
+        for (Rating rating : ratings) {
+            ret.add(convert(rating));
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
 }

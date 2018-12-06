@@ -53,7 +53,12 @@ public class User implements UserDetails {
     private List<Agency> agencies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<DocImage> docImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Rating> ratings = new ArrayList<>();
 
     @Column
     private boolean deleted;
@@ -216,5 +221,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
 
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public void addRating(Rating rating) {
+        this.ratings.add(rating);
+
+        if (!this.equals(rating.getUser())) {
+            rating.setUser(this);
+        }
+    }
 }

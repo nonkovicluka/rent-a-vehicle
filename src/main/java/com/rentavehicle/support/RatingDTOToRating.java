@@ -2,8 +2,10 @@ package com.rentavehicle.support;
 
 import com.rentavehicle.model.Agency;
 import com.rentavehicle.model.Rating;
+import com.rentavehicle.model.User;
 import com.rentavehicle.service.AgencyService;
 import com.rentavehicle.service.RatingService;
+import com.rentavehicle.service.UserService;
 import com.rentavehicle.web.dto.RatingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -21,6 +23,9 @@ public class RatingDTOToRating implements Converter<RatingDTO, Rating> {
 	@Autowired
 	private AgencyService agencyService;
 
+	@Autowired
+	private UserService userService;
+
 	@Override
 	public Rating convert(RatingDTO dto) {
 
@@ -28,8 +33,10 @@ public class RatingDTOToRating implements Converter<RatingDTO, Rating> {
 
 		if (dto.getId() == null) {
 			Agency agency = agencyService.findOne(dto.getAgencyId());
+			User user = userService.findOne(dto.getUserId());
 			rating = new Rating();
 			rating.setAgency(agency);
+			rating.setUser(user);
 		} else {
 			rating = ratingService.findOne(dto.getId());
 		}

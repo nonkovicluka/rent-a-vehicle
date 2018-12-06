@@ -142,8 +142,8 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     // new reservation
 
     $scope.newReservation = {};
-    $scope.newReservation.startDate = "";
-    $scope.newReservation.endDate = "";
+    $scope.newReservation.startDate = null;
+    $scope.newReservation.endDate = null;
     $scope.newReservation.totalPrice = 0.00;
     $scope.newReservation.userId = $scope.user.id;
     $scope.newReservation.vehicleId = $routeParams.vehicleId;
@@ -168,31 +168,50 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
     $scope.dif = 0;
 
-    $scope.startDate = null;
-    $scope.endDate = null;
+    // $scope.$watch('newReservation.startDate', function () {
+    //
+    //     calculateTotalPrice();
+    //
+    // });
+    //
+    // $scope.$watch('newReservation.endDate', function () {
+    //
+    //     calculateTotalPrice();
+    //
+    // });
 
-    $scope.calculateTotalPrice = function () {
+    $scope.$watchGroup(['newReservation.startDate', 'newReservation.endDate'], function (newValues) {
 
-        if ($scope.newReservation.startDate != null && $scope.newReservation.endDate != null) {
+        if (newValues[0] && newValues[1]) {
+            calculateTotalPrice()
 
-            $scope.dif = ($scope.endDate.getTime() - $scope.startDate.getTime()) / 3.6e+6;
-            $scope.newReservation.totalPrice = Math.ceil($scope.dif) * $scope.pricePerHour;
-            $scope.newReservation.startDate = $scope.startDate.toISOString();
-            $scope.newReservation.endDate = $scope.endDate.toISOString();
         }
+    });
+
+    var calculateTotalPrice = function () {
+
+        $scope.dateSt = Date.parse($scope.newReservation.startDate);
+        $scope.dateEnd = Date.parse($scope.newReservation.endDate);
+
+
+        $scope.dif = ($scope.dateEnd - $scope.dateSt) / 3.6e+6;
+        $scope.newReservation.totalPrice = Math.ceil($scope.dif) * $scope.pricePerHour;
+
 
     };
 
+
+    $scope.message = null;
 
     $scope.reserveVehicle = function () {
         $http.post(reservationsUrl, $scope.newReservation)
             .then(
                 function success(data) {
-                    alert("Reservation was successful.");
+
                     $location.path("/");
                 },
                 function error(data) {
-                    alert("Reservation failed. Try again.");
+                    $scope.message = "Reservation failed, try again.";
                 }
             );
     };

@@ -1,0 +1,96 @@
+<div>
+    <br>
+    <h2>Vehicles by {{agency.name}}</h2>
+    <br><br>
+    <form>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="filteredVehicleName">Name:</label>
+                <input ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.name" type="text"
+                       class="form-control"
+                       id="filteredVehicleName">
+            </div>
+
+            <div class="col-md-3">
+                <label for="filteredVehicleType">Type:</label>
+                <select ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.vehicleTypeId"
+                        class="form-control" id="filteredVehicleType">
+                    <option value=""></option>
+                    <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filteredVehiclePriceList">Select price list </label>
+                <select ng-change="getVehiclesAndPrice()" ng-model="currentPriceList.id" class="form-control"
+                        id="filteredVehiclePriceList">
+                    <option ng-repeat="pl in priceLists" value="{{pl.id}}">{{pl.startDate | date: 'dd.MM.yyyy.'}} -
+                        {{pl.endDate | date: 'dd.MM.yyyy.'}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div ng-show="agency.ownerId === user.id" class="float-left">
+        <button ng-click="addPriceList()" type="button" class="btn btn-primary">Add new price list</button>
+        <button ng-click="registerBranch()" type="button" class="btn btn-primary">Register branch</button>
+        <button ng-show="currentPriceList" ng-click="addVehicle()" type="button" class="btn btn-primary">Add new
+            vehicle
+        </button>
+        <button ng-click="reservations()" type="button" class="btn btn-primary">Reservations</button>
+
+    </div>
+    <table class="table table-bordered table-striped">
+        <th>Name</th>
+        <th>Description</th>
+        <th>Specification</th>
+        <th>Type</th>
+        <th>Available</th>
+        <th>Price per hour</th>
+        <th>Deleted</th>
+
+
+        <tr ng-repeat="v in vehiclesAndPrice">
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.name}}</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.name" value="{{v.name}}"
+                                                                      type="text"></td>
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.description}}</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.description"
+                                                                      value="{{v.description}}" type="text"></td>
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.specification}}</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.specification"
+                                                                      value="{{v.specification}}" type="text"></td>
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.vehicleTypeName}}</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.vehicleTypeId">
+                <option ng-repeat="vt in vehicleTypes" ng-value="vt.id">{{vt.name}}</option>
+            </select></td>
+
+            <td ng-show="v.available && v.vehicleId !== oldVehicle.vehicleId">Available</td>
+            <td ng-show="!v.available && v.vehicleId !== oldVehicle.vehicleId">Not available</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.available">
+                <option value="true">Available</option>
+                <option value="false">Not available</option>
+            </select></td>
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.pricePerHour}}</td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.pricePerHour"
+                                                                      value="{{v.pricePerHour}}" type="text"></td>
+
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">
+                <button class="btn btn-warning" ng-click="editVehicle(v)">Edit
+                </button>
+            </td>
+            <td ng-show="v.vehicleId === oldVehicle.vehicleId">
+                <button class="btn btn-primary" ng-click="saveEdit()">Save
+                </button>
+            </td>
+            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">
+                <button class="btn btn-danger" ng-click="deleteVehicle(v)">Delete</button>
+            </td>
+        </tr>
+    </table>
+</div>

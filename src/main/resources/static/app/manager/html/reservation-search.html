@@ -1,0 +1,24 @@
+<div>
+    <br>
+    <h2>{{agency.name}} reservations</h2>
+    <br><br>
+    <table class="table table-striped table-bordered">
+        <th>Vehicle name</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Total price</th>
+        <th>Branch pickup</th>
+        <th>Branch delivery</th>
+        <th>User</th>
+        <tr ng-repeat="r in reservationsByAgency">
+            <td>{{r.vehicleName}}</td>
+            <td>{{r.startDate | date: 'dd.MM.yyyy.&nbsp;&nbsp;&nbsp;&nbsp; hh:mm'}}</td>
+            <td>{{r.endDate | date: 'dd.MM.yyyy.&nbsp;&nbsp;&nbsp;&nbsp; hh:mm'}}</td>
+            <td>{{r.totalPrice}}</td>
+            <td>{{r.branchPickupAddress}}</td>
+            <td>{{r.branchDeliveryAddress}}</td>
+            <td>{{r.username}}</td>
+        </tr>
+    </table>
+    <h4>Total earnings: {{totalEarnings}}</h4>
+</div>

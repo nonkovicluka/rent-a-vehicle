@@ -38,6 +38,9 @@ public class TestData {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private RatingService ratingService;
+
     @PostConstruct
     public void init() {
 
@@ -350,12 +353,12 @@ public class TestData {
 
 
         Reservation res4 = new Reservation();
-        res4.setVehicle(v1);
-        res4.setBranchPickup(b2);
-        res4.setBranchDelivery(b2);
+        res4.setVehicle(v6);
+        res4.setBranchPickup(b1);
+        res4.setBranchDelivery(b1);
         res4.setUser(u1);
-        res4.setStartDate(startDate2);
-        res4.setEndDate(endDate2);
+        res4.setStartDate(startDate1);
+        res4.setEndDate(endDate1);
         res4.setTotalPrice(1299.25);
         reservationService.save(res4);
 
@@ -369,5 +372,35 @@ public class TestData {
         res5.setTotalPrice(2225.35);
         reservationService.save(res5);
 
+
+        // rating test data
+
+        Rating r1 = new Rating();
+        r1.setScore(5);
+        r1.setComment("Random comment...");
+        r1.setAgency(a1);
+        r1.setUser(u1);
+        ratingService.save(r1);
+
+        Rating r2 = new Rating();
+        r2.setScore(4);
+        r2.setComment("Bla bla comment...");
+        r2.setAgency(a1);
+        r2.setUser(u1);
+        ratingService.save(r2);
+
+        Rating r3 = new Rating();
+        r3.setScore(4);
+        r3.setComment("Random comment...");
+        r3.setAgency(a2);
+        r3.setUser(u2);
+        ratingService.save(r3);
+
+        Rating r4 = new Rating();
+        r4.setScore(5);
+        r4.setComment("Bla bla comment 2...");
+        r4.setAgency(a1);
+        r4.setUser(u2);
+        ratingService.save(r4);
     }
 }

@@ -44,14 +44,14 @@ public class ApiRatingController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<RatingDTO> add(@Validated @RequestBody RatingDTO ratingDTO, @RequestParam Long userId, @RequestParam Long agencyId) {
+    public ResponseEntity<RatingDTO> add(@Validated @RequestBody RatingDTO ratingDTO) {
 
         Rating rating = toRating.convert(ratingDTO);
 
-        List<Reservation> reservations = reservationService.findFinishedReservation(agencyId, userId);
+        List<Reservation> reservations = reservationService.findFinishedReservation(rating.getAgency().getId(), rating.getUser().getId());
+        List<Rating> userRatings = ratingService.findUserRatings(rating.getAgency().getId(), rating.getUser().getId());
 
-
-        if (reservations.size() > 0) {
+        if (reservations.size() > 0 && rating.getScore() > 0 && userRatings.size() < 1) {
             ratingService.save(rating);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

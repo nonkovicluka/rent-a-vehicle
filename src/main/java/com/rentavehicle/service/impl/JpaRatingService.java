@@ -39,4 +39,11 @@ public class JpaRatingService implements RatingService {
         return ratingRepository.averageScore(agencyId);
     }
 
+    @Override
+    public List<Rating> findUserRatings(Long agencyId, Long userId) {
+
+        return ratingRepository.findUserRatings(agencyId, userId);
+    }
+
+
 }

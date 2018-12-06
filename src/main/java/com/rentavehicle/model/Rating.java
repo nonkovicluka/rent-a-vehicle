@@ -1,69 +1,78 @@
 package com.rentavehicle.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
 public class Rating {
 
-	// attributes
-	
-	@Id
-	@GeneratedValue
-	@Column
-	private Long id;
+    // attributes
 
-	@Column
-	private int score;
+    @Id
+    @GeneratedValue
+    @Column
+    private Long id;
 
-	@Column
-	private String comment;
+    @Column
+    private int score;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Agency agency;
+    @Column
+    private String comment;
 
-	
-	// getters and setters
-	
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Agency agency;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
-	public int getScore() {
-		return score;
-	}
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    // getters and setters
 
-	public String getComment() {
-		return comment;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Agency getAgency() {
-		return agency;
-	}
+    public int getScore() {
+        return score;
+    }
 
-	public void setAgency(Agency agency) {
-		this.agency = agency;
+    public void setScore(int score) {
+        this.score = score;
+    }
 
-		if (agency != null && !agency.getRatings().contains(this)) {
-			agency.getRatings().add(this);
-		}
-	}
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+
+        if (agency != null && !agency.getRatings().contains(this)) {
+            agency.getRatings().add(this);
+        }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+
+        if (user != null && !user.getRatings().contains(this)) {
+            user.getRatings().add(this);
+        }
+    }
 }

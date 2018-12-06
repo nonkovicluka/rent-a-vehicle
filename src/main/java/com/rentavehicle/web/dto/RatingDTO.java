@@ -2,16 +2,20 @@ package com.rentavehicle.web.dto;
 
 public class RatingDTO {
 
-	
+
 	private Long id;
-	
+
 	private int score;
-	
+
 	private String comment;
-	
+
 	private Long agencyId;
-	
+
 	private String agencyName;
+
+	private Long userId;
+
+	private String userUsername;
 
 	public Long getId() {
 		return id;
@@ -52,6 +56,20 @@ public class RatingDTO {
 	public void setAgencyName(String agencyName) {
 		this.agencyName = agencyName;
 	}
-	
-	
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getUserUsername() {
+		return userUsername;
+	}
+
+	public void setUserUsername(String userUsername) {
+		this.userUsername = userUsername;
+	}
 }
