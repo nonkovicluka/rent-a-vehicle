@@ -20,12 +20,19 @@ public class VehicleImage {
 	private Long id;
 
 	@Column
-	private String imageSource;
+	private String name;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Vehicle vehicle;
 
-	
+
+	public VehicleImage() {
+	}
+
+	public VehicleImage(String name) {
+		this.name = name;
+	}
+
 	// getters and setters
 
 	public Long getId() {
@@ -36,12 +43,12 @@ public class VehicleImage {
 		this.id = id;
 	}
 
-	public String getImageSource() {
-		return imageSource;
+	public String getName() {
+		return name;
 	}
 
-	public void setImageSource(String imageSource) {
-		this.imageSource = imageSource;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Vehicle getVehicle() {

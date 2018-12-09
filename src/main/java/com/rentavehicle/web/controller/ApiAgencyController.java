@@ -79,15 +79,24 @@ public class ApiAgencyController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{userId}u", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}uPages", method = RequestMethod.GET)
     public ResponseEntity<List<AgencyDTO>> ownerAgencies(@PathVariable Long userId,
-                                                          @RequestParam(defaultValue = "0") int pageNum) {
+                                                         @RequestParam(defaultValue = "0") int pageNum) {
 
         Page<Agency> agencies = agencyService.findByOwnerId(pageNum, userId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("totalPages", Integer.toString(agencies.getTotalPages()));
         return new ResponseEntity<>(toDTO.convert(agencies.getContent()), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{userId}u", method = RequestMethod.GET)
+    public ResponseEntity<List<AgencyDTO>> ownerAgencies(@PathVariable Long userId) {
+
+        List<Agency> agencies = agencyService.findByOwnerId(userId);
+
+
+        return new ResponseEntity<>(toDTO.convert(agencies), HttpStatus.OK);
     }
 
 }

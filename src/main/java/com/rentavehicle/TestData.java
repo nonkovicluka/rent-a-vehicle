@@ -137,28 +137,60 @@ public class TestData {
 //        // Branch test data
 
         Branch b1 = new Branch();
-        b1.setAddress("Address 1");
-        b1.setPhoneNumber("Number1");
+        b1.setAddress("Bul. Kralja Petra I 38, Novi Sad");
+        b1.setPhoneNumber("+3816599785");
         b1.setAgency(a2);
+        b1.setLatitude(45.259592);
+        b1.setLongitude(19.828038);
         branchService.save(b1);
 
         Branch b2 = new Branch();
-        b2.setAddress("Address 2");
-        b2.setPhoneNumber("Number2");
+        b2.setAddress("Stražilovska 34, Novi Sad");
+        b2.setPhoneNumber("+38164225551");
         b2.setAgency(a1);
+        b2.setLatitude(45.249461);
+        b2.setLongitude(19.848467);
         branchService.save(b2);
 
         Branch b3 = new Branch();
-        b3.setAddress("Address 3");
-        b3.setPhoneNumber("Number3");
+        b3.setAddress("Kosovska 41, Novi Sad");
+        b3.setPhoneNumber("+38166226212");
         b3.setAgency(a2);
+        b3.setLatitude(45.263129);
+        b3.setLongitude(19.850361);
         branchService.save(b3);
 
         Branch b4 = new Branch();
-        b4.setAddress("Address 4");
-        b4.setPhoneNumber("Number4");
+        b4.setAddress("Belgijska 7, Beograd");
+        b4.setPhoneNumber("+381621161273");
         b4.setAgency(a1);
+        b4.setLatitude(44.792514);
+        b4.setLongitude(20.440736);
         branchService.save(b4);
+
+        Branch b5 = new Branch();
+        b5.setAddress("Mutapopova 32, Beograd");
+        b5.setPhoneNumber("+38161621273");
+        b5.setAgency(a1);
+        b5.setLatitude(44.799295);
+        b5.setLongitude(20.473711);
+        branchService.save(b5);
+
+        Branch b6 = new Branch();
+        b6.setAddress("Bul. Zorana Đinđića 6, Beograd");
+        b6.setPhoneNumber("+38166421233");
+        b6.setAgency(a1);
+        b6.setLatitude(44.813026);
+        b6.setLongitude(20.427663);
+        branchService.save(b6);
+
+        Branch b7 = new Branch();
+        b7.setAddress("Narodnog Fronta 57, Novi Sad");
+        b7.setPhoneNumber("+3816643367");
+        b7.setAgency(a1);
+        b7.setLatitude(45.238581);
+        b7.setLongitude(19.831582);
+        branchService.save(b7);
 
 
         // VehicleType test data
@@ -363,13 +395,13 @@ public class TestData {
         reservationService.save(res4);
 
         Reservation res5 = new Reservation();
-        res5.setVehicle(v3);
-        res5.setBranchPickup(b2);
-        res5.setBranchDelivery(b2);
+        res5.setVehicle(v6);
+        res5.setBranchPickup(b1);
+        res5.setBranchDelivery(b3);
         res5.setUser(u2);
-        res5.setStartDate(startDate2);
-        res5.setEndDate(endDate2);
-        res5.setTotalPrice(2225.35);
+        res5.setStartDate(startDate1);
+        res5.setEndDate(endDate1);
+        res5.setTotalPrice(12235.35);
         reservationService.save(res5);
 
 

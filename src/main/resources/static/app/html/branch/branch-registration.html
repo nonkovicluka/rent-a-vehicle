@@ -5,9 +5,9 @@
         <div class="card-body">
             <form>
                 <div class="form-group">
-                    <label for="branchAddress">Address</label> <input
-                        ng-model="newBranch.address" type="text" class="form-control"
-                        id="branchAddress">
+                    <label for="branchAddress">Address</label> <input class="form-control" id="branchAddress"
+                                                                      places-auto-complete ng-model="newBranch.address"
+                                                                      on-place-changed="getCords()"/>
                 </div>
                 <div class="form-group">
                     <label for="branchPhoneNumber">Phone number</label> <input

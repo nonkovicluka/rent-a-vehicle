@@ -2,10 +2,10 @@
     <br>
     <h2>Branches by {{agency.name}}</h2>
     <br><br>
-    <div ng-show="agenciesByUser.length > 0" class="btn-group float-left">
+    <div ng-show="agenciesByUser.length > 0 && agency.ownerId === user.id" class="btn-group float-left">
         <button ng-click="register()" type="button" class="btn btn-primary">Register branch</button>
     </div>
-    <div class="btn-group float-right">
+    <div ng-show="branchesByAgency.length > 0" class="btn-group float-right">
         <button class="page-link" ng-click="go(-1)"
                 ng-disabled="pageNum == 0">&laquo;
         </button>
@@ -13,12 +13,16 @@
                 ng-disabled="pageNum == totalPages - 1">&raquo;
         </button>
     </div>
-    <table class="table table-bordered table-striped">
-        <th>Branch address</th>
-        <th>Phone number</th>
-        <tr ng-repeat="branch in branchesByAgency">
-            <td>{{branch.address}}</td>
-            <td>{{branch.phoneNumber}}</td>
-        </tr>
-    </table>
+    <br><br>
+    <div ng-repeat="b in branchesByAgency">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{b.address}}</h5>
+                <h6 class="card-subtitle text-muted">{{b.phoneNumber}}</h6>
+            </div>
+            <ng-map center="[{{b.latitude}},{{b.longitude}}]">
+                <marker position="[{{b.latitude}},{{b.longitude}}]"></marker>
+            </ng-map>
+        </div>
+    </div>
 </div>

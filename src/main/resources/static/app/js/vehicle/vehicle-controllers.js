@@ -125,7 +125,7 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     $scope.user = AuthService.user;
 
     var redirect = function () {
-        if ($scope.user == null) {
+        if (!$scope.user) {
             $location.path("/login");
         }
     };
@@ -167,18 +167,6 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
 
     $scope.dif = 0;
-
-    // $scope.$watch('newReservation.startDate', function () {
-    //
-    //     calculateTotalPrice();
-    //
-    // });
-    //
-    // $scope.$watch('newReservation.endDate', function () {
-    //
-    //     calculateTotalPrice();
-    //
-    // });
 
     $scope.$watchGroup(['newReservation.startDate', 'newReservation.endDate'], function (newValues) {
 

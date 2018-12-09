@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // "/favicon.ico"
                 .antMatchers("/", "/index.html", "/app/**", "/api/agencies/all", "/api/agencies/{agencyId}",
                         "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all",
-                        "/api/branches/{agencyId}b", "/api/branches/all", "/api/ratings/avgScore", "/assets/**", "/register", "/authenticate",
+                        "/api/branches/{agencyId}bPages", "/api/branches/all", "/api/ratings/avgScore", "/assets/**", "/register", "/authenticate",
                         "/api/pricelistitems/vehicles",
                         "/favicon.ico");
     }

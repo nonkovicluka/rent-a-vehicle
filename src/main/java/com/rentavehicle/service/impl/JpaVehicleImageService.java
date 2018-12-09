@@ -4,33 +4,42 @@ import com.rentavehicle.model.VehicleImage;
 import com.rentavehicle.repository.VehicleImageRepository;
 import com.rentavehicle.service.VehicleImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Service
 public class JpaVehicleImageService implements VehicleImageService {
 
-	@Autowired
-	private VehicleImageRepository vehicleImageRepository;
+    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/src/main/resources/static/images/vehicle-images";
 
-	@Override
-	public VehicleImage findOne(Long id) {
+    @Autowired
+    private VehicleImageRepository vehicleImageRepository;
 
-		return vehicleImageRepository.findOne(id);
-	}
+    @Autowired
+    private ResourceLoader resourceLoader;
 
-	@Override
-	public List<VehicleImage> findAll() {
+    public Resource findOneImage(String filename) {
 
-		return vehicleImageRepository.findAll();
-	}
+        return resourceLoader.getResource(UPLOUD_ROOT + "/" + filename);
+    }
 
-	@Override
-	public void save(VehicleImage vehicleImage) {
+    public void createImage (MultipartFile file) throws IOException {
 
-		vehicleImageRepository.save(vehicleImage);
-	}
+        if (!file.isEmpty()){
+            Files.copy(file.getInputStream(), Paths.get(UPLOUD_ROOT, file.getOriginalFilename()));
+            vehicleImageRepository.save(new VehicleImage(file.getOriginalFilename()));
+        }
+    }
 
+    public void deleteImage (String filename) throws IOException {
+        VehicleImage vehicleImage = vehicleImageRepository.findByName(filename);
+        vehicleImageRepository.delete(vehicleImage);
+        Files.deleteIfExists(Paths.get(UPLOUD_ROOT, filename));
+    }
 }

@@ -1,17 +1,20 @@
 package com.rentavehicle.service;
 
 import com.rentavehicle.model.Agency;
-import com.rentavehicle.model.Branch;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface AgencyService {
 
-	Agency findOne(Long id);
+    Agency findOne(Long id);
 
-	Page<Agency> findAll(int pageNum);
+    Page<Agency> findAll(int pageNum);
 
-	void save(Agency agency);
+    void save(Agency agency);
 
-	Page<Agency> findByOwnerId(int pageNum, Long userId);
+    List<Agency> findByOwnerId(Long userId);
+
+    Page<Agency> findByOwnerId(int pageNum, Long userId);
 
 }

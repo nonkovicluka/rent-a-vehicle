@@ -8,36 +8,41 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class JpaBranchService implements BranchService {
 
-	@Autowired
-	private BranchRepository branchRepository;
+    @Autowired
+    private BranchRepository branchRepository;
 
-	@Override
-	public Branch findOne(Long id) {
+    @Override
+    public Branch findOne(Long id) {
 
-		return branchRepository.findOne(id);
-	}
+        return branchRepository.findOne(id);
+    }
 
-	@Override
-	public Page<Branch> findAll(int pageNum) {
-		// TODO Auto-generated method stub
-		return branchRepository.findAll(new PageRequest(pageNum, 3));
-	}
+    @Override
+    public Page<Branch> findAll(int pageNum) {
+        // TODO Auto-generated method stub
+        return branchRepository.findAll(new PageRequest(pageNum, 3));
+    }
 
-	@Override
-	public void save(Branch branch) {
-		// TODO Auto-generated method stub
-		branchRepository.save(branch);
-	}
+    @Override
+    public void save(Branch branch) {
+        // TODO Auto-generated method stub
+        branchRepository.save(branch);
+    }
 
-	@Override
-	public Page<Branch> findByAgencyId(int pageNum, Long agencyId) {
+    @Override
+    public Page<Branch> findByAgencyId(int pageNum, Long agencyId) {
 
-		return branchRepository.findByAgencyId(agencyId, new PageRequest(pageNum, 5));
-	}
+        return branchRepository.findByAgencyId(agencyId, new PageRequest(pageNum, 2));
+    }
 
+    @Override
+    public List<Branch> findByAgencyId(Long agencyId) {
+
+        return branchRepository.findByAgencyId(agencyId);
+    }
 }

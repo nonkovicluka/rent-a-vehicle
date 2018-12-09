@@ -12,7 +12,7 @@ rentAVehicleApp.controller("myAgenciesCtrl", function ($scope, $http, $location,
     redirect();
 
 
-    var baseUrlAgenciesByUser = "/api/agencies/" + $scope.user.id + "u";
+    var baseUrlAgenciesByUser = "/api/agencies/" + $scope.user.id + "uPages";
 
     $scope.pageNum = 0;
     $scope.totalPages = 1;

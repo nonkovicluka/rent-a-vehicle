@@ -1,4 +1,17 @@
 rentAVehicleApp.controller('LoginController', function ($http, $scope, $location, AuthService, $rootScope) {
+
+    // redirect
+
+    $scope.user = AuthService.user;
+
+    var redirect = function () {
+        if ($scope.user) {
+            $location.path("/");
+        }
+    };
+
+    redirect();
+
     // method for login
     $scope.login = function () {
         // requesting the token by usename and passoword

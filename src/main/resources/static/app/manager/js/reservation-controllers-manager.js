@@ -72,4 +72,22 @@ rentAVehicleApp.controller("reservationsCtrl", function ($scope, $http, $locatio
     getAgencyTotalEarnings();
 
 
+    // sorting reservations
+
+    $scope.propertyName = 'vehicleName';
+    $scope.reverse = true;
+
+    $scope.sortBy = function (propertyName) {
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
+
+    $scope.getSortClass = function (propertyName) {
+
+        if ($scope.propertyName === propertyName) {
+            return $scope.reverse ? 'fa fa-chevron-down' : 'fa fa-chevron-up';
+        }
+        return '';
+    }
+
 });

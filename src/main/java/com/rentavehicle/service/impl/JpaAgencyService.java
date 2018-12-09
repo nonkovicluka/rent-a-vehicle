@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class JpaAgencyService implements AgencyService {
@@ -28,6 +28,7 @@ public class JpaAgencyService implements AgencyService {
         return agencyRepository.findAll(new PageRequest(pageNum, 5));
     }
 
+
     @Override
     public void save(Agency agency) {
 
@@ -40,5 +41,9 @@ public class JpaAgencyService implements AgencyService {
         return agencyRepository.findByOwnerId(userId, new PageRequest(pageNum, 5));
     }
 
+    @Override
+    public List<Agency> findByOwnerId(Long userId) {
 
+        return agencyRepository.findByOwnerId(userId);
+    }
 }

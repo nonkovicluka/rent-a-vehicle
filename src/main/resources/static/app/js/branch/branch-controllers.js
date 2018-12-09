@@ -9,7 +9,7 @@ rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $route
     $scope.pageNum = 0;
     $scope.totalPages = 1;
 
-    var branchesUrl = "/api/branches/" + $routeParams.agencyId + "b";
+    var branchesUrl = "/api/branches/" + $routeParams.agencyId + "bPages";
 
     var getBranches = function () {
 
@@ -82,12 +82,12 @@ rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $route
 });
 
 
-rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $location, AuthService) {
+rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $location, AuthService, NgMap) {
 
     $scope.user = AuthService.user;
 
     var redirect = function () {
-        if ($scope.user == null) {
+        if (!$scope.user) {
             $location.path("/login");
         }
     };
@@ -99,10 +99,21 @@ rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $locat
 
     $scope.agencies = [];
 
+
     $scope.newBranch = {};
     $scope.newBranch.address = "";
     $scope.newBranch.phoneNumber = "";
     $scope.newBranch.agencyId = "";
+    $scope.newBranch.latitude = "";
+    $scope.newBranch.longitude = "";
+
+    $scope.getCords = function () {
+        NgMap.getGeoLocation($scope.newBranch.address).then(function (latlng) {
+            $scope.newBranch.latitude = latlng.lat();
+            $scope.newBranch.longitude = latlng.lng();
+
+        });
+    };
 
     var getAgencies = function () {
 

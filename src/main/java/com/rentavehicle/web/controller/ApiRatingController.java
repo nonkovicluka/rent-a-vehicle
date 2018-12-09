@@ -51,7 +51,7 @@ public class ApiRatingController {
         List<Reservation> reservations = reservationService.findFinishedReservation(rating.getAgency().getId(), rating.getUser().getId());
         List<Rating> userRatings = ratingService.findUserRatings(rating.getAgency().getId(), rating.getUser().getId());
 
-        if (reservations.size() > 0 && rating.getScore() > 0 && userRatings.size() < 1) {
+        if (reservations.size() > 0 && rating.getScore() > 0 && userRatings.size() == 0 && rating.getAgency().getOwner().getId() != rating.getUser().getId()) {
             ratingService.save(rating);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -79,7 +79,7 @@ public class ApiBranchController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{agencyId}b", method = RequestMethod.GET)
+    @RequestMapping(value = "/{agencyId}bPages", method = RequestMethod.GET)
     public ResponseEntity<List<BranchDTO>> agencyBranches(@PathVariable Long agencyId,
                                                           @RequestParam(defaultValue = "0") int pageNum) {
         Page<Branch> branches = branchService.findByAgencyId(pageNum, agencyId);
@@ -87,6 +87,14 @@ public class ApiBranchController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("totalPages", Integer.toString(branches.getTotalPages()));
         return new ResponseEntity<>(toDTO.convert(branches.getContent()), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{agencyId}b", method = RequestMethod.GET)
+    public ResponseEntity<List<BranchDTO>> agencyBranches(@PathVariable Long agencyId) {
+
+        List<Branch> branches = branchService.findByAgencyId(agencyId);
+
+        return new ResponseEntity<>(toDTO.convert(branches), HttpStatus.OK);
     }
 
 }

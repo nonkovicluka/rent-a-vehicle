@@ -21,7 +21,7 @@ public class VehicleImageToVehicleImageDTO implements Converter<VehicleImage, Ve
 		VehicleImageDTO dto = new VehicleImageDTO();
 		
 		dto.setId(vehicleImage.getId());
-		dto.setImageSource(vehicleImage.getImageSource());
+		dto.setImageSource(vehicleImage.getName());
 		dto.setVehicleId(vehicleImage.getVehicle().getId());
 		
 		return dto;

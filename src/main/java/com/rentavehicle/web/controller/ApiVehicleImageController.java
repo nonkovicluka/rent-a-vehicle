@@ -1,65 +1,66 @@
 package com.rentavehicle.web.controller;
 
-import com.rentavehicle.model.VehicleImage;
 import com.rentavehicle.service.VehicleImageService;
-import com.rentavehicle.support.VehicleImageDTOToVehicleImage;
-import com.rentavehicle.support.VehicleImageToVehicleImageDTO;
-import com.rentavehicle.web.dto.VehicleImageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/vehicleImages")
 public class ApiVehicleImageController {
-	
-	@Autowired
-	private VehicleImageService vehicleImageService;
-	
-	@Autowired
-	private VehicleImageDTOToVehicleImage toVehicleImage;
-	
-	@Autowired
-	private VehicleImageToVehicleImageDTO toDTO;
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<VehicleImageDTO> get(@PathVariable Long id) {
-		VehicleImage vehicleImage = vehicleImageService.findOne(id);
 
-		if (vehicleImage == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+    private static final String FILENAME = "{filename:.+}";
 
-		return new ResponseEntity<>(toDTO.convert(vehicleImage), HttpStatus.OK);
-	}
-	
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<VehicleImageDTO> add(@Validated @RequestBody VehicleImageDTO vehicleImageDTO) {
+    @Autowired
+    private VehicleImageService vehicleImageService;
 
-		VehicleImage vehicleImage = toVehicleImage.convert(vehicleImageDTO);
-		try {
-			vehicleImageService.save(vehicleImage);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 
-		return new ResponseEntity<>(toDTO.convert(vehicleImage), HttpStatus.CREATED);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<VehicleImageDTO> edit(@PathVariable Long id, @Validated @RequestBody VehicleImageDTO editedVehicleImage) {
+    @RequestMapping(value = "/" + FILENAME + "/raw", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<?> oneRawImage(@PathVariable String filename) {
 
-		if (id == null || !id.equals(editedVehicleImage.getId())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+        try {
+            Resource file = vehicleImageService.findOneImage(filename);
+            return ResponseEntity.ok()
+                    .contentLength(file.contentLength())
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(new InputStreamResource(file.getInputStream()));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest()
+                    .body("Couldn't find " + filename + " => " + e.getMessage());
+        }
 
-		VehicleImage converted = toVehicleImage.convert(editedVehicleImage);
+    }
 
-		vehicleImageService.save(converted);
+    @RequestMapping(method = RequestMethod.POST)
+    public String createFile(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
-		return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
-	}
-	
+        try {
+            vehicleImageService.createImage(file);
+            redirectAttributes.addFlashAttribute("flash.message", "Successfully uploaded " + file.getName());
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("flash.message", "Failed to upload " + file.getName() + " => " + e.getMessage());
+        }
+        return "redirect:/";
+
+    }
+
+    @RequestMapping(value = "/" + FILENAME, method = RequestMethod.DELETE)
+    public String deleteFile(@PathVariable String filename,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            vehicleImageService.deleteImage(filename);
+            redirectAttributes.addFlashAttribute("flash.message", "Successfully deleted " + filename);
+        } catch (IOException | RuntimeException e) {
+            redirectAttributes.addFlashAttribute("flash.message", "Failed to delete " + filename + " => " + e.getMessage());
+        }
+        return "redirect:/";
+    }
 }

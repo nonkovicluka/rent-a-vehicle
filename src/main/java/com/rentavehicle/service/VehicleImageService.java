@@ -1,13 +1,17 @@
 package com.rentavehicle.service;
 
-import com.rentavehicle.model.VehicleImage;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 public interface VehicleImageService {
-	
-	VehicleImage findOne(Long id);
-	List<VehicleImage> findAll();
-	void save(VehicleImage vehicleImage);
-	
+
+    Resource findOneImage(String filename);
+
+    void createImage(MultipartFile file) throws IOException;
+
+    void deleteImage(String filename) throws IOException;
+
+
 }
