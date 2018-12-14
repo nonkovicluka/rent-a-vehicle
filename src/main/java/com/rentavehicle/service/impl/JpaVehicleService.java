@@ -4,9 +4,10 @@ import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.repository.VehicleRepository;
 import com.rentavehicle.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -33,20 +34,5 @@ public class JpaVehicleService implements VehicleService {
 
         vehicleRepository.save(vehicle);
     }
-
-    @Override
-    public List<Vehicle> findByAgencyId(Long agencyId) {
-
-        return vehicleRepository.findByAgencyId(agencyId);
-    }
-
-    @Override
-    public List<Vehicle> search(String name, Long vehicleTypeId, Long agencyId) {
-        if (name != null) {
-            name = "%" + name + "%";
-        }
-        return vehicleRepository.search(name, vehicleTypeId, agencyId);
-    }
-
 
 }

@@ -29,8 +29,9 @@ public class VehicleImage {
 	public VehicleImage() {
 	}
 
-	public VehicleImage(String name) {
+	public VehicleImage(String name, Vehicle vehicle) {
 		this.name = name;
+		this.vehicle = vehicle;
 	}
 
 	// getters and setters

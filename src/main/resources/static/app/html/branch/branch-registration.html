@@ -9,6 +9,10 @@
                                                                       places-auto-complete ng-model="newBranch.address"
                                                                       on-place-changed="getCords()"/>
                 </div>
+                <ng-map id="map-canvas" center="[{{newBranch.latitude}},{{newBranch.longitude}}]">
+                    <marker position="[{{newBranch.latitude}},{{newBranch.longitude}}]"></marker>
+                </ng-map>
+                <br>
                 <div class="form-group">
                     <label for="branchPhoneNumber">Phone number</label> <input
                         ng-model="newBranch.phoneNumber" type="text" class="form-control"
@@ -21,7 +25,6 @@
                 </select>
                 </div>
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
-                <br>
                 <div class="text-center">
                     <button ng-click="registerBranch()" type="button"
                             class="btn btn-primary">Register
@@ -30,4 +33,5 @@
             </form>
         </div>
     </div>
+    <br><br>
 </div>

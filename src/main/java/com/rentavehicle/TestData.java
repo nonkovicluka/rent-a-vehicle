@@ -1,6 +1,7 @@
 package com.rentavehicle;
 
 import com.rentavehicle.model.*;
+import com.rentavehicle.repository.VehicleImageRepository;
 import com.rentavehicle.service.*;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -40,6 +41,9 @@ public class TestData {
 
     @Autowired
     private RatingService ratingService;
+
+    @Autowired
+    private VehicleImageRepository vehicleImageRepository;
 
     @PostConstruct
     public void init() {
@@ -211,9 +215,9 @@ public class TestData {
         // Vehicle test data
 
         Vehicle v1 = new Vehicle();
-        v1.setName("Volkswagen Golf 6");
+        v1.setName("Volkswagen Golf 7");
         v1.setAvailable(true);
-        v1.setDescription("Neki random opis");
+        v1.setDescription("Neki random opis...");
         v1.setSpecification("The new GTI is powered by a 2.0-litre turbocharged direct-injection petrol engine (TSI) with 220 PS (162 kW; 217 hp).");
         v1.setAgency(a1);
         v1.setVehicleType(vt1);
@@ -222,7 +226,7 @@ public class TestData {
         Vehicle v2 = new Vehicle();
         v2.setName("Audi A6");
         v2.setAvailable(false);
-        v2.setDescription("Neki random opis");
+        v2.setDescription("Neki random opis...");
         v2.setSpecification("It is a version of S6 Avant with increased engine power to 560 PS (412 kW; 552 hp) at 5700–6700 rpm and 700 N⋅m (516.3 lbf⋅ft) at 1750–5500 rpm.");
         v2.setAgency(a1);
         v2.setVehicleType(vt1);
@@ -231,7 +235,7 @@ public class TestData {
         Vehicle v3 = new Vehicle();
         v3.setName("Skoda Superb");
         v3.setAvailable(true);
-        v3.setDescription("Neki random opis");
+        v3.setDescription("Neki random opis...");
         v3.setSpecification("1.4 litre inline four cylinder (I4) TFSI (with a turbocharger and Fuel Stratified Injection), and a 118 kW (160 PS; 158 hp) 1.8 litre I4 TFSI.");
         v3.setAgency(a1);
         v3.setVehicleType(vt1);
@@ -240,7 +244,7 @@ public class TestData {
         Vehicle v4 = new Vehicle();
         v4.setName("Yamaha Aerox");
         v4.setAvailable(true);
-        v4.setDescription("Neki random opis");
+        v4.setDescription("Neki random opis...");
         v4.setSpecification("The Yamaha Aerox is a range of single-cylinder scooters made by Yamaha since 1997, available in either 50 cc or 100 cc for the European market, and 125 cc or 155 cc for the South East Asian market with several different body designs.");
         v4.setAgency(a1);
         v4.setVehicleType(vt2);
@@ -249,7 +253,7 @@ public class TestData {
         Vehicle v5 = new Vehicle();
         v5.setName("Aprilia Pegaso");
         v5.setAvailable(true);
-        v5.setDescription("Neki random opis");
+        v5.setDescription("Neki random opis...");
         v5.setSpecification("The Pegaso's 652cc powerplant is liquid-cooled and features double overhead camshafts operating on five radial valves. Aprilia claim 47hp ...");
         v5.setAgency(a2);
         v5.setVehicleType(vt2);
@@ -258,11 +262,57 @@ public class TestData {
         Vehicle v6 = new Vehicle();
         v6.setName("Scott Spark Pro 700");
         v6.setAvailable(true);
-        v6.setDescription("Neki random opis");
+        v6.setDescription("Neki random opis...");
         v6.setSpecification("The Spark Pro 700 is the ideal next step for any aspiring athlete who wants to compete with the best.");
         v6.setAgency(a2);
         v6.setVehicleType(vt3);
         vehicleService.save(v6);
+
+        Vehicle v7 = new Vehicle();
+        v7.setName("Mercedes AMG GLE");
+        v7.setAvailable(true);
+        v7.setDescription("Neki random opis...");
+        v7.setSpecification("The overall silhouette of the Mercedes-AMG GLE 63 Coupé appears ready for the next challenge at any time: Whatever the challenge – it does not matter to the Mercedes-AMG GLE 63 Coupé delivers best performance");
+        v7.setAgency(a1);
+        v7.setVehicleType(vt1);
+        vehicleService.save(v7);
+
+
+        Vehicle v8 = new Vehicle();
+        v8.setName("Volkswagen Beetle");
+        v8.setAvailable(true);
+        v8.setDescription("Neki random opis...");
+        v8.setSpecification("The Beetle featured a rear-located, rear-wheel drive, air-cooled four-cylinder, boxer engine in a two-door bodywork featuring a flat front windscreen...");
+        v8.setAgency(a1);
+        v8.setVehicleType(vt1);
+        vehicleService.save(v8);
+
+        Vehicle v9 = new Vehicle();
+        v9.setName("Volkswagen Passat");
+        v9.setAvailable(true);
+        v9.setDescription("Neki random opis...");
+        v9.setSpecification("The base 1.8L turbocharged and direct-injection four-cylinder mill makes 170 horsepower and 184 lb.-ft. of torque.");
+        v9.setAgency(a1);
+        v9.setVehicleType(vt1);
+        vehicleService.save(v9);
+
+        Vehicle v10 = new Vehicle();
+        v10.setName("Porsche Cayenne");
+        v10.setAvailable(true);
+        v10.setDescription("Neki random opis...");
+        v10.setSpecification("The GTS is powered with a 405 PS (298 kW; 399 hp) 4.8 L V8 and features a sport suspension and 21-inch (533 mm) wheels.");
+        v10.setAgency(a1);
+        v10.setVehicleType(vt1);
+        vehicleService.save(v10);
+
+        Vehicle v11 = new Vehicle();
+        v11.setName("Volkswagen Touareg");
+        v11.setAvailable(true);
+        v11.setDescription("Neki random opis...");
+        v11.setSpecification("The Volkswagen Touareg is a mid-size luxury crossover SUV produced by German automaker Volkswagen since 2002 at the Volkswagen Bratislava Plant.");
+        v11.setAgency(a1);
+        v11.setVehicleType(vt1);
+        vehicleService.save(v11);
 
 
         // PriceList test data
@@ -343,6 +393,35 @@ public class TestData {
         pli9.setPriceList(pl3);
         priceListItemService.save(pli9);
 
+        PriceListItem pli10 = new PriceListItem();
+        pli10.setPricePerHour(14.99);
+        pli10.setVehicle(v7);
+        pli10.setPriceList(pl1);
+        priceListItemService.save(pli10);
+
+        PriceListItem pli11 = new PriceListItem();
+        pli11.setPricePerHour(4.50);
+        pli11.setVehicle(v8);
+        pli11.setPriceList(pl1);
+        priceListItemService.save(pli11);
+
+        PriceListItem pli12 = new PriceListItem();
+        pli12.setPricePerHour(6);
+        pli12.setVehicle(v9);
+        pli12.setPriceList(pl1);
+        priceListItemService.save(pli12);
+
+        PriceListItem pli13 = new PriceListItem();
+        pli13.setPricePerHour(16.99);
+        pli13.setVehicle(v10);
+        pli13.setPriceList(pl1);
+        priceListItemService.save(pli13);
+
+        PriceListItem pli14 = new PriceListItem();
+        pli14.setPricePerHour(11);
+        pli14.setVehicle(v11);
+        pli14.setPriceList(pl1);
+        priceListItemService.save(pli14);
 
         // reservation test data
 
@@ -434,5 +513,64 @@ public class TestData {
         r4.setAgency(a1);
         r4.setUser(u2);
         ratingService.save(r4);
+
+
+        // vehicle image test data
+
+        VehicleImage vi1 = new VehicleImage();
+        vi1.setName("images/vehicle-images/1/1/golf1.jpg");
+        vi1.setVehicle(v1);
+        vehicleImageRepository.save(vi1);
+
+        VehicleImage vi2 = new VehicleImage();
+        vi2.setName("images/vehicle-images/1/2/audi.jpg");
+        vi2.setVehicle(v2);
+        vehicleImageRepository.save(vi2);
+
+        VehicleImage vi3 = new VehicleImage();
+        vi3.setName("images/vehicle-images/1/3/skoda.jpg");
+        vi3.setVehicle(v3);
+        vehicleImageRepository.save(vi3);
+
+        VehicleImage vi4 = new VehicleImage();
+        vi4.setName("images/vehicle-images/1/4/aerox.jpg");
+        vi4.setVehicle(v4);
+        vehicleImageRepository.save(vi4);
+
+        VehicleImage vi5 = new VehicleImage();
+        vi5.setName("images/vehicle-images/1/1/golf2.jpg");
+        vi5.setVehicle(v1);
+        vehicleImageRepository.save(vi5);
+
+        VehicleImage vi6 = new VehicleImage();
+        vi6.setName("images/vehicle-images/1/3/skoda2.jpg");
+        vi6.setVehicle(v3);
+        vehicleImageRepository.save(vi6);
+
+        VehicleImage vi7 = new VehicleImage();
+        vi7.setName("images/vehicle-images/1/7/mercedes.jpg");
+        vi7.setVehicle(v7);
+        vehicleImageRepository.save(vi7);
+
+        VehicleImage vi8 = new VehicleImage();
+        vi8.setName("images/vehicle-images/1/8/buba.jpg");
+        vi8.setVehicle(v8);
+        vehicleImageRepository.save(vi8);
+
+        VehicleImage vi9 = new VehicleImage();
+        vi9.setName("images/vehicle-images/1/9/passat.jpg");
+        vi9.setVehicle(v9);
+        vehicleImageRepository.save(vi9);
+
+        VehicleImage vi10 = new VehicleImage();
+        vi10.setName("images/vehicle-images/1/10/porsche.jpg");
+        vi10.setVehicle(v10);
+        vehicleImageRepository.save(vi10);
+
+        VehicleImage vi11 = new VehicleImage();
+        vi11.setName("images/vehicle-images/1/11/touareg.jpg");
+        vi11.setVehicle(v11);
+        vehicleImageRepository.save(vi11);
+
     }
 }

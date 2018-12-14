@@ -10,9 +10,14 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
     $scope.filteredVehicle.name = '';
     $scope.filteredVehicle.vehicleTypeId = '';
 
+    $scope.pageNum = 0;
+    $scope.totalPages = 1;
+
     $scope.getVehiclesAndPrice = function () {
 
         var config = {params: {}};
+
+        config.params.pageNum = $scope.pageNum;
 
         if ($scope.filteredVehicle.name != "") {
             config.params.name = $scope.filteredVehicle.name;
@@ -28,11 +33,18 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
         $http.get(priceListItemVehiclesUrl, config)
             .then(function success(data) {
                     $scope.vehiclesAndPrice = data.data;
+                    $scope.totalPages = data.headers('totalPages');
                 },
                 function error(data) {
                     alert("Vehicles and price list item failed to get.");
 
                 });
+
+    };
+
+    $scope.go = function (direction) {
+        $scope.pageNum = $scope.pageNum + direction;
+        $scope.getVehiclesAndPrice();
 
     };
 
@@ -54,6 +66,33 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     getVehicleTypes();
 
+
+    $scope.imagesByAgency = [];
+
+
+    var baseUrlVehicleImages = "/api/vehicleImages/allByAgency";
+
+    var getVehicleImages = function () {
+
+        var config = {params: {}};
+
+        config.params.agencyId = $routeParams.agencyId;
+
+
+        $http.get(baseUrlVehicleImages, config)
+            .then(function success(data) {
+                    $scope.imagesByAgency = data.data;
+                }
+                , function error(data) {
+                    alert("images failed to get")
+
+                }
+            )
+    };
+
+    getVehicleImages();
+
+    console.log($scope);
 
     $scope.agency = {};
 
@@ -116,7 +155,8 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     getAverageRating();
 
-});
+})
+;
 
 rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
 

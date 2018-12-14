@@ -1,7 +1,6 @@
 package com.rentavehicle.web.controller;
 
 import com.rentavehicle.model.PriceListItem;
-import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.PriceListItemService;
 import com.rentavehicle.support.PriceListItemDTOToPriceListItem;
 import com.rentavehicle.support.PriceListItemToPriceListItemDTO;
@@ -10,12 +9,13 @@ import com.rentavehicle.web.dto.PriceListItemDTO;
 import com.rentavehicle.web.dto.VehiclePriceListItem;
 import com.rentavehicle.web.dto.VehiclePriceListItemDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -74,23 +74,28 @@ public class ApiPriceListItemController {
     }
 
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
-    public List<VehiclePriceListItemDTO> currentPriceListItem(@RequestParam Long agencyId, @RequestParam(required = false) String name,
-                                                              @RequestParam(required = false) Long vehicleTypeId) {
+    public ResponseEntity<List<VehiclePriceListItemDTO>> currentPriceListItem(@RequestParam Long agencyId, @RequestParam(required = false) String name,
+                                                                              @RequestParam(required = false) Long vehicleTypeId,
+                                                                              @RequestParam(defaultValue = "0") int pageNum) {
 
-        List<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.currentPriceLIstItem(agencyId, name, vehicleTypeId);
+        Page<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.currentPriceLIstItem(agencyId, name, vehicleTypeId, pageNum);
 
-
-        return toVehiclePliDTO.convert(vehiclesAndPrices);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", Integer.toString(vehiclesAndPrices.getTotalPages()));
+        return new ResponseEntity<>(toVehiclePliDTO.convert(vehiclesAndPrices.getContent()), headers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/priceListVehicles", method = RequestMethod.GET)
-    public List<VehiclePriceListItemDTO> selectedPriceListItem(@RequestParam Long priceListId, @RequestParam Long agencyId, @RequestParam(required = false) String name,
-                                                               @RequestParam(required = false) Long vehicleTypeId) {
+    public ResponseEntity<List<VehiclePriceListItemDTO>> selectedPriceListItem(@RequestParam Long priceListId, @RequestParam Long agencyId, @RequestParam(required = false) String name,
+                                                                     @RequestParam(required = false) Long vehicleTypeId,
+                                                                     @RequestParam(defaultValue = "0") int pageNum) {
 
-        List<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.selectedPriceListItem(priceListId, agencyId, name, vehicleTypeId);
+        Page<VehiclePriceListItem> vehiclesAndPrices = priceListItemService.selectedPriceListItem(priceListId, agencyId, name, vehicleTypeId, pageNum);
 
 
-        return toVehiclePliDTO.convert(vehiclesAndPrices);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", Integer.toString(vehiclesAndPrices.getTotalPages()));
+        return new ResponseEntity<>(toVehiclePliDTO.convert(vehiclesAndPrices.getContent()), headers, HttpStatus.OK);
     }
 
 }

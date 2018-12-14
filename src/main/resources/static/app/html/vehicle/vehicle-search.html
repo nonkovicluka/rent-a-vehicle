@@ -34,29 +34,55 @@
         </div>
     </div>
 </form>
+<div ng-show="vehiclesAndPrice.length > 0" class="btn-group float-right">
+    <button class="page-link" ng-click="go(-1)"
+            ng-disabled="pageNum == 0">&laquo;
+    </button>
+    <button class="page-link" ng-click="go(1)"
+            ng-disabled="pageNum == totalPages - 1">&raquo;
+    </button>
+</div>
 <br>
-<table class="table table-bordered table-striped">
-    <th>Name</th>
-    <th>Description</th>
-    <th>Specification</th>
-    <th>Type</th>
-    <th>Available</th>
-    <th>Price per hour</th>
-    <th></th>
+<br>
+<div class="card-group">
+    <div class="col-md-4" ng-repeat="v in vehiclesAndPrice">
+        <div class="card">
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner img-card">
+                    <div class="carousel-item" ng-class="{active: $first}"
+                         ng-repeat="i in imagesByAgency | filter: {vehicleId: v.vehicleId}">
+                        <img class="card-img-top" ng-src="{{i.imageSource}}">
+                    </div>
+                </div>
 
-    <tr ng-repeat="v in vehiclesAndPrice">
-        <td>{{v.name}}</td>
-        <td>{{v.description}}</td>
-        <td>{{v.specification}}</td>
-        <td>{{v.vehicleTypeName}}</td>
-        <td ng-show="v.available === true">Available</td>
-        <td ng-show="v.available === false">Not available</td>
-        <td>{{v.pricePerHour}}</td>
-        <td>
-            <button class="btn btn-success" ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
-                    ng-disabled="!v.available">Reserve
-            </button>
-        </td>
-    </tr>
-</table>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">{{v.name}}</h4>
+                <br>
+                <ul class="list-group list-group-flush">
+                    <h5 class="card-subtitle">Description</h5>
+                    <li class="list-group-item text-muted">{{v.description}}</li>
+                    <br>
+                    <h5 class="card-subtitle">Sepcification</h5>
+                    <li class="list-group-item text-muted">{{v.specification}}</li>
+                    <br>
+                    <h5 class="card-subtitle">Type: &nbsp;&nbsp;<span class="text-muted">{{v.vehicleTypeName}}</span>
+                    </h5>
+                    <br>
+                    <h5 class="card-subtitle">Available: &nbsp;&nbsp;<span class="fa fa-check"
+                                                                           ng-show="v.available"></span><span
+                            class="fa fa-close" ng-show="!v.available"></span></h5>
+
+                    <br>
+                    <h5 class="card-subtitle">Price per hour: &nbsp;&nbsp;<span class="text-warning">{{v.pricePerHour}} <span
+                            class="fa fa-eur"></span></span></h5>
+                </ul>
+                <div class="card-body">
+                    <button class="btn btn-success" ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
+                            ng-disabled="!v.available">Reserve
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

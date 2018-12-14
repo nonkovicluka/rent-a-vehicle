@@ -1,10 +1,12 @@
 package com.rentavehicle.web.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rentavehicle.model.PriceListItem;
 import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.PriceListItemService;
+import com.rentavehicle.service.VehicleImageService;
 import com.rentavehicle.service.VehicleService;
-import com.rentavehicle.support.VehicleDTOToVehicle;
 import com.rentavehicle.support.VehiclePliDTOToVehiclePli;
 import com.rentavehicle.support.VehiclePliToVehiclePliDTO;
 import com.rentavehicle.support.VehicleToVehicleDTO;
@@ -16,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -30,7 +34,7 @@ public class ApiVehicleController {
     private PriceListItemService priceListItemService;
 
     @Autowired
-    private VehicleDTOToVehicle toVehicle;
+    private VehicleImageService vehicleImageService;
 
     @Autowired
     private VehicleToVehicleDTO toDTO;
@@ -40,22 +44,6 @@ public class ApiVehicleController {
 
     @Autowired
     private VehiclePliToVehiclePliDTO toPliDTO;
-
-    @RequestMapping(value = "/{agencyId}/all", method = RequestMethod.GET)
-    public List<VehicleDTO> get(@RequestParam(required = false) String name,
-                                @RequestParam(required = false) Long vehicleTypeId, @PathVariable @RequestParam Long agencyId) {
-
-        List<Vehicle> vehicles;
-
-        if (name != null || vehicleTypeId != null || agencyId != null) {
-            vehicles = vehicleService.search(name, vehicleTypeId, agencyId);
-        } else {
-            vehicles = vehicleService.findAll();
-        }
-
-
-        return toDTO.convert(vehicles);
-    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<VehicleDTO> getAll() {
@@ -93,6 +81,43 @@ public class ApiVehicleController {
         return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/addAll", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @ResponseBody
+    public ResponseEntity<?> addAll(
+            @RequestParam(required = false) MultipartFile[] vehicleImages, @RequestParam String vehicleDTO, @RequestParam Long agencyId) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        VehiclePriceListItemDTO vehiclePriceListItemDTO = mapper.readValue(vehicleDTO, VehiclePriceListItemDTO.class);
+
+        VehiclePriceListItem vehiclePriceListItem = toVehiclePli.convert(vehiclePriceListItemDTO);
+
+        Vehicle vehicle = vehiclePriceListItem.getVehicle();
+        PriceListItem priceListItem = vehiclePriceListItem.getPriceListItem();
+
+        if (priceListItem != null && vehicle != null) {
+            vehicleService.save(vehicle);
+            priceListItemService.save(priceListItem);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (vehicleImages.length > 0) {
+            for (MultipartFile vehicleImage : vehicleImages) {
+                try {
+                    vehicleImageService.createImage(vehicleImage, vehicle, agencyId);
+                } catch (IOException e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
+
+        }
+        return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.CREATED);
+    }
+
+
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public ResponseEntity<VehiclePriceListItemDTO> edit(@Validated @RequestBody VehiclePriceListItemDTO vehiclePliDTO) {
 
@@ -110,14 +135,6 @@ public class ApiVehicleController {
         }
 
         return new ResponseEntity<>(toPliDTO.convert(vehiclePriceListItem), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{agencyId}v", method = RequestMethod.GET)
-    public List<VehicleDTO> agencyVehicles(@PathVariable Long agencyId) {
-        List<Vehicle> vehicles = vehicleService.findByAgencyId(agencyId);
-
-
-        return toDTO.convert(vehicles);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.PUT)

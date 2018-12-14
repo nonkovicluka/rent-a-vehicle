@@ -3,7 +3,7 @@
     <div class="card border-primary mx-auto" style="max-width: 40rem;">
         <div class="card-header text-center"><h3>New vehicle</h3></div>
         <div class="card-body">
-            <form>
+            <form name="myForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="vehicleName">Name</label> <input
                         ng-model="newVehicle.name" type="text" class="form-control"
@@ -30,10 +30,30 @@
                         ng-model="newVehicle.pricePerHour" type="text" class="form-control"
                         id="priceListItemPph">
                 </div>
+
+                <br>
+                <div class="form-row">
+                    <div class="col-md-7 mb-3 custom-file">
+                        <input type="file" ngf-select ng-model="picFiles" name="file"
+                               accept="image/*" ngf-max-size="20MB" required
+                               ngf-model-invalid="errorFile" multiple class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <ul class="list-group">
+                        <li ng-show="p" class="list-group-item" ng-repeat="p in picFiles">
+                            <img ngf-thumbnail="p" class="thumb">&nbsp;&nbsp;{{p.name}}
+                            <button class="fa fa-remove btn btn-warning float-right" ng-click="deletePic(p)"
+                                    ng-show="p"></button>
+                        </li>
+                    </ul>
+                </div>
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <br>
                 <div class="text-center">
-                    <button ng-click="addVehicleAndPriceListItem()" type="button"
+                    <button ng-click="uploadPic()" type="button"
                             class="btn btn-primary">Add vehicle
                     </button>
                 </div>

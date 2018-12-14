@@ -57,26 +57,29 @@ public class ApiPriceListController {
         LocalDate now = new LocalDate().minusDays(1);
 
         if (startDate.isBefore(endDate) && startDate.isAfter(now)) {
+            if (currentPriceList != null) {
+                if (startDate.isBefore(currentPriceList.getEndDate())) {
 
-            if (startDate.isBefore(currentPriceList.getEndDate())) {
+                    currentPriceList.setEndDate(startDate.minusDays(1));
+                }
 
-                currentPriceList.setEndDate(startDate.minusDays(1));
+
+                String name = null;
+                Long vehicleTypeId = null;
+                List<VehiclePriceListItem> vehiclePriceListItems = priceListItemService.current(priceListDTO.getAgencyId(), name, vehicleTypeId);
+                List<PriceListItem> priceListItems = new ArrayList<>();
+
+                for (VehiclePriceListItem vehiclePli : vehiclePriceListItems) {
+                    PriceListItem pli = new PriceListItem();
+                    pli.setPricePerHour(vehiclePli.getPriceListItem().getPricePerHour());
+                    pli.setPriceList(priceList);
+                    pli.setVehicle(vehiclePli.getPriceListItem().getVehicle());
+                    priceListItems.add(pli);
+                }
+
+
+                priceList.setPriceListItems(priceListItems);
             }
-            String name = null;
-            Long vehicleTypeId = null;
-            List<VehiclePriceListItem> vehiclePriceListItems = priceListItemService.currentPriceLIstItem(priceListDTO.getAgencyId(), name, vehicleTypeId);
-            List<PriceListItem> priceListItems = new ArrayList<>();
-
-            for (VehiclePriceListItem vehiclePli : vehiclePriceListItems) {
-                PriceListItem pli = new PriceListItem();
-                pli.setPricePerHour(vehiclePli.getPriceListItem().getPricePerHour());
-                pli.setPriceList(priceList);
-                pli.setVehicle(vehiclePli.getPriceListItem().getVehicle());
-                priceListItems.add(pli);
-            }
-
-
-            priceList.setPriceListItems(priceListItems);
 
             priceListService.save(priceList);
 

@@ -1,1 +1,1 @@
-var rentAVehicleApp = angular.module('rentAVehicleApp', ['ngRoute', 'angularjs-datetime-picker', 'ngMap']);
+var rentAVehicleApp = angular.module('rentAVehicleApp', ['ngRoute', 'angularjs-datetime-picker', 'ngMap', 'ngFileUpload']);

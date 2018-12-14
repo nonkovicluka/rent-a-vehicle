@@ -182,7 +182,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
 });
 
-rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService) {
+rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, $rootScope, AuthService, multipartForm) {
 
     $scope.user = AuthService.user;
     $scope.agency = {};
@@ -215,7 +215,7 @@ rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location,
     };
 
 
-    var baseUrlVehicle = "/api/vehicles/add";
+    var baseUrlVehicle = "/api/vehicles/addAll";
     var baseUrlVehicleType = "/api/vehicleTypes/all";
 
     $scope.vehicleTypes = [];
@@ -260,17 +260,19 @@ rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location,
 
     getCurrentPriceList();
 
-    $scope.message = null;
 
-    $scope.addVehicleAndPriceListItem = function () {
-        $http.post(baseUrlVehicle, $scope.newVehicle)
-            .then(
-                function success(data) {
-                    $location.path("/my-agencies/" + $routeParams.agencyId + "/manage");
-                },
-                function error(data) {
-                    $scope.message = "Vehicle registration failed.";
-                }
-            );
+    $scope.picFiles = [];
+
+    $scope.deletePic = function (p) {
+
+        $scope.picFiles.splice($scope.picFiles.indexOf(p), 1);
+
     };
+
+    $rootScope.message = null;
+
+    $scope.uploadPic = function () {
+        multipartForm.post(baseUrlVehicle, $scope.picFiles, $scope.newVehicle);
+    };
+
 });
