@@ -1,88 +1,95 @@
 <div>
+
+    <div class="d-flex row h-100">
+        <img class="logo-agency" src="{{agency.logo}}">
+        <h2 class="align-self-center">{{agency.name}}</h2>
+        <span class="d-flex text-success ml-auto align-self-center h-100">
+            <img class="star-rating" src="assets/bootstrap/img/star.png">&nbsp;<h4>{{avgRating}}</h4>
+        </span>
+    </div>
+    <div class="float-right">
+        <button ng-click="rateAgency()" type="button"
+                class="btn btn-primary">Rate
+        </button>
+    </div>
+    <br><br>
+    <form>
+        <div class="row d-flex h-100">
+            <div class="col-md-3">
+                <label for="filteredVehicleName">Name: </label> <input ng-change="getVehiclesAndPrice()"
+                                                                       ng-model="filteredVehicle.name"
+                                                                       type="text"
+                                                                       class="form-control"
+                                                                       id="filteredVehicleName">
+            </div>
+            <div class="col-md-3">
+                <label for="filteredVehicleType">Type: </label> <select ng-change="getVehiclesAndPrice()"
+                                                                        ng-model="filteredVehicle.vehicleTypeId"
+                                                                        class="form-control"
+                                                                        id="filteredVehicleType">
+                <option value=""></option>
+                <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
+            </select>
+            </div>
+            <div class="align-self-end">
+                <button ng-click="agencyBranches()" type="button"
+                        class="btn btn-primary">Branches
+                </button>
+            </div>
+        </div>
+    </form>
+    <div ng-show="vehiclesAndPrice.length > 0" class="btn-group float-right">
+        <button class="page-link" ng-click="go(-1)"
+                ng-disabled="pageNum == 0">&laquo;
+        </button>
+        <button class="page-link" ng-click="go(1)"
+                ng-disabled="pageNum == totalPages - 1">&raquo;
+        </button>
+    </div>
     <br>
-    <div class="page-header">
-        <h2>Vehicles by {{agency.name}}<span title="Rating"><h4 class="text-success float-right">{{avgRating}}</h4>&nbsp;<img
-                class="float-right" src="assets/bootstrap/img/star.png"></span>
-
-        </h2>
-    </div>
-</div>
-
-<div class="float-right">
-    <button ng-click="rateAgency()" type="button"
-            class="btn btn-primary">Rate
-    </button>
-</div>
-<br><br>
-<form>
-    <div class="row">
-        <div class="col-md-3">
-            <label for="filteredVehicleName">Name: </label> <input ng-change="getVehiclesAndPrice()"
-                                                                   ng-model="filteredVehicle.name"
-                                                                   type="text"
-                                                                   class="form-control"
-                                                                   id="filteredVehicleName">
-        </div>
-        <div class="col-md-3">
-            <label for="filteredVehicleType">Type: </label> <select ng-change="getVehiclesAndPrice()"
-                                                                    ng-model="filteredVehicle.vehicleTypeId"
-                                                                    class="form-control"
-                                                                    id="filteredVehicleType">
-            <option value=""></option>
-            <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
-        </select>
-        </div>
-    </div>
-</form>
-<div ng-show="vehiclesAndPrice.length > 0" class="btn-group float-right">
-    <button class="page-link" ng-click="go(-1)"
-            ng-disabled="pageNum == 0">&laquo;
-    </button>
-    <button class="page-link" ng-click="go(1)"
-            ng-disabled="pageNum == totalPages - 1">&raquo;
-    </button>
-</div>
-<br>
-<br>
-<div class="card-group">
-    <div class="col-md-4" ng-repeat="v in vehiclesAndPrice">
-        <div class="card">
-            <div class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner img-card">
-                    <div class="carousel-item" ng-class="{active: $first}"
-                         ng-repeat="i in imagesByAgency | filter: {vehicleId: v.vehicleId}">
-                        <img class="card-img-top" ng-src="{{i.imageSource}}">
+    <br>
+    <div class="card-group">
+        <div class="col-md-4" ng-repeat="v in vehiclesAndPrice">
+            <div class="card">
+                <div class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner img-card">
+                        <div class="carousel-item" ng-class="{'active': !$index}"
+                             ng-repeat="i in imagesByAgency | filter: {vehicleId: v.vehicleId}"
+                             ng-if="i.vehicleId == v.vehicleId">
+                            <img class="card-img-top" ng-src="{{i.imageSource}}">
+                        </div>
                     </div>
                 </div>
-
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">{{v.name}}</h4>
-                <br>
-                <ul class="list-group list-group-flush">
-                    <h5 class="card-subtitle">Description</h5>
-                    <li class="list-group-item text-muted">{{v.description}}</li>
-                    <br>
-                    <h5 class="card-subtitle">Sepcification</h5>
-                    <li class="list-group-item text-muted">{{v.specification}}</li>
-                    <br>
-                    <h5 class="card-subtitle">Type: &nbsp;&nbsp;<span class="text-muted">{{v.vehicleTypeName}}</span>
-                    </h5>
-                    <br>
-                    <h5 class="card-subtitle">Available: &nbsp;&nbsp;<span class="fa fa-check"
-                                                                           ng-show="v.available"></span><span
-                            class="fa fa-close" ng-show="!v.available"></span></h5>
-
-                    <br>
-                    <h5 class="card-subtitle">Price per hour: &nbsp;&nbsp;<span class="text-warning">{{v.pricePerHour}} <span
-                            class="fa fa-eur"></span></span></h5>
-                </ul>
                 <div class="card-body">
-                    <button class="btn btn-success" ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
-                            ng-disabled="!v.available">Reserve
-                    </button>
+                    <h4 class="card-title">{{v.name}}</h4>
+                    <br>
+                    <ul class="list-group list-group-flush">
+                        <h5 class="card-subtitle">Description</h5>
+                        <li class="list-group-item text-muted">{{v.description}}</li>
+                        <br>
+                        <h5 class="card-subtitle">Sepcification</h5>
+                        <li class="list-group-item text-muted">{{v.specification}}</li>
+                        <br>
+                        <h5 class="card-subtitle">Type: &nbsp;&nbsp;<span
+                                class="text-muted">{{v.vehicleTypeName}}</span>
+                        </h5>
+                        <br>
+                        <h5 class="card-subtitle">Available: &nbsp;&nbsp;<span class="fa fa-check"
+                                                                               ng-show="v.available"></span><span
+                                class="fa fa-close" ng-show="!v.available"></span></h5>
+
+                        <br>
+                        <h5 class="card-subtitle">Price per hour: &nbsp;&nbsp;<span class="text-warning">{{v.pricePerHour}} <span
+                                class="fa fa-eur"></span></span></h5>
+                    </ul>
+                    <div class="card-body">
+                        <button class="btn btn-success" ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
+                                ng-disabled="!v.available">Reserve
+                        </button>
+                    </div>
                 </div>
             </div>
+            <br>
         </div>
     </div>
 </div>

@@ -37,7 +37,7 @@ public class JpaBranchService implements BranchService {
     @Override
     public Page<Branch> findByAgencyId(int pageNum, Long agencyId) {
 
-        return branchRepository.findByAgencyId(agencyId, new PageRequest(pageNum, 2));
+        return branchRepository.findByAgencyId(agencyId, new PageRequest(pageNum, 3));
     }
 
     @Override

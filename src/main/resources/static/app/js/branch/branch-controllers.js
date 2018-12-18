@@ -42,6 +42,30 @@ rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $route
 
     };
 
+    $scope.imagesByAgency = [];
+
+
+    var baseUrlBranchImages = "/api/branchImages/allByAgency";
+
+    var getBranchImages = function () {
+
+        var config = {params: {}};
+
+        config.params.agencyId = $routeParams.agencyId;
+
+        $http.get(baseUrlBranchImages, config)
+            .then(function success(data) {
+                    $scope.imagesByAgency = data.data;
+                }
+                , function error(data) {
+                    alert("images failed to get")
+
+                }
+            )
+    };
+
+    getBranchImages();
+
     getAgency();
 
     getBranches();
@@ -82,7 +106,7 @@ rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $route
 });
 
 
-rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $location, AuthService, NgMap) {
+rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $location, AuthService, NgMap, branchImagesService) {
 
     $scope.user = AuthService.user;
 
@@ -94,7 +118,7 @@ rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $locat
 
     redirect();
 
-    var baseUrlBranch = "/api/branches/add";
+    var baseUrlBranch = "/api/branches/addAll";
     var baseUrlAgency = "/api/agencies/" + $scope.user.id + "u";
 
     $scope.agencies = [];
@@ -128,15 +152,16 @@ rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $locat
 
     $scope.message = null;
 
-    $scope.registerBranch = function () {
-        $http.post(baseUrlBranch, $scope.newBranch)
-            .then(
-                function success(data) {
-                    $location.path("/my-agencies");
-                },
-                function error(data) {
-                    $scope.message = "Branch registration failed. Try again."
-                }
-            );
+    $scope.picFiles = [];
+
+    $scope.deletePic = function (p) {
+
+        $scope.picFiles.splice($scope.picFiles.indexOf(p), 1);
+
     };
+
+    $scope.uploadAndSave = function () {
+        branchImagesService.post(baseUrlBranch, $scope.picFiles, $scope.newBranch);
+    };
+
 });

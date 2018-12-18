@@ -27,10 +27,24 @@
                         ng-model="newAgency.email" type="text" class="form-control"
                         id="agencyEmail">
                 </div>
+                <br>
+                <div class="form-group">
+                    <div class="col-md-7 mb-3 custom-file">
+                        <input type="file" ngf-select ng-model="logo" name="file"
+                               accept="image/*" ngf-max-size="5MB"
+                               ngf-model-invalid="errorFile" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+                <br>
+                <span ng-show="logo"><img ngf-thumbnail="logo" class="thumb">&nbsp;&nbsp;{{logo.name}}><button
+                        class="fa fa-remove btn btn-warning float-right" ng-click="logo = null"></button></span>
+
+                <br>
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <br>
                 <div class="text-center">
-                    <button ng-click="registerAgency()" type="button"
+                    <button ng-click="uploadAndSave()" type="button"
                             class="btn btn-success">Register
                     </button>
                 </div>

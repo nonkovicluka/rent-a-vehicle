@@ -2,65 +2,49 @@ package com.rentavehicle.web.controller;
 
 import com.rentavehicle.model.BranchImage;
 import com.rentavehicle.service.BranchImageService;
-import com.rentavehicle.support.BranchImageDTOToBranchImage;
 import com.rentavehicle.support.BranchImageToBranchImageDTO;
 import com.rentavehicle.web.dto.BranchImageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/branchimages")
+@RequestMapping("/api/branchImages")
 public class ApiBranchImageController {
 
-	@Autowired
-	private BranchImageService branchImageService;
+    private static final String FILENAME = "{filename:.+}";
 
-	@Autowired
-	private BranchImageDTOToBranchImage toBranchImage;
+    @Autowired
+    private BranchImageService branchImageService;
 
-	@Autowired
-	private BranchImageToBranchImageDTO toDTO;
+    @Autowired
+    private BranchImageToBranchImageDTO toDTO;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<BranchImageDTO> get(@PathVariable Long id) {
-		BranchImage branchImage = branchImageService.findOne(id);
+    @RequestMapping(value = "/allByAgency", method = RequestMethod.GET)
+    public ResponseEntity<List<BranchImageDTO>> agencyImages(@RequestParam Long agencyId) {
 
-		if (branchImage == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+        List<BranchImage> branchImages = branchImageService.findByAgencyId(agencyId);
 
-		return new ResponseEntity<>(toDTO.convert(branchImage), HttpStatus.OK);
-	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<BranchImageDTO> add(@Validated @RequestBody BranchImageDTO branchImageDTO) {
+        return new ResponseEntity<>(toDTO.convert(branchImages), HttpStatus.OK);
+    }
 
-		BranchImage branchImage = toBranchImage.convert(branchImageDTO);
-		try {
-			branchImageService.save(branchImage);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 
-		return new ResponseEntity<>(toDTO.convert(branchImage), HttpStatus.CREATED);
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<BranchImageDTO> edit(@PathVariable Long id,
-			@Validated @RequestBody BranchImageDTO editedBranchImage) {
-
-		if (id == null || !id.equals(editedBranchImage.getId())) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-
-		BranchImage converted = toBranchImage.convert(editedBranchImage);
-
-		branchImageService.save(converted);
-
-		return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
-	}
+    @RequestMapping(value = "/" + FILENAME, method = RequestMethod.DELETE)
+    public String deleteFile(@PathVariable String filename,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            branchImageService.deleteImage(filename);
+            redirectAttributes.addFlashAttribute("flash.message", "Successfully deleted " + filename);
+        } catch (IOException | RuntimeException e) {
+            redirectAttributes.addFlashAttribute("flash.message", "Failed to delete " + filename + " => " + e.getMessage());
+        }
+        return "redirect:/";
+    }
 
 }

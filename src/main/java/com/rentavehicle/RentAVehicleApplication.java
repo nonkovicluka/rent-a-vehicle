@@ -5,12 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class  RentAVehicleApplication {
+public class RentAVehicleApplication {
 
-	@Autowired
-	private TestData td;
+    @Autowired
+    private TestData td;
 
-	public static void main(String[] args) {
-		SpringApplication.run(RentAVehicleApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RentAVehicleApplication.class, args);
+    }
 }

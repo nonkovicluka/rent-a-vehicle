@@ -92,8 +92,6 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     getVehicleImages();
 
-    console.log($scope);
-
     $scope.agency = {};
 
     var getAgency = function () {
@@ -132,6 +130,12 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
     $scope.rateAgency = function () {
 
         $location.path("/agencies/" + $routeParams.agencyId + "/rate")
+
+    };
+
+    $scope.agencyBranches = function () {
+
+        $location.path("/agencies/" + $routeParams.agencyId + "/branches");
 
     };
 

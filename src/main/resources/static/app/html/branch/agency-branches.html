@@ -14,15 +14,26 @@
         </button>
     </div>
     <br><br>
-    <div ng-repeat="b in branchesByAgency">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{b.address}}</h5>
-                <h6 class="card-subtitle text-muted">{{b.phoneNumber}}</h6>
+    <div class="card-group col">
+        <div class="col-md-4" ng-repeat="b in branchesByAgency">
+            <div class="card">
+                <div class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner img-card">
+                        <div class="carousel-item" ng-class="{'active': !$index}"
+                             ng-repeat="i in imagesByAgency | filter: {branchId: b.id}">
+                            <img class="card-img-top" ng-src="{{i.imageSource}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{b.address}}</h5>
+                    <h6 class="card-subtitle text-muted">{{b.phoneNumber}}</h6>
+                </div>
+                <ng-map center="[{{b.latitude}},{{b.longitude}}]">
+                    <marker position="[{{b.latitude}},{{b.longitude}}]"></marker>
+                </ng-map>
             </div>
-            <ng-map center="[{{b.latitude}},{{b.longitude}}]">
-                <marker position="[{{b.latitude}},{{b.longitude}}]"></marker>
-            </ng-map>
         </div>
+        <br>
     </div>
 </div>

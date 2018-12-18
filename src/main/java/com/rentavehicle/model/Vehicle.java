@@ -3,6 +3,7 @@ package com.rentavehicle.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class Vehicle {
 
     @Column
     private boolean deleted;
+
+
+
 
     // getters and setters
 

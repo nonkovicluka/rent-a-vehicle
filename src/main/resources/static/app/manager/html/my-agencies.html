@@ -13,18 +13,34 @@
                 ng-disabled="pageNum == totalPages - 1">&raquo;
         </button>
     </div>
-    <table class="table table-bordered table-striped">
-        <th>Agency name</th>
-        <th>Description</th>
-        <th>Phone number</th>
-        <th>E-mail</th>
-        <th>Branches</th>
-        <tr ng-repeat="a in agencies">
-            <td><a href="#/my-agencies/{{a.id}}/manage">Manage {{a.name}}</a></td>
-            <td>{{a.description}}</td>
-            <td>{{a.phoneNumber}}</td>
-            <td>{{a.email}}</td>
-            <td><a href="#/agencies/{{a.id}}/branches">Click here</a></td>
-        </tr>
-    </table>
+    <br><br>
+    <div class="card-group col">
+        <div class="col-md-4" ng-repeat="a in agencies">
+            <div class="card">
+                <div class="logo-card2 text-center">
+                    <img class="card-img-top" ng-src="{{a.logo}}">
+                </div>
+                <br>
+                <div class="card-body">
+                    <h4 class="card-title text-center">{{a.name}}</h4>
+                    <br>
+                    <ul class="list-group list-group-flush">
+                        <h5 class="card-subtitle">Description</h5>
+                        <li class="list-group-item text-muted">{{a.description}}</li>
+                        <br>
+                        <h5 class="card-subtitle">Contact:</h5>
+                        <li class="list-group-item text-muted"><span>{{a.email}}</span>
+                            <div>{{a.phoneNumber}}</div>
+                        </li>
+                        <br>
+                        <div class="text-center">
+                            <a class="btn btn-success" href="#/my-agencies/{{a.id}}/manage">Manage</a>
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

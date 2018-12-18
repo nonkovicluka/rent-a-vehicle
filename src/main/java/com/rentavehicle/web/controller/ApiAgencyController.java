@@ -1,5 +1,7 @@
 package com.rentavehicle.web.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rentavehicle.model.Agency;
 import com.rentavehicle.service.AgencyService;
 import com.rentavehicle.support.AgencyDTOToAgency;
@@ -13,12 +15,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/agencies")
 public class ApiAgencyController {
+
+    private static String RELATIVE_ROOT = "images/agency-logo";
 
     @Autowired
     private AgencyService agencyService;
@@ -52,11 +58,23 @@ public class ApiAgencyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    public ResponseEntity<AgencyDTO> add(@Validated @RequestBody AgencyDTO agencyDTO) {
+    public ResponseEntity<?> add(@RequestParam(required = false) MultipartFile logo, @RequestParam String agencyDTO) throws IOException {
 
-        Agency agency = toAgency.convert(agencyDTO);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        AgencyDTO dto = mapper.readValue(agencyDTO, AgencyDTO.class);
+
+        Agency agency = toAgency.convert(dto);
+
+        if (logo != null) {
+            agency.setLogo(RELATIVE_ROOT + "/" + agency.getId() + "/" + logo.getOriginalFilename());
+            agencyService.createImage(logo, agency.getId());
+        }
+
         try {
             agencyService.save(agency);
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

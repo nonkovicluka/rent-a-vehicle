@@ -182,7 +182,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
 });
 
-rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, $rootScope, AuthService, multipartForm) {
+rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, $rootScope, AuthService, vehicleImagesService) {
 
     $scope.user = AuthService.user;
     $scope.agency = {};
@@ -271,8 +271,8 @@ rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location,
 
     $rootScope.message = null;
 
-    $scope.uploadPic = function () {
-        multipartForm.post(baseUrlVehicle, $scope.picFiles, $scope.newVehicle);
+    $scope.uploadAndSave = function () {
+        vehicleImagesService.post(baseUrlVehicle, $scope.picFiles, $scope.newVehicle);
     };
 
 });

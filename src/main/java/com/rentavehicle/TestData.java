@@ -1,6 +1,7 @@
 package com.rentavehicle;
 
 import com.rentavehicle.model.*;
+import com.rentavehicle.repository.BranchImageRepository;
 import com.rentavehicle.repository.VehicleImageRepository;
 import com.rentavehicle.service.*;
 import org.joda.time.DateTime;
@@ -44,6 +45,9 @@ public class TestData {
 
     @Autowired
     private VehicleImageRepository vehicleImageRepository;
+
+    @Autowired
+    private BranchImageRepository branchImageRepository;
 
     @PostConstruct
     public void init() {
@@ -90,51 +94,57 @@ public class TestData {
         // Agency test data
 
         Agency a1 = new Agency();
-        a1.setName("Agency 1");
-        a1.setDescription("Description 1");
-        a1.setPhoneNumber("Number 1");
+        a1.setName("Car Rental");
+        a1.setDescription("Neki random opis o agenciji...");
+        a1.setPhoneNumber("+381642243464");
         a1.setEmial("mail1@mail.com");
         a1.setOwner(u1);
+        a1.setLogo("images/agency-logo/1/logo1.png");
         agencyService.save(a1);
 
         Agency a2 = new Agency();
-        a2.setName("Agency 2");
-        a2.setDescription("Description 2");
-        a2.setPhoneNumber("Number 2");
+        a2.setName("Secure Rent");
+        a2.setDescription("Neki random opis o agenciji...");
+        a2.setPhoneNumber("+381631242347");
         a2.setEmial("mail2@mail.com");
         a2.setOwner(u2);
+        a2.setLogo("images/agency-logo/2/logo2.jpg");
         agencyService.save(a2);
 
         Agency a3 = new Agency();
-        a3.setName("Agency 3");
-        a3.setDescription("Description 3");
-        a3.setPhoneNumber("Number 3");
+        a3.setName("ForCar");
+        a3.setDescription("Neki random opis o agenciji...");
+        a3.setPhoneNumber("+381612241234");
         a3.setEmial("mail3@mail.com");
         a3.setOwner(u2);
+        a3.setLogo("images/agency-logo/3/logo3.jpg");
         agencyService.save(a3);
 
         Agency a4 = new Agency();
-        a4.setName("Agency 4");
-        a4.setDescription("Description 4");
-        a4.setPhoneNumber("Number 4");
+        a4.setName("Cole Rental");
+        a4.setDescription("Neki random opis o agenciji...");
+        a4.setPhoneNumber("+38166971232");
         a4.setEmial("mail4@mail.com");
         a4.setOwner(u1);
+        a4.setLogo("images/agency-logo/4/logo4.jpg");
         agencyService.save(a4);
 
         Agency a5 = new Agency();
-        a5.setName("Agency 5");
-        a5.setDescription("Description 5");
-        a5.setPhoneNumber("Number 5");
+        a5.setName("Auto Rent");
+        a5.setDescription("Neki random opis o agenciji...");
+        a5.setPhoneNumber("+381628241838");
         a5.setEmial("mail5@mail.com");
         a5.setOwner(u2);
+        a5.setLogo("images/agency-logo/5/logo5.png");
         agencyService.save(a5);
 
         Agency a6 = new Agency();
-        a6.setName("Agency 6");
-        a6.setDescription("Description 6");
-        a6.setPhoneNumber("Number 6");
+        a6.setName("X-Car Rental");
+        a6.setDescription("Neki random opis o agenciji...");
+        a6.setPhoneNumber("+38161729495");
         a6.setEmial("mail6@mail.com");
         a6.setOwner(u1);
+        a6.setLogo("images/agency-logo/6/logo6.jpg");
         agencyService.save(a6);
 
 
@@ -187,14 +197,6 @@ public class TestData {
         b6.setLatitude(44.813026);
         b6.setLongitude(20.427663);
         branchService.save(b6);
-
-        Branch b7 = new Branch();
-        b7.setAddress("Narodnog Fronta 57, Novi Sad");
-        b7.setPhoneNumber("+3816643367");
-        b7.setAgency(a1);
-        b7.setLatitude(45.238581);
-        b7.setLongitude(19.831582);
-        branchService.save(b7);
 
 
         // VehicleType test data
@@ -572,5 +574,29 @@ public class TestData {
         vi11.setVehicle(v11);
         vehicleImageRepository.save(vi11);
 
+        VehicleImage vi12 = new VehicleImage();
+        vi12.setName("images/vehicle-images/2/5/pegaso.jpg");
+        vi12.setVehicle(v5);
+        vehicleImageRepository.save(vi12);
+
+        VehicleImage vi13 = new VehicleImage();
+        vi13.setName("images/vehicle-images/2/6/scott.jpg");
+        vi13.setVehicle(v6);
+        vehicleImageRepository.save(vi13);
+
+
+        // branch images test data
+
+        BranchImage bi1 = new BranchImage("images/branch-images/1/2/b1.jpg", b2);
+        branchImageRepository.save(bi1);
+
+        BranchImage bi2 = new BranchImage("images/branch-images/1/4/b2.jpg", b4);
+        branchImageRepository.save(bi2);
+
+        BranchImage bi3 = new BranchImage("images/branch-images/1/5/b3.jpg", b5);
+        branchImageRepository.save(bi3);
+
+        BranchImage bi4 = new BranchImage("images/branch-images/1/6/b4.jpg", b6);
+        branchImageRepository.save(bi4);
     }
 }

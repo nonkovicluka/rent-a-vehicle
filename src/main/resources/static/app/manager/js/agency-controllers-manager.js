@@ -53,7 +53,7 @@ rentAVehicleApp.controller("myAgenciesCtrl", function ($scope, $http, $location,
 
 });
 
-rentAVehicleApp.controller("registerAgencyCtrl", function ($scope, $http, $location, AuthService) {
+rentAVehicleApp.controller("registerAgencyCtrl", function ($scope, $http, $location, AuthService, agencyLogo) {
 
     var baseUrlAgency = "/api/agencies/add";
 
@@ -74,17 +74,11 @@ rentAVehicleApp.controller("registerAgencyCtrl", function ($scope, $http, $locat
     $scope.newAgency.email = "";
     $scope.newAgency.ownerId = $scope.user.id;
 
+    $scope.logo = null;
+
     $scope.message = null;
 
-    $scope.registerAgency = function () {
-        $http.post(baseUrlAgency, $scope.newAgency)
-            .then(
-                function success(data) {
-                    $location.path("/");
-                },
-                function error(data) {
-                    $scope.message = "Agency registration failed.";
-                }
-            );
+    $scope.uploadAndSave = function () {
+        agencyLogo.post(baseUrlAgency, $scope.logo, $scope.newAgency);
     };
 });

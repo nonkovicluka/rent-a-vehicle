@@ -84,7 +84,7 @@ public class ApiVehicleController {
     @RequestMapping(value = "/addAll", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseBody
     public ResponseEntity<?> addAll(
-            @RequestParam(required = false) MultipartFile[] vehicleImages, @RequestParam String vehicleDTO, @RequestParam Long agencyId) throws IOException {
+            @RequestParam(required = false) MultipartFile[] vehicleImages, @RequestParam String vehicleDTO) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -107,7 +107,7 @@ public class ApiVehicleController {
         if (vehicleImages.length > 0) {
             for (MultipartFile vehicleImage : vehicleImages) {
                 try {
-                    vehicleImageService.createImage(vehicleImage, vehicle, agencyId);
+                    vehicleImageService.createImage(vehicleImage, vehicle, vehicle.getAgency().getId());
                 } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }

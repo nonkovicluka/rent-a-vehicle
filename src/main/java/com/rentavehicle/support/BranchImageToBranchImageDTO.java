@@ -23,7 +23,7 @@ public class BranchImageToBranchImageDTO implements Converter<BranchImage, Branc
 		dto.setId(branchImage.getId());
 		dto.setImageSource(branchImage.getImageSource());
 		dto.setBranchId(branchImage.getBranch().getId());
-		dto.setBranchAdress(branchImage.getBranch().getAddress());
+		dto.setBranchAddress(branchImage.getBranch().getAddress());
 
 		return dto;
 	}

@@ -23,7 +23,7 @@ public class AgencyDTO {
 	private String email;
 
 	@Min(0)
-	@Max(100)
+	@Max(5)
 	private double averageScore;
 
 	private boolean approved;

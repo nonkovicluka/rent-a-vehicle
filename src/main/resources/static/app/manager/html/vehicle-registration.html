@@ -32,7 +32,7 @@
                 </div>
 
                 <br>
-                <div class="form-row">
+                <div class="form-group">
                     <div class="col-md-7 mb-3 custom-file">
                         <input type="file" ngf-select ng-model="picFiles" name="file"
                                accept="image/*" ngf-max-size="20MB" required
@@ -53,7 +53,7 @@
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <br>
                 <div class="text-center">
-                    <button ng-click="uploadPic()" type="button"
+                    <button ng-click="uploadAndSave()" type="button"
                             class="btn btn-primary">Add vehicle
                     </button>
                 </div>

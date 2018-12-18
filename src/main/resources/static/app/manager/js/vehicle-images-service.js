@@ -1,4 +1,4 @@
-rentAVehicleApp.service("multipartForm", function ($http, $location, $routeParams, $rootScope) {
+rentAVehicleApp.service("vehicleImagesService", function ($http, $location, $routeParams, $rootScope) {
 
     this.post = function (uploadUrl, files, vehicle) {
         var data = new FormData();
@@ -7,7 +7,6 @@ rentAVehicleApp.service("multipartForm", function ($http, $location, $routeParam
             data.append('vehicleImages', files[i]);
         }
         data.append("vehicleDTO", JSON.stringify(vehicle));
-        data.append("agencyId", $routeParams.agencyId);
         $http.post(uploadUrl, data, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}

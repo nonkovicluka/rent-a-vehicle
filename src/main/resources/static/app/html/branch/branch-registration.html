@@ -24,10 +24,30 @@
                     <option ng-repeat="a in agencies" ng-value="a.id">{{a.name}}</option>
                 </select>
                 </div>
+                <br>
+                <div class="form-group">
+                    <div class="col-md-7 mb-3 custom-file">
+                        <input type="file" ngf-select ng-model="picFiles" name="file"
+                               accept="image/*" ngf-max-size="20MB" required
+                               ngf-model-invalid="errorFile" multiple class="custom-file-input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <ul class="list-group">
+                        <li ng-show="p" class="list-group-item" ng-repeat="p in picFiles">
+                            <img ngf-thumbnail="p" class="thumb">&nbsp;&nbsp;{{p.name}}
+                            <button class="fa fa-remove btn btn-warning float-right" ng-click="deletePic(p)"
+                                    ng-show="p"></button>
+                        </li>
+                    </ul>
+                </div>
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
+                <br>
                 <div class="text-center">
-                    <button ng-click="registerBranch()" type="button"
-                            class="btn btn-primary">Register
+                    <button ng-click="uploadAndSave()" type="button"
+                            class="btn btn-primary">Add vehicle
                     </button>
                 </div>
             </form>

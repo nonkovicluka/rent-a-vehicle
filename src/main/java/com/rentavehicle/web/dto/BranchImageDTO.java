@@ -8,7 +8,7 @@ public class BranchImageDTO {
 	
 	private Long branchId;
 	
-	private String branchAdress;
+	private String branchAddress;
 
 	public Long getId() {
 		return id;
@@ -34,12 +34,12 @@ public class BranchImageDTO {
 		this.branchId = branchId;
 	}
 
-	public String getBranchAdress() {
-		return branchAdress;
+	public String getBranchAddress() {
+		return branchAddress;
 	}
 
-	public void setBranchAdress(String branchAdress) {
-		this.branchAdress = branchAdress;
+	public void setBranchAddress(String branchAddress) {
+		this.branchAddress = branchAddress;
 	}
 	
 	
