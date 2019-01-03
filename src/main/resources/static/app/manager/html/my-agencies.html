@@ -1,46 +1,50 @@
-<div>
-    <br>
-    <h2>My agencies</h2>
-    <br><br>
-    <div ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'" class="btn-group pull-left">
-        <button ng-click="registerAgency()" type="button" class="btn btn-primary">Register agency</button>
-    </div>
-    <div class="btn-group float-right">
-        <button class="page-link" ng-click="go(-1)"
-                ng-disabled="pageNum == 0">&laquo;
-        </button>
-        <button class="page-link" ng-click="go(1)"
-                ng-disabled="pageNum == totalPages - 1">&raquo;
-        </button>
-    </div>
-    <br><br>
-    <div class="card-group col">
-        <div class="col-md-4" ng-repeat="a in agencies">
-            <div class="card">
-                <div class="logo-card2 text-center">
-                    <img class="card-img-top" ng-src="{{a.logo}}">
-                </div>
-                <br>
-                <div class="card-body">
-                    <h4 class="card-title text-center">{{a.name}}</h4>
-                    <br>
-                    <ul class="list-group list-group-flush">
-                        <h5 class="card-subtitle">Description</h5>
-                        <li class="list-group-item text-muted">{{a.description}}</li>
+<div class="section-gray">
+    <div class="container">
+        <br><br><br>
+        <div class="text-center">
+            <h2 class="title">My agencies</h2>
+        </div>
+        <br><br>
+        <div ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'" class="btn-group pull-left">
+            <button ng-click="registerAgency()" type="button" class="btn btn-primary">Register agency</button>
+        </div>
+        <div class="btn-group float-right">
+            <button class="btn btn-info btn-just-icon" ng-click="go(-1)"
+                    ng-disabled="pageNum == 0"><i class="fa fa-angle-left"></i>
+            </button>
+            <button class="btn btn-info btn-just-icon" ng-click="go(1)"
+                    ng-disabled="pageNum == totalPages - 1"><i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="a in agencies">
+                <div class="card">
+                    <div class="logo-agency text-center">
+                        <img class="card-img-top" ng-src="{{a.logo}}">
+                    </div>
+                    <br><br><br>
+                    <div class="card-body">
+                        <h4 class="card-title text-center">{{a.name}}</h4>
                         <br>
-                        <h5 class="card-subtitle">Contact:</h5>
-                        <li class="list-group-item text-muted"><span>{{a.email}}</span>
-                            <div>{{a.phoneNumber}}</div>
-                        </li>
-                        <br>
-                        <div class="text-center">
-                            <a class="btn btn-success" href="#/my-agencies/{{a.id}}/manage">Manage</a>
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            <h5 class="card-subtitle">Description</h5>
+                            <li class="list-group-item text-muted">{{a.description}}</li>
+                            <br>
+                            <h5 class="card-subtitle">Contact:</h5>
+                            <li class="list-group-item text-muted"><span>{{a.email}}</span>
+                                <div>{{a.phoneNumber}}</div>
+                            </li>
+                            <br>
+                            <div class="text-center">
+                                <a class="btn btn-success" href="#/my-agencies/{{a.id}}/manage">Manage</a>
+                            </div>
 
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+        <br><br>
     </div>
-
 </div>

@@ -1,6 +1,7 @@
 package com.rentavehicle.service.impl;
 
 import com.rentavehicle.model.PriceListItem;
+import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.repository.PriceListItemRepository;
 import com.rentavehicle.service.PriceListItemService;
 import com.rentavehicle.web.dto.VehiclePriceListItem;
@@ -23,6 +24,7 @@ public class JpaPriceListItemService implements PriceListItemService {
         return priceListItemRepository.findOne(id);
     }
 
+
     @Override
     public List<PriceListItem> findAll() {
         // TODO Auto-generated method stub
@@ -33,6 +35,12 @@ public class JpaPriceListItemService implements PriceListItemService {
     public void save(PriceListItem priceListItem) {
         // TODO Auto-generated method stub
         priceListItemRepository.save(priceListItem);
+    }
+
+    @Override
+    public List<PriceListItem> top3Pli() {
+
+        return priceListItemRepository.top3Pli();
     }
 
     @Override

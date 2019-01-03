@@ -31,7 +31,13 @@ public class JpaVehicleImageService implements VehicleImageService {
         return vehicleImageRepository.findByAgencyId(agencyId);
     }
 
-//    @Override
+    @Override
+    public List<VehicleImage> top3VehicleImages() {
+
+        return vehicleImageRepository.top3VehicleImages();
+    }
+
+    //    @Override
 //    public List<VehicleImage> findByVehicleId(Long vehicleId) {
 //
 //        return vehicleImageRepository.findByVehicleId(vehicleId);

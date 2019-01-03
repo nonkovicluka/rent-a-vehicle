@@ -40,7 +40,7 @@ public class PriceListDTOToPriceList implements Converter<PriceListDTO, PriceLis
 
         String inputStart = dto.getStartDate();
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy.");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy");
         LocalDate dtStart = formatter.parseLocalDate(inputStart);
 
 

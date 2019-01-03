@@ -1,6 +1,4 @@
-rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, AuthService, pricePerHourService) {
-
-    $scope.user = AuthService.user;
+rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, pricePerHourService) {
 
     var priceListItemVehiclesUrl = "api/pricelistitems/vehicles";
 
@@ -36,7 +34,7 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
                     $scope.totalPages = data.headers('totalPages');
                 },
                 function error(data) {
-                    alert("Vehicles and price list item failed to get.");
+
 
                 });
 
@@ -183,8 +181,63 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
     $scope.pricePerHour = pricePerHourService.pricePerHour;
 
 
-    // new reservation
+    // <<< date picker code start
 
+    $(function () {
+        $('#startDate').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-chevron-up",
+                    down: "fa fa-chevron-down",
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-screenshot',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-remove'
+                }
+                , format: "DD-MM-YYYY  HH:mm"
+
+            }
+        );
+        $('#endDate').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+            , format: "DD-MM-YYYY  HH:mm"
+            , useCurrent: false
+
+        });
+        $("#startDate").on("dp.change", function (e) {
+            $('#endDate').data("DateTimePicker").minDate(e.date);
+            $scope.$apply(function () {
+                $scope.newReservation.startDate = e.date.format("DD-MM-YYYY  HH:mm");
+                $scope.calculateTotalPrice();
+
+            })
+
+        });
+        $("#endDate").on("dp.change", function (e) {
+            $('#startDate').data("DateTimePicker").maxDate(e.date);
+            $scope.$apply(function () {
+                $scope.newReservation.endDate = e.date.format("DD-MM-YYYY  HH:mm");
+                $scope.calculateTotalPrice();
+            })
+        });
+    });
+
+    // date picker code end >>>
+
+
+    // new reservation
     $scope.newReservation = {};
     $scope.newReservation.startDate = null;
     $scope.newReservation.endDate = null;
@@ -212,19 +265,13 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
     $scope.dif = 0;
 
-    $scope.$watchGroup(['newReservation.startDate', 'newReservation.endDate'], function (newValues) {
+    $scope.calculateTotalPrice = function () {
 
-        if (newValues[0] && newValues[1]) {
-            calculateTotalPrice()
+        $scope.mStart = moment($scope.newReservation.startDate, "DD-MM-YYYY  HH:mm");
+        $scope.mEnd = moment($scope.newReservation.endDate, "DD-MM-YYYY  HH:mm");
 
-        }
-    });
-
-    var calculateTotalPrice = function () {
-
-        $scope.dateSt = Date.parse($scope.newReservation.startDate);
-        $scope.dateEnd = Date.parse($scope.newReservation.endDate);
-
+        $scope.dateSt = $scope.mStart.toDate();
+        $scope.dateEnd = $scope.mEnd.toDate();
 
         $scope.dif = ($scope.dateEnd - $scope.dateSt) / 3.6e+6;
         $scope.newReservation.totalPrice = Math.ceil($scope.dif) * $scope.pricePerHour;
@@ -232,21 +279,24 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
     };
 
-
     $scope.message = null;
 
     $scope.reserveVehicle = function () {
         $http.post(reservationsUrl, $scope.newReservation)
             .then(
-                function success(data) {
+                function success() {
 
                     $location.path("/");
                 },
-                function error(data) {
+                function error() {
+
                     $scope.message = "Reservation failed, try again.";
                 }
             );
     };
 
-})
-;
+});
+
+rentAVehicleApp.controller("vehicleBranchCtrl", function () {
+
+});

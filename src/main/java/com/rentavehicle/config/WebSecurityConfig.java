@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -55,9 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // ignoring the "/", "/index.html", "/app/**", "/register",
                 // "/favicon.ico"
                 .antMatchers("/", "/index.html", "/app/**", "/api/agencies/all", "/api/agencies/{agencyId}",
-                        "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all",
+                        "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all", "/api/vehicles/top3", "/api/vehicleImages/top3",
                         "/api/branches/{agencyId}bPages", "/api/branches/all", "/api/ratings/avgScore", "/api/vehicleImages/allByAgency", "/api/branchImages/allByAgency", "/assets/**", "/images/**", "/register", "/authenticate",
-                        "/api/pricelistitems/vehicles",
+                        "/api/pricelistitems/vehicles", "/api/pricelistitems/top3",
                         "/favicon.ico");
     }
 

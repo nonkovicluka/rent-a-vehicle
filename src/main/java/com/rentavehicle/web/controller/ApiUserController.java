@@ -28,7 +28,6 @@ public class ApiUserController {
     @Autowired
     UserToUserDTO toDTO;
 
-
     @Autowired
     private UserRepository userRepository;
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface VehicleService {
 
+    List<Vehicle> top3Vehicles();
+
     Vehicle findOne(Long id);
 
     List<Vehicle> findAll();

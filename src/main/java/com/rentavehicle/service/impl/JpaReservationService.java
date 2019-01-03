@@ -1,10 +1,12 @@
 package com.rentavehicle.service.impl;
 
 import com.rentavehicle.model.Reservation;
+import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.repository.ReservationRepository;
 import com.rentavehicle.service.ReservationService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public class JpaReservationService implements ReservationService {
 
         return reservationRepository.findOne(id);
     }
+
+
 
     @Override
     public List<Reservation> findAll() {

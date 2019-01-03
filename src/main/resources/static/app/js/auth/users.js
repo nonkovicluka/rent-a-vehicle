@@ -1,4 +1,4 @@
-rentAVehicleApp.controller('UsersController', function ($http, $scope, AuthService) {
+rentAVehicleApp.controller('UsersController', function ($http, $scope) {
     var edit = false;
     $scope.buttonText = 'Create';
     var init = function () {

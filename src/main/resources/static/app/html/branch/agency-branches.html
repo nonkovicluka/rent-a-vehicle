@@ -1,39 +1,44 @@
-<div>
-    <br>
-    <h2>{{agency.name}} branches</h2>
-    <br><br>
-    <div ng-show="agenciesByUser.length > 0 && agency.ownerId === user.id" class="btn-group float-left">
-        <button ng-click="register()" type="button" class="btn btn-primary">Register branch</button>
-    </div>
-    <div ng-show="branchesByAgency.length > 0" class="btn-group float-right">
-        <button class="page-link" ng-click="go(-1)"
-                ng-disabled="pageNum == 0">&laquo;
-        </button>
-        <button class="page-link" ng-click="go(1)"
-                ng-disabled="pageNum == totalPages - 1">&raquo;
-        </button>
-    </div>
-    <br><br>
-    <div class="card-group col">
-        <div class="col-md-4" ng-repeat="b in branchesByAgency">
-            <div class="card">
-                <div class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner img-card">
-                        <div class="carousel-item" ng-class="{'active': !$index}"
-                             ng-repeat="i in imagesByAgency | filter: {branchId: b.id}">
-                            <img class="card-img-top" ng-src="{{i.imageSource}}">
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{b.address}}</h5>
-                    <h6 class="card-subtitle text-muted">{{b.phoneNumber}}</h6>
-                </div>
-                <ng-map center="[{{b.latitude}},{{b.longitude}}]">
-                    <marker position="[{{b.latitude}},{{b.longitude}}]"></marker>
-                </ng-map>
-            </div>
+<div class="section-gray">
+    <div class="container">
+        <br><br><br><br>
+        <div class="text-center">
+            <h2 class="title">{{agency.name}} branches</h2>
         </div>
         <br>
+        <div ng-show="agenciesByUser.length > 0 && agency.ownerId === user.id" class="btn-group float-left">
+            <button ng-click="register()" type="button" class="btn btn-primary">Register branch</button>
+        </div>
+        <div ng-show="branchesByAgency.length > 0" class="btn-group float-right">
+            <button class="btn btn-info btn-just-icon" ng-click="go(-1)"
+                    ng-disabled="pageNum == 0"><i class="fa fa-angle-left"></i>
+            </button>
+            <button class="btn btn-info btn-just-icon" ng-click="go(1)"
+                    ng-disabled="pageNum == totalPages - 1"><i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        <br><br><br>
+        <div class="card-group col">
+            <div class="col-md-4" ng-repeat="b in branchesByAgency">
+                <div class="card">
+                    <div class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner img-card">
+                            <div class="carousel-item" ng-class="{'active': !$index}"
+                                 ng-repeat="i in imagesByAgency | filter: {branchId: b.id}">
+                                <img class="card-img-top" ng-src="{{i.imageSource}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{b.address}}</h5>
+                        <h6 class="card-subtitle text-muted">{{b.phoneNumber}}</h6>
+                    </div>
+                    <ng-map center="[{{b.latitude}},{{b.longitude}}]">
+                        <marker position="[{{b.latitude}},{{b.longitude}}]"></marker>
+                    </ng-map>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br><br>
     </div>
 </div>

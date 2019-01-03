@@ -1,23 +1,27 @@
-<div>
-    <br><br><br><br>
-    <div class="card border-primary mx-auto" style="max-width: 40rem;">
-        <div class="card-header text-center"><h3>New vehicle</h3></div>
-        <div class="card-body">
-            <form name="myForm" enctype="multipart/form-data">
+<div class="section section-gray">
+    <div class="container">
+        <br><br>
+        <div class="card2 card-register3 mx-auto" style="max-width: 35rem;">
+            <h3 class="card-title text-center">Vehicle registration</h3>
+            <br><br>
+            <form>
                 <div class="form-group">
                     <label for="vehicleName">Name</label> <input
                         ng-model="newVehicle.name" type="text" class="form-control"
                         id="vehicleName">
                 </div>
                 <div class="form-group">
-                    <label for="vehicleDescription">Description</label> <input
-                        ng-model="newVehicle.description" type="text" class="form-control"
-                        id="vehicleDescription">
+                    <label for="vehicleDescription">Description</label>
+                    <textarea
+                            ng-model="newVehicle.description" type="text" class="form-control"
+                            id="vehicleDescription" rows="3">
+                    </textarea>
                 </div>
                 <div class="form-group">
-                    <label for="vehicleSpecification">Specification</label> <input
-                        ng-model="newVehicle.specification" type="text" class="form-control"
-                        id="vehicleSpecification">
+                    <label for="vehicleSpecification">Specification</label>
+                    <textarea ng-model="newVehicle.specification" type="text" class="form-control"
+                              id="vehicleSpecification" rows="2">
+                    </textarea>
                 </div>
                 <div class="form-group">
                     <label for="vehicleTypes">Type</label> <select
@@ -25,33 +29,45 @@
                     <option ng-repeat="vt in vehicleTypes" ng-value="vt.id">{{vt.name}}</option>
                 </select>
                 </div>
-                <div class="form-group">
-                    <label for="priceListItemPph">Price per hour</label> <input
-                        ng-model="newVehicle.pricePerHour" type="text" class="form-control"
-                        id="priceListItemPph">
+                <div class="row">
+                    <div class="col-md-7">
+                        <label for="priceListItemPph">Price per hour</label>
+                        <div class="input-group">
+                            <input ng-model="newVehicle.pricePerHour" type="text" class="form-control"
+                                   id="priceListItemPph">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white"><i class="fa fa-euro"></i></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
                 <br>
                 <div class="form-group">
-                    <div class="col-md-7 mb-3 custom-file">
+                    <div class="col-md-5 mb-3 custom-file">
+                        <label for="inputGroupFile02">Upload images</label>
                         <input type="file" ngf-select ng-model="picFiles" name="file"
-                               accept="image/*" ngf-max-size="20MB" required
+                               accept="image/*" ngf-max-size="20MB"
                                ngf-model-invalid="errorFile" multiple class="custom-file-input" id="inputGroupFile02">
                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                     </div>
                 </div>
                 <br>
-                <div class="form-group">
-                    <ul class="list-group">
-                        <li ng-show="p" class="list-group-item" ng-repeat="p in picFiles">
-                            <img ngf-thumbnail="p" class="thumb">&nbsp;&nbsp;{{p.name}}
-                            <button class="fa fa-remove btn btn-warning float-right" ng-click="deletePic(p)"
-                                    ng-show="p"></button>
-                        </li>
-                    </ul>
+                <div class="container">
+                    <div ng-show="p" ng-repeat="p in picFiles">
+                        <div class="d-flex row h-100">
+                            <img ngf-thumbnail="p" class="thumb">
+                            <span class="align-self-center">&nbsp;&nbsp;{{p.name}}</span>
+                            <button class="btn btn-outline-danger btn-just-icon ml-auto align-self-center"
+                                    ng-click="deletePic(p)"
+                                    ng-show="p">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </div>
+                        <br>
+                    </div>
                 </div>
-                <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <br>
+                <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <div class="text-center">
                     <button ng-click="uploadAndSave()" type="button"
                             class="btn btn-primary">Add vehicle

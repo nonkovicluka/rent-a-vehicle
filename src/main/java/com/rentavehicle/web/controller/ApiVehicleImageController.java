@@ -34,6 +34,14 @@ public class ApiVehicleImageController {
 //        return new ResponseEntity<>(toDTO.convert(vehicleImages), HttpStatus.OK);
 //    }
 
+    @RequestMapping(value = "/top3", method = RequestMethod.GET)
+    public ResponseEntity<List<VehicleImageDTO>> top3VehicleImages() {
+
+        List<VehicleImage> vehicleImages = vehicleImageService.top3VehicleImages();
+
+
+        return new ResponseEntity<>(toDTO.convert(vehicleImages), HttpStatus.OK);
+    }
 
 
     @RequestMapping(value = "/allByAgency", method = RequestMethod.GET)

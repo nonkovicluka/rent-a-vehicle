@@ -73,6 +73,15 @@ public class ApiPriceListItemController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/top3", method = RequestMethod.GET)
+    public ResponseEntity<List<PriceListItemDTO>> top3Pli() {
+
+        List<PriceListItem> plis = priceListItemService.top3Pli();
+
+
+        return new ResponseEntity<>(toDTO.convert(plis), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
     public ResponseEntity<List<VehiclePriceListItemDTO>> currentPriceListItem(@RequestParam Long agencyId, @RequestParam(required = false) String name,
                                                                               @RequestParam(required = false) Long vehicleTypeId,

@@ -1,0 +1,129 @@
+<div class="page-header" data-parallax="true"
+     style="background-image: url('assets/bootstrap/img/headers/david-marcu.jpg');">
+    <div class="filter"></div>
+    <div class="content-center">
+        <div class="container">
+            <div class="motto">
+                <h1 class="title">Rent vehicles all around the globe.</h1>
+                <h5 class="description">Whether you own an agency or want to rent a vehicle, &nbsp;you can do it all
+                    here.</h5>
+                <br/>
+                <a ng-show="!user.username" class="btn btn-outline-neutral btn-round" href="#/register">Join</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="blog-3">
+    <div class="container">
+        <br>
+        <div class="text-center">
+            <h2 class="title">Agencies</h2>
+        </div>
+        <br>
+        <div class="btn-group float-right">
+            <button class="btn btn-info btn-just-icon" ng-click="go(-1)"
+                    ng-disabled="pageNum == 0"><i class="fa fa-angle-left"></i>
+            </button>
+            <button class="btn btn-info btn-just-icon" ng-click="go(1)"
+                    ng-disabled="pageNum == totalPages - 1"><i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        <br>
+        <br>
+        <div class="card-group">
+            <div class="col-md-3" ng-repeat="a in agencies">
+                <div class="card card-with-shadow">
+                    <div class="logo-card text-center">
+                        <img class="card-img" ng-src="{{a.logo}}">
+                    </div>
+                    <br><br>
+                    <div class="card-body">
+                        <h4 class="card-title text-center">{{a.name}}</h4>
+                        <br>
+                        <ul class="list-group list-group-flush">
+                            <h5 class="card-subtitle">Description</h5>
+                            <li class="list-group-item text-muted">{{a.description}}</li>
+                            <br>
+                            <h5 class="card-subtitle">Contact:</h5>
+                            <li class="list-group-item text-muted"><span>{{a.email}}</span>
+                                <div>{{a.phoneNumber}}</div>
+                            </li>
+                            <br>
+                            <div class="text-center">
+                                <a class="btn btn-success" href="#/agencies/{{a.id}}/vehicles">More info</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+<div class="section-gray">
+    <div class="container">
+        <br>
+        <br>
+        <div class="text-center">
+            <h2 class="title">Top vehicles</h2>
+            <h5 class="description">These are the most rented vehicles so far.</h5>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="v in vehicles">
+                <div class="card card-blog">
+                    <div class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner img-card">
+                            <div class="carousel-item" ng-class="{'active': !$index}"
+                                 ng-repeat="i in vehicleImages | filter: {vehicleId: v.id}"
+                                 ng-if="i.vehicleId == v.id">
+                                <img class="img img-raised" ng-src="{{i.imageSource}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{v.name}}</h4>
+                        <br>
+                        <ul class="list-group list-group-flush">
+                            <h5 class="card-subtitle">Description</h5>
+                            <li class="list-group-item text-muted">{{v.description}}</li>
+                            <br>
+                            <h5 class="card-subtitle">Sepcification</h5>
+                            <li class="list-group-item text-muted">{{v.specification}}</li>
+                            <br>
+                            <div ng-repeat="pli in plis | filter: {vehicleId: v.id} | limitTo: 1 ">
+                                <h5 class="card-subtitle">Price per hour: &nbsp;&nbsp;<span class="text-warning">{{pli.pricePerHour | number: 2}} &nbsp;<span
+                                        class="fa fa-eur"></span></span></h5>
+                            </div>
+                            <div>
+                                <hr>
+                            </div>
+                            <h5 class="card-subtitle">Agency: &nbsp;&nbsp;
+                                <span>
+                                    <a class="text-success"
+                                       href="#/agencies/{{v.agencyId}}/vehicles">{{v.agencyName}}</a>
+                                </span>
+                            </h5>
+                            <div>
+                                <hr>
+                            </div>
+                            <div class="card-body text-center">
+                                <button class="btn btn-success"
+                                        ng-click="reserve(v.agencyId, v.id); getPricePerHour(pli.pricePerHour)"
+                                        ng-disabled="!v.available">Reserve
+                                </button>
+                            </div>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>

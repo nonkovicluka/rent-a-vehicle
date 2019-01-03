@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rentavehicle.model.PriceListItem;
 import com.rentavehicle.model.Vehicle;
 import com.rentavehicle.service.PriceListItemService;
+import com.rentavehicle.service.ReservationService;
 import com.rentavehicle.service.VehicleImageService;
 import com.rentavehicle.service.VehicleService;
 import com.rentavehicle.support.VehiclePliDTOToVehiclePli;
@@ -36,6 +37,7 @@ public class ApiVehicleController {
     @Autowired
     private VehicleImageService vehicleImageService;
 
+
     @Autowired
     private VehicleToVehicleDTO toDTO;
 
@@ -60,6 +62,18 @@ public class ApiVehicleController {
         }
 
         return new ResponseEntity<>(toDTO.convert(vehicle), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/top3", method = RequestMethod.GET)
+    public ResponseEntity<List<VehicleDTO>> top3() {
+
+        List<Vehicle> vehicles = vehicleService.top3Vehicles();
+
+        if (vehicles == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(toDTO.convert(vehicles), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

@@ -1,30 +1,36 @@
-<div>
-    <br><br><br><br>
-    <div class="card border-primary mx-auto" style="max-width: 30rem;">
-        <div class="card-header text-center"><h3>Login</h3></div>
-        <div class="card-body">
-            <div>
-                <form ng-submit="login()">
-                    <div class="form-group">
-                        <label for="username">Username:</label> <input type="txt"
-                                                                       class="form-control" ng-model="username"
-                                                                       id="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd">Password:</label> <input type="password"
-                                                                  class="form-control" id="pwd" ng-model="password">
-                    </div>
-                    <br>
-                    <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
-                    <br>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success">Login</button>
-                        <button type="button" class="btn btn-outline-primary" ng-click="register()">Register</button>
-
-                    </div>
-                </form>
+<div class="full-screen login">
+    <div class="wrapper">
+        <div class="page-header" style="background-image: url('/assets/bootstrap/img/sections/bruno-abatti.jpg');">
+            <div class="filter"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 ml-auto mr-auto">
+                        <div class="card card-register">
+                            <h3 class="card-title">Login</h3>
 
 
+                            <form class="register-form" ng-submit="login()">
+
+                                <label for="username">Username</label> <input placeholder="Username" type="text"
+                                                                              class="form-control no-border"
+                                                                              ng-model="username"
+                                                                              id="username">
+
+
+                                <label for="pwd">Password</label> <input placeholder="Password" type="password"
+                                                                         class="form-control no-border" id="pwd"
+                                                                         ng-model="password">
+                                <br>
+                                <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
+                                <button type="submit" class="btn btn-danger btn-block btn-round">Login</button>
+
+                            </form>
+                            <div class="forgot">
+                                <a href="#" class="btn btn-link btn-danger">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

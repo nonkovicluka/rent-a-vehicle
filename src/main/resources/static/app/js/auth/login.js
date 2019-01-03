@@ -33,11 +33,8 @@ rentAVehicleApp.controller('LoginController', function ($http, $scope, $location
                 AuthService.user = res.user;
                 $rootScope.$broadcast('LoginSuccessful');
                 // going to the home page
-                if(AuthService.user.roles[0] === "ROLE_ADMIN" || AuthService.user.roles[0] === "ROLE_MANAGER"){
-                    $location.path('my-agencies')
-                }else{
-                    $location.path('agencies');
-                }
+                $location.path("/");
+
             } else {
                 // if the token is not present in the response then the
                 // authentication was not successful. Setting the error message.
@@ -49,9 +46,4 @@ rentAVehicleApp.controller('LoginController', function ($http, $scope, $location
         });
     };
 
-    $scope.register = function () {
-
-        $location.path("register")
-
-    }
 });

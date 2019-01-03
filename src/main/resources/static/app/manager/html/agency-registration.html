@@ -1,9 +1,9 @@
-<div>
-    <br><br><br><br>
-    <div class="card border-primary mx-auto" style="max-width: 45rem;">
-        <div class="card-header text-center"><h3>Register agency</h3></div>
-        <div class="card-body">
-
+<div class="section section-gray">
+    <div class="container">
+        <br><br>
+        <div class="card2 card-register3 mx-auto" style="max-width: 35rem;">
+            <h3 class="card-title text-center">Agency registration</h3>
+            <br><br>
             <form>
                 <div class="form-group">
                     <label for="agencyName">Agency name</label> <input
@@ -11,9 +11,9 @@
                         id="agencyName">
                 </div>
                 <div class="form-group">
-                    <label for="agencyDescription">Description</label> <input
+                    <label for="agencyDescription">Description</label> <textarea
                         ng-model="newAgency.description" type="text" class="form-control"
-                        id="agencyDescription">
+                        id="agencyDescription" rows="3"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -30,19 +30,25 @@
                 <br>
                 <div class="form-group">
                     <div class="col-md-7 mb-3 custom-file">
-                        <input type="file" ngf-select ng-model="logo" name="file"
+                        <input class="custom-file-input" type="file" ngf-select ng-model="logo" name="file"
                                accept="image/*" ngf-max-size="5MB"
                                ngf-model-invalid="errorFile" id="inputGroupFile02">
                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                     </div>
                 </div>
                 <br>
-                <span ng-show="logo"><img ngf-thumbnail="logo" class="thumb">&nbsp;&nbsp;{{logo.name}}><button
-                        class="fa fa-remove btn btn-warning float-right" ng-click="logo = null"></button></span>
+                <span class="d-flex row h-100" ng-show="logo">
+                    <img ngf-thumbnail="logo" class="thumb "><span
+                        class="align-self-center">&nbsp;&nbsp;{{logo.name}}</span>
+                    <button class="btn btn-outline-danger btn-just-icon ml-auto align-self-center"
+                            ng-click="logo = null">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </span>
 
                 <br>
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
-                <br>
+
                 <div class="text-center">
                     <button ng-click="uploadAndSave()" type="button"
                             class="btn btn-success">Register
@@ -50,5 +56,6 @@
                 </div>
             </form>
         </div>
+        <br><br>
     </div>
 </div>

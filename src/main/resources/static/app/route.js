@@ -1,12 +1,8 @@
 rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'app/html/agency/agency-search.html',
-            controller: 'agencySearchCtrl'
-        })
-        .when('/home', {
-            templateUrl: 'app/html/auth/home.html',
-            controller: 'HomeController'
+            templateUrl: 'app/html/home.html',
+            controller: 'homeCtrl'
         })
         .when('/login', {
             templateUrl: 'app/html/auth/login.html',
@@ -31,13 +27,14 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
         .when('/agencies', {
             templateUrl: "/app/html/agency/agency-search.html",
             controller: "agencySearchCtrl"
+
         })
         .when('/agencies/register', {
             templateUrl: "/app/manager/html/agency-registration.html",
             controller: "registerAgencyCtrl"
         })
         .when('/branches/register', {
-            templateUrl: "/app/html/branch/branch-registration.html",
+            templateUrl: "/app/manager/html/branch-registration.html",
             controller: "registerBranchCtrl"
         })
         .when('/agencies/:agencyId/branches', {

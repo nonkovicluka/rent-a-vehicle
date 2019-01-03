@@ -55,7 +55,7 @@ public class ReservationDTOToReservation implements Converter<ReservationDTO, Re
 
         String inputStart = dto.getStartDate();
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd  HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MM-yyyy  HH:mm");
         DateTime dtStart = formatter.parseDateTime(inputStart);
 
 

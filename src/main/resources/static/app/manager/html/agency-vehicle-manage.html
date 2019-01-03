@@ -1,16 +1,35 @@
-<div>
-    <br>
-    <h2>Vehicles by {{agency.name}}</h2>
-    <br><br>
-    <form>
+<div class="section section-gray">
+    <div class="container">
+        <br><br>
+        <h2>Vehicles by {{agency.name}}</h2>
+        <br><br>
         <div class="row">
+            <div ng-show="agency.ownerId === user.id" class="col-md-8">
+                <button ng-click="addPriceList()" type="button" class="btn btn-success btn-round"><i
+                        class="fa fa-calendar"></i>Add new price list
+                </button>
+                <button ng-click="registerBranch()" type="button" class="btn btn-success btn-round"><i
+                        class="fa fa-building-o"></i>Register branch
+                </button>
+                <button ng-show="currentPriceList" ng-click="addVehicle()" type="button"
+                        class="btn btn-success btn-round"><i
+                        class="fa fa-car"></i>Add new
+                    vehicle
+                </button>
+                <button ng-click="reservations()" type="button" class="btn btn-success btn-round"><i
+                        class="fa fa-list"></i>Reservations
+                </button>
+            </div>
+        </div>
+        <br><br>
+        <div class="d-flex row h-100">
             <div class="col-md-3">
                 <label for="filteredVehicleName">Name:</label>
                 <input ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.name" type="text"
                        class="form-control"
                        id="filteredVehicleName">
             </div>
-
+            <br>
             <div class="col-md-3">
                 <label for="filteredVehicleType">Type:</label>
                 <select ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.vehicleTypeId"
@@ -28,69 +47,79 @@
                     </option>
                 </select>
             </div>
+            <div class="col-md-3 align-self-end">
+                <div ng-show="vehiclesAndPrice.length > 0" class="btn-group float-right">
+                    <button class="btn btn-info btn-just-icon" ng-click="go(-1)"
+                            ng-disabled="pageNum == 0"><i class="fa fa-angle-left"></i>
+                    </button>
+                    <button class="btn btn-info btn-just-icon" ng-click="go(1)"
+                            ng-disabled="pageNum == totalPages - 1"><i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </form>
-    <br>
-    <div ng-show="agency.ownerId === user.id" class="float-left">
-        <button ng-click="addPriceList()" type="button" class="btn btn-primary">Add new price list</button>
-        <button ng-click="registerBranch()" type="button" class="btn btn-primary">Register branch</button>
-        <button ng-show="currentPriceList" ng-click="addVehicle()" type="button" class="btn btn-primary">Add new
-            vehicle
-        </button>
-        <button ng-click="reservations()" type="button" class="btn btn-primary">Reservations</button>
+        <br>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th class="w-10">Name</th>
+                <th class="w-10">Description</th>
+                <th class="w-25">Specification</th>
+                <th class="w-5">Type</th>
+                <th class="w-5">Available</th>
+                <th class="w-10">Price per hour</th>
+                <th class="w-15">Actions</th>
+            </tr>
 
+            <tr height="100" ng-repeat="v in vehiclesAndPrice">
+
+                <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.name}}</td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.name" value="{{v.name}}"
+                                                                          type="text"></td>
+
+                <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.description}}</td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.description"
+                                                                          value="{{v.description}}" type="text"></td>
+
+                <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.specification}}</td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.specification"
+                                                                          value="{{v.specification}}" type="text"></td>
+
+                <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.vehicleTypeName}}</td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.vehicleTypeId">
+                    <option ng-repeat="vt in vehicleTypes" ng-value="vt.id">{{vt.name}}</option>
+                </select></td>
+
+                <td ng-show="v.available && v.vehicleId !== oldVehicle.vehicleId" class="text-center"><span class="fa fa-check"></span></td>
+                <td ng-show="!v.available && v.vehicleId !== oldVehicle.vehicleId" class="text-center"><span class="fa fa-close"></span>
+                </td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.available">
+                    <option value="true">Available</option>
+                    <option value="false">Not available</option>
+                </select></td>
+
+                <td ng-hide="v.vehicleId === oldVehicle.vehicleId" class="text-center">{{v.pricePerHour}}<i
+                        class="fa fa-eur"></i></td>
+                <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.pricePerHour"
+                                                                          value="{{v.pricePerHour}}" type="text"></td>
+
+                <td class="td-actions text-center">
+                    <span ng-hide="v.vehicleId === oldVehicle.vehicleId">
+                        <button class="btn btn-warning btn-round btn-icon" ng-click="editVehicle(v)"><i
+                                class="fa fa-edit"></i>
+                        </button>
+                    </span>
+                    <span ng-hide="v.vehicleId === oldVehicle.vehicleId">
+                        <button class="btn btn-danger btn-round btn-icon" ng-click="deleteVehicle(v)"><i
+                                class="fa fa-times"></i></button>
+                    </span>
+                    <span ng-show="v.vehicleId === oldVehicle.vehicleId">
+                        <button class="btn btn-info btn-round btn-icon" ng-click="saveEdit()"><i
+                                class="fa fa-save"></i>
+                        </button>
+                    </span>
+                </td>
+
+            </tr>
+        </table>
     </div>
-    <table class="table table-bordered table-striped">
-        <th>Name</th>
-        <th>Description</th>
-        <th>Specification</th>
-        <th>Type</th>
-        <th>Available</th>
-        <th>Price per hour</th>
-        <th></th>
-        <th></th>
-
-        <tr ng-repeat="v in vehiclesAndPrice">
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.name}}</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.name" value="{{v.name}}"
-                                                                      type="text"></td>
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.description}}</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.description"
-                                                                      value="{{v.description}}" type="text"></td>
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.specification}}</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.specification"
-                                                                      value="{{v.specification}}" type="text"></td>
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.vehicleTypeName}}</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.vehicleTypeId">
-                <option ng-repeat="vt in vehicleTypes" ng-value="vt.id">{{vt.name}}</option>
-            </select></td>
-
-            <td ng-show="v.available && v.vehicleId !== oldVehicle.vehicleId">Available</td>
-            <td ng-show="!v.available && v.vehicleId !== oldVehicle.vehicleId">Not available</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><select ng-model="oldVehicle.available">
-                <option value="true">Available</option>
-                <option value="false">Not available</option>
-            </select></td>
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">{{v.pricePerHour}}</td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId"><input ng-model="oldVehicle.pricePerHour"
-                                                                      value="{{v.pricePerHour}}" type="text"></td>
-
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">
-                <button class="btn btn-warning" ng-click="editVehicle(v)">Edit
-                </button>
-            </td>
-            <td ng-show="v.vehicleId === oldVehicle.vehicleId">
-                <button class="btn btn-primary" ng-click="saveEdit()">Save
-                </button>
-            </td>
-            <td ng-hide="v.vehicleId === oldVehicle.vehicleId">
-                <button class="btn btn-danger" ng-click="deleteVehicle(v)">Delete</button>
-            </td>
-        </tr>
-    </table>
 </div>

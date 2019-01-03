@@ -1,19 +1,39 @@
-<div>
-    <br><br><br><br>
-    <div class="card border-primary mx-auto" style="max-width: 40rem;">
-        <div class="card-header text-center"><h3>Vehicle reservation</h3></div>
-        <div class="card-body">
+<div class="section section-gray">
+    <div class="container">
+        <br><br>
+        <div class="card2 card-register3 mx-auto" style="max-width: 27rem;">
+            <h3 class="card-title text-center">Vehicle reservation</h3>
+            <br><br>
             <form>
+
                 <div class="form-group">
-                    <label for="startDate">Start date</label> <input ng-model="newReservation.startDate" datetime-picker date-format="yyyy-MM-dd  HH:mm:ss"
-                                                                     class="form-control"
-                                                                     id="startDate">
+                    <label for="startDate">Start date</label>
+                    <div class="input-group date" id="startDate">
+                        <input ng-model="newReservation.startDate" type="text"
+                               class="form-control datetimepicker" placeholder="Select date"/>
+                        <div class="input-group-append">
+                             <span class="input-group-text">
+                                     <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar"
+                                                                                   aria-hidden="true"></i></span>
+                             </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="endDate">End date</label> <input ng-model="newReservation.endDate" datetime-picker date-format="yyyy-MM-dd  HH:mm:ss"
-                                                                 class="form-control"
-                                                                 id="endDate">
+                    <label for="endDate">End date</label>
+                    <div class="input-group date" id="endDate">
+                        <input ng-model="newReservation.endDate" type="text"
+                               class="form-control datetimepicker" placeholder="Select date"/>
+                        <div class="input-group-append">
+                             <span class="input-group-text">
+                                     <span class="glyphicon glyphicon-calendar"><i class="fa fa-calendar"
+                                                                                   aria-hidden="true"></i>
+                                     </span>
+                             </span>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="form-group">
                     <label for="branchPickup">Pickup branch</label> <select
                         ng-model="newReservation.branchPickupId" class="form-control" id="branchPickup">
@@ -27,14 +47,18 @@
                 </select>
                 </div>
                 <br>
-                <div><h3>Total price: {{newReservation.totalPrice}}</h3></div>
-                <br>
+                <div><h3>Total price: {{newReservation.totalPrice | number: 2}}&nbsp;<span
+                        class="fa fa-eur"></span></h3></div>
+
                 <div class="alert" ng-class="{ 'alert-warning' : message != null}">{{message}}</div>
                 <br>
-                <button ng-click="reserveVehicle()" type="button"
-                        class="btn btn-primary">Reserve vehicle
-                </button>
+                <div class="text-center">
+                    <button ng-click="reserveVehicle()" type="button"
+                            class="btn btn-primary">Reserve vehicle
+                    </button>
+                </div>
             </form>
+
         </div>
     </div>
 </div>

@@ -13,6 +13,7 @@ public class PasswordEncoderTest {
         String encodedPassword = passwordEncoder.encode("pass");
 
         System.out.println(encodedPassword);
+
     }
 
 

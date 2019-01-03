@@ -1,25 +1,32 @@
-<div>
-    <br>
-    <h2>{{agency.name}} reservations</h2>
-    <br><br>
-    <table class="table table-striped table-bordered">
-        <th ng-click="sortBy('vehicleName')">Vehicle name <span ng-class="getSortClass('vehicleName')"></span>
-        </th>
-        <th ng-click="sortBy('startDate')">Start date <span ng-class="getSortClass('startDate')"></span></th>
-        <th ng-click="sortBy('endDate')">End date <span ng-class="getSortClass('endDate')"></span></th>
-        <th ng-click="sortBy('totalPrice')">Total price <span ng-class="getSortClass('totalPrice')"></span></th>
-        <th ng-click="sortBy('branchPickupAddress')">Branch pickup <span ng-class="getSortClass('branchPickupAddress')"></span></th>
-        <th ng-click="sortBy('branchDeliveryAddress')">Branch delivery <span ng-class="getSortClass('branchDeliveryAddress')"></span></th>
-        <th ng-click="sortBy('username')">User <span ng-class="getSortClass('username')"></span></th>
-        <tr ng-repeat="r in reservationsByAgency | orderBy:propertyName:!reverse">
-            <td>{{r.vehicleName}}</td>
-            <td>{{r.startDate | date: 'dd.MM.yyyy.&nbsp;&nbsp;&nbsp;&nbsp; hh:mm'}}</td>
-            <td>{{r.endDate | date: 'dd.MM.yyyy.&nbsp;&nbsp;&nbsp;&nbsp; hh:mm'}}</td>
-            <td>{{r.totalPrice}}</td>
-            <td>{{r.branchPickupAddress}}</td>
-            <td>{{r.branchDeliveryAddress}}</td>
-            <td>{{r.username}}</td>
-        </tr>
-    </table>
-    <h4>Total earnings: {{totalEarnings}}</h4>
+<div class="section section-gray">
+    <div class="container">
+        <br><br>
+        <h2>{{agency.name}} reservations</h2>
+        <br><br>
+        <table class="table table-striped table-bordered">
+            <th ng-click="sortBy('vehicleName')">Vehicle name <span ng-class="getSortClass('vehicleName')"></span></th>
+            <th ng-click="sortBy('startDate')">Start date <span ng-class="getSortClass('startDate')"></span></th>
+            <th ng-click="sortBy('endDate')">End date <span ng-class="getSortClass('endDate')"></span></th>
+            <th ng-click="sortBy('totalPrice')">Total price <span ng-class="getSortClass('totalPrice')"></span></th>
+            <th ng-click="sortBy('branchPickupAddress')">Branch pickup <span
+                    ng-class="getSortClass('branchPickupAddress')"></span></th>
+            <th ng-click="sortBy('branchDeliveryAddress')">Branch delivery <span
+                    ng-class="getSortClass('branchDeliveryAddress')"></span></th>
+            <th ng-click="sortBy('username')">User <span ng-class="getSortClass('username')"></span></th>
+            <tr ng-repeat="r in reservationsByAgency | orderBy:propertyName:!reverse">
+                <td>{{r.vehicleName}}</td>
+                <td>{{r.startDate | date: 'dd.MM.yyyy.&nbsp;&nbsp; hh:mm'}}</td>
+                <td>{{r.endDate | date: 'dd.MM.yyyy.&nbsp;&nbsp; hh:mm'}}</td>
+                <td>{{r.totalPrice | number: 2}}<span
+                        class="fa fa-eur"></span></td>
+                <td>{{r.branchPickupAddress}}</td>
+                <td>{{r.branchDeliveryAddress}}</td>
+                <td>{{r.username}}</td>
+            </tr>
+        </table>
+        <h4>Total earnings: {{totalEarnings | number: 2}} &nbsp;<span
+                class="fa fa-eur"></span>
+        </h4>
+        <br><br><br><br>
+    </div>
 </div>

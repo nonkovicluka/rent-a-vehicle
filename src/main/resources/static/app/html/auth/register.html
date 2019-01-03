@@ -1,45 +1,48 @@
-<div class=" col-md-6 col-md-offset-3">
-    <div class="panel panel-default">
-        <div class="panel-heading">Register</div>
-        <div class="panel-body">
-            <div class="col-md-12">
-                <form ng-submit="submit()" name="register" novalidate>
+<div class="full-screen login">
+    <div class="wrapper">
+        <div class="page-header" style="background-image: url('/assets/bootstrap/img/headers/2.jpg');">
+            <div class="filter"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 ml-auto mr-auto">
+                        <div class="card2 card-register2">
+                            <h3 class="card-title text-center">Register</h3>
+                            <br>
+                            <form ng-submit="submit()">
 
-                    <div class="form-group"
-                         ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }">
-                        <label for="username">Username:</label> <input type="text"
-                                                                       required class="form-control"
-                                                                       ng-model="appUser.username"
-                                                                       id="username" name="username">
+                                <div ng-class="{ 'has-error': register.username.$invalid && register.username.$dirty }">
+                                    <input placeholder="Username" type="text" required class="form-control"
+                                           ng-model="appUser.username" id="username" name="username">
+                                </div>
+                                <br>
+                                <div ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }">
+                                    <input placeholder="Password" type="password" required class="form-control" id="pwd"
+                                           ng-model="appUser.password" name="password">
+                                </div>
+                                <br>
+                                <div ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
+                                    <input placeholder="Confirm Password" type="password" name="confirmPassword" required
+                                           class="form-control" id="cpwd" ng-model="confirmPassword">
+                                </div>
+                                <div class="alert alert-warning margin-top-5"
+                                     ng-show="confirmPassword != appUser.password ">Password Not
+                                    Matching
+                                </div>
+                                <br>
+                                <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
+                                <button type="submit" class="btn btn-success btn-block btn-round"
+                                        ng-disabled="register.$invalid || (confirmPassword != appUser.password)">
+                                    Register
+                                </button>
+
+                            </form>
+                            <br>
+                            <div class="text-sm-center">
+                                <p>Already have an account? <a class="text-success" href="#/login">Log in</a>.</p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group"
-                         ng-class="{ 'has-error': register.password.$invalid && register.password.$dirty }">
-                        <label for="pwd">Password:</label> <input type="password" required
-                                                                  class="form-control" id="pwd"
-                                                                  ng-model="appUser.password"
-                                                                  name="password">
-                    </div>
-
-                    <div class="form-group"
-                         ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
-                        <label for="cpwd">Confirm Password:</label> <input type="password"
-                                                                           name="confirmPassword" required
-                                                                           class="form-control" id="cpwd"
-                                                                           ng-model="confirmPassword">
-                    </div>
-
-                    <div class="alert alert-warning margin-top-5"
-                         ng-show="confirmPassword != appUser.password ">Password Not
-                        Matching
-                    </div>
-
-                    <button type="submit" class="btn btn-default"
-                            ng-disabled="register.$invalid || (confirmPassword != appUser.password)">Register
-                    </button>
-                    <button class="btn btn-default" ui-sref="login">Login</button>
-                    <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

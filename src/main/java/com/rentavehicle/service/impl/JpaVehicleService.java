@@ -24,6 +24,12 @@ public class JpaVehicleService implements VehicleService {
     }
 
     @Override
+    public List<Vehicle> top3Vehicles() {
+
+        return vehicleRepository.top3Vehicles();
+    }
+
+    @Override
     public List<Vehicle> findAll() {
 
         return vehicleRepository.findAll();

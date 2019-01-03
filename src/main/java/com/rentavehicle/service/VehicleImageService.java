@@ -17,6 +17,8 @@ public interface VehicleImageService {
 
 //    List<VehicleImage> findByVehicleId(Long vehicleId);
 
+    List<VehicleImage> top3VehicleImages();
+
     List<VehicleImage> findByAgencyId(Long agencyId);
 
     void createImage(MultipartFile file, Vehicle vehicle, Long agencyId) throws IOException;

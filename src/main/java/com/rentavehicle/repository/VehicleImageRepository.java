@@ -24,4 +24,13 @@ public interface VehicleImageRepository extends PagingAndSortingRepository<Vehic
 
     )
     List<VehicleImage> findByAgencyId(@Param("agencyId") Long agencyId);
+
+    @Query(
+            value = "SELECT vi.* FROM vehicle_image vi INNER JOIN " +
+            "(SELECT  v.* FROM reservation r LEFT JOIN vehicle v ON v.id = r.vehicle_id GROUP BY r.vehicle_id ORDER BY count(r.vehicle_id) desc LIMIT 3) " +
+            "AS veh ON vi.vehicle_id = veh.id",
+            nativeQuery = true
+    )
+    List<VehicleImage> top3VehicleImages();
+
 }

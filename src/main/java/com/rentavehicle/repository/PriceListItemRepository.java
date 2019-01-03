@@ -15,6 +15,16 @@ import java.util.List;
 public interface PriceListItemRepository extends JpaRepository<PriceListItem, Long> {
 
     @Query(
+            value = "SELECT pli.* FROM price_list_item pli " +
+                    "INNER JOIN price_list pl ON pli.price_list_id = pl.id " +
+                    "INNER JOIN (SELECT  v.* FROM reservation r LEFT JOIN vehicle v ON v.id = r.vehicle_id GROUP BY r.vehicle_id ORDER BY count(r.vehicle_id) desc LIMIT 3) " +
+                    "AS veh ON pli.vehicle_id = veh.id WHERE pl.start_date <= now() and pl.end_date >= now()",
+            nativeQuery = true
+    )
+    List<PriceListItem> top3Pli();
+
+
+    @Query(
             "SELECT new com.rentavehicle.web.dto.VehiclePriceListItem(v, pli) FROM PriceListItem pli LEFT JOIN pli.vehicle v " +
                     "INNER JOIN pli.priceList WHERE pli.priceList.startDate <= current_date AND pli.priceList.endDate >= current_date " +
                     "AND v.agency.id = :agencyId AND (:name IS NULL OR v.name LIKE :name) AND (:vehicleTypeId IS NULL OR v.vehicleType.id =:vehicleTypeId) AND v.deleted = false"

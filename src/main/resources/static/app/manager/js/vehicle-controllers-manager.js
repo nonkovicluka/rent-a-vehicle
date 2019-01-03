@@ -17,6 +17,8 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
     $scope.currentPriceList = {};
 
+
+
     var baseUrlCurrentPriceList = "api/pricelists/" + $routeParams.agencyId + "/pl";
 
     var getCurrentPriceList = function () {
@@ -31,7 +33,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
     getCurrentPriceList();
 
-    var priceListItemVehiclesUrl = "api/pricelistitems/priceListVehicles";
+    var priceListItemVehiclesUrl = "api/pricelistitems/vehicles";
 
     $scope.vehiclesAndPrice = [];
 
@@ -39,9 +41,14 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
     $scope.filteredVehicle.name = '';
     $scope.filteredVehicle.vehicleTypeId = '';
 
+    $scope.pageNum = 0;
+    $scope.totalPages = 1;
+
     $scope.getVehiclesAndPrice = function () {
 
         var config = {params: {}};
+
+        config.params.pageNum = $scope.pageNum;
 
         if ($scope.filteredVehicle.name != "") {
             config.params.name = $scope.filteredVehicle.name;
@@ -58,6 +65,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
         $http.get(priceListItemVehiclesUrl, config)
             .then(function success(data) {
                     $scope.vehiclesAndPrice = data.data;
+                    $scope.totalPages = data.headers('totalPages');
                 },
                 function error(data) {
 
@@ -65,6 +73,11 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
     };
 
+    $scope.go = function (direction) {
+        $scope.pageNum = $scope.pageNum + direction;
+        $scope.getVehiclesAndPrice();
+
+    };
 
     var baseUrlVehicleType = "/api/vehicleTypes/all";
 

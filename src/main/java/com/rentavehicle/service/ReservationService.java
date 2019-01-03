@@ -1,6 +1,7 @@
 package com.rentavehicle.service;
 
 import com.rentavehicle.model.Reservation;
+import com.rentavehicle.model.Vehicle;
 import org.joda.time.DateTime;
 import org.springframework.data.repository.query.Param;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface ReservationService {
 
     Reservation findOne(Long id);
+
 
     List<Reservation> findAll();
 

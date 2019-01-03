@@ -1,6 +1,7 @@
 package com.rentavehicle.repository;
 
 import com.rentavehicle.model.Reservation;
+import com.rentavehicle.model.Vehicle;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,9 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     List<Reservation> findByVehicleId(Long vehicleId);
+
+
+
 
 
     @Query(

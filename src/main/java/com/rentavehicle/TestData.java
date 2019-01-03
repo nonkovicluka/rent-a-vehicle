@@ -265,7 +265,7 @@ public class TestData {
         v6.setName("Scott Spark Pro 700");
         v6.setAvailable(true);
         v6.setDescription("Neki random opis...");
-        v6.setSpecification("The Spark Pro 700 is the ideal next step for any aspiring athlete who wants to compete with the best.");
+        v6.setSpecification("The Spark Pro 700 is the ideal next step for any aspiring athlete who wants to compete with the best riders in the world.");
         v6.setAgency(a2);
         v6.setVehicleType(vt3);
         vehicleService.save(v6);
@@ -321,20 +321,20 @@ public class TestData {
 
         PriceList pl1 = new PriceList();
         pl1.setAgency(a1);
-        pl1.setStartDate(new LocalDate(2018, 1, 1));
-        pl1.setEndDate(new LocalDate(2018, 12, 31));
+        pl1.setStartDate(new LocalDate(2019, 1, 1));
+        pl1.setEndDate(new LocalDate(2019, 12, 31));
         priceListService.save(pl1);
 
         PriceList pl2 = new PriceList();
         pl2.setAgency(a1);
-        pl2.setStartDate(new LocalDate(2019, 1, 1));
-        pl2.setEndDate(new LocalDate(2019, 12, 31));
+        pl2.setStartDate(new LocalDate(2020, 1, 1));
+        pl2.setEndDate(new LocalDate(2020, 12, 31));
         priceListService.save(pl2);
 
         PriceList pl3 = new PriceList();
         pl3.setAgency(a2);
-        pl3.setStartDate(new LocalDate(2018, 1, 1));
-        pl3.setEndDate(new LocalDate(2018, 12, 31));
+        pl3.setStartDate(new LocalDate(2019, 1, 1));
+        pl3.setEndDate(new LocalDate(2019, 12, 31));
         priceListService.save(pl3);
 
 
@@ -484,6 +484,26 @@ public class TestData {
         res5.setEndDate(endDate1);
         res5.setTotalPrice(12235.35);
         reservationService.save(res5);
+
+        Reservation res6 = new Reservation();
+        res6.setVehicle(v9);
+        res6.setBranchPickup(b2);
+        res6.setBranchDelivery(b2);
+        res6.setUser(u1);
+        res6.setStartDate(startDate1);
+        res6.setEndDate(endDate1);
+        res6.setTotalPrice(3452.25);
+        reservationService.save(res6);
+
+        Reservation res7 = new Reservation();
+        res7.setVehicle(v10);
+        res7.setBranchPickup(b2);
+        res7.setBranchDelivery(b2);
+        res7.setUser(u1);
+        res7.setStartDate(startDate1);
+        res7.setEndDate(endDate1);
+        res7.setTotalPrice(1200);
+        reservationService.save(res7);
 
 
         // rating test data
