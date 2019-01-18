@@ -41,8 +41,8 @@ public class User implements UserDetails {
     @Column
     private LocalDate birthDate;
 
-    @ElementCollection
-    private List<String> roles = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private UserRole userRole;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -68,11 +68,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+        List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
+        simpleGrantedAuthorities.add(new SimpleGrantedAuthority(this.getUserRole().getAuthority()));
+
+        return simpleGrantedAuthorities;
     }
 
     @Override
@@ -213,12 +212,16 @@ public class User implements UserDetails {
     }
 
 
-    public List<String> getRoles() {
-        return roles;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+
+        if (userRole != null && !userRole.getUsers().contains(this)) {
+            userRole.getUsers().add(this);
+        }
     }
 
     public List<Rating> getRatings() {

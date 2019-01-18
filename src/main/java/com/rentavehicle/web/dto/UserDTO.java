@@ -9,7 +9,6 @@ public class UserDTO {
 
     private String username;
 
-    private String password;
 
     private String profileImage;
 
@@ -18,6 +17,10 @@ public class UserDTO {
     private boolean banned;
 
     private LocalDate birthDate;
+
+    private Long userRoleId;
+
+    private String userRoleName;
 
     private boolean deleted;
 
@@ -45,13 +48,7 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getProfileImage() {
         return profileImage;
@@ -85,5 +82,19 @@ public class UserDTO {
         this.birthDate = birthDate;
     }
 
+    public String getUserRoleName() {
+        return userRoleName;
+    }
 
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
+    public Long getUserRoleId() {
+        return userRoleId;
+    }
+
+    public void setUserRoleId(Long userRoleId) {
+        this.userRoleId = userRoleId;
+    }
 }

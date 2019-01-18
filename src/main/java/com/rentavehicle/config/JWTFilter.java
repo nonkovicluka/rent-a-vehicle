@@ -1,5 +1,6 @@
 package com.rentavehicle.config;
 
+import com.rentavehicle.model.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ import java.util.List;
  */
 public class JWTFilter extends GenericFilterBean {
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORITIES_KEY = "roles";
+    private static final String AUTHORITIES_KEY = "role";
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
@@ -60,10 +62,10 @@ public class JWTFilter extends GenericFilterBean {
      */
     public Authentication getAuthentication(Claims claims) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-        List<String> roles = (List<String>) claims.get(AUTHORITIES_KEY);
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
+        String role = (String) claims.get(AUTHORITIES_KEY);
+
+        authorities.add(new SimpleGrantedAuthority(role));
+
         User principal = new User(claims.getSubject(), "", authorities);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 principal, "", authorities);

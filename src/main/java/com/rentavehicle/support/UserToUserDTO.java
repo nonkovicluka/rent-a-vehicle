@@ -22,12 +22,14 @@ public class UserToUserDTO implements Converter<User, UserDTO>{
 
 		dto.setId(user.getId());
 		dto.setUsername(user.getUsername());
-		dto.setPassword(user.getPassword());
+
 		dto.setProfileImage(user.getProfileImage());
 		dto.setBirthDate(user.getBirthDate());
 		dto.setApproved(user.isApproved());
 		dto.setBanned(user.isBanned());
 		dto.setDeleted(user.isDeleted());
+		dto.setUserRoleId(user.getUserRole().getId());
+		dto.setUserRoleName(user.getUserRole().getName());
 
 		return dto;
 	}

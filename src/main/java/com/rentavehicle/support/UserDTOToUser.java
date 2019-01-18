@@ -1,6 +1,8 @@
 package com.rentavehicle.support;
 
 import com.rentavehicle.model.User;
+import com.rentavehicle.model.UserRole;
+import com.rentavehicle.service.UserRoleService;
 import com.rentavehicle.service.UserService;
 import com.rentavehicle.web.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +18,29 @@ public class UserDTOToUser implements Converter<UserDTO, User> {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
     @Override
     public User convert(UserDTO dto) {
 
         User user;
 
         if (dto.getId() == null) {
+            UserRole userRole = userRoleService.findOne(dto.getUserRoleId());
             user = new User();
+            user.setUserRole(userRole);
         } else {
             user = userService.findOne(dto.getId());
         }
 
         user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
         user.setProfileImage(dto.getProfileImage());
         user.setApproved(dto.isApproved());
         user.setBanned(dto.isBanned());
         user.setBirthDate(dto.getBirthDate());
         user.setDeleted(dto.isDeleted());
+
 
         return user;
     }

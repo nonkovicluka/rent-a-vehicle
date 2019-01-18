@@ -26,6 +26,9 @@ public class TestData {
     private UserService userService;
 
     @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
     private VehicleService vehicleService;
 
     @Autowired
@@ -52,22 +55,19 @@ public class TestData {
     @PostConstruct
     public void init() {
 
+        // UserRole test data
 
-        // Authorities test data
+        UserRole ur1 = new UserRole();
+        ur1.setName("ROLE_ADMIN");
+        userRoleService.save(ur1);
 
-        String au1 = "ROLE_ADMIN";
-        String au2 = "ROLE_MANAGER";
-        String au3 = "ROLE_USER";
+        UserRole ur2 = new UserRole();
+        ur2.setName("ROLE_MANAGER");
+        userRoleService.save(ur2);
 
-        List<String> authorities1 = new ArrayList<>();
-        authorities1.add(au1);
-
-
-        List<String> authorities2 = new ArrayList<>();
-        authorities2.add(au2);
-
-        List<String> authorities3 = new ArrayList<>();
-        authorities3.add(au3);
+        UserRole ur3 = new UserRole();
+        ur3.setName("ROLE_USER");
+        userRoleService.save(ur3);
 
 
         // User test data
@@ -75,19 +75,19 @@ public class TestData {
         User u1 = new User();
         u1.setUsername("user1");
         u1.setPassword("$2a$10$dChX5BFdvueSIvxs/x7SfuO6g.tqzuzI1YS3DST/3AULnFczc5JxK"); // pass
-        u1.setRoles(authorities1); // ADMIN
+        u1.setUserRole(ur1); // ADMIN
         userService.save(u1);
 
         User u2 = new User();
         u2.setUsername("user2");
         u2.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
-        u2.setRoles(authorities2); // MANAGER
+        u2.setUserRole(ur2); // MANAGER
         userService.save(u2);
 
         User u3 = new User();
         u3.setUsername("user3");
         u3.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
-        u3.setRoles(authorities3); // USER
+        u3.setUserRole(ur3); // USER
         userService.save(u3);
 
 
