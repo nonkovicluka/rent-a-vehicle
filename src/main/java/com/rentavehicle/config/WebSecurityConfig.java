@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all", "/api/vehicles/top3", "/api/vehicleImages/top3",
                         "/api/branches/{agencyId}bPages", "/api/branches/all", "/api/ratings/avgScore", "/api/vehicleImages/allByAgency", "/api/branchImages/allByAgency", "/assets/**", "/images/**", "/register", "/authenticate",
                         "/api/pricelistitems/vehicles", "/api/pricelistitems/top3",
-                        "/favicon.ico");
+                        "/favicon.ico", "/websocket/**");
     }
 
     // This method is used for override HttpSecurity of the web Application.

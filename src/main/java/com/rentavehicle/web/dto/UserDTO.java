@@ -1,26 +1,31 @@
 package com.rentavehicle.web.dto;
 
 
-import org.joda.time.LocalDate;
-
 public class UserDTO {
 
     private Long id;
 
     private String username;
 
-
-    private String profileImage;
+    private String password;
 
     private boolean approved;
 
     private boolean banned;
 
-    private LocalDate birthDate;
-
     private Long userRoleId;
 
     private String userRoleName;
+
+    private String docImage;
+
+    public String getDocImage() {
+        return docImage;
+    }
+
+    public void setDocImage(String docImage) {
+        this.docImage = docImage;
+    }
 
     private boolean deleted;
 
@@ -49,15 +54,6 @@ public class UserDTO {
     }
 
 
-
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
-
     public boolean isApproved() {
         return approved;
     }
@@ -74,14 +70,6 @@ public class UserDTO {
         this.banned = banned;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getUserRoleName() {
         return userRoleName;
     }
@@ -96,5 +84,13 @@ public class UserDTO {
 
     public void setUserRoleId(Long userRoleId) {
         this.userRoleId = userRoleId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

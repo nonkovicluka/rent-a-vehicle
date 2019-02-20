@@ -25,14 +25,14 @@
         <div class="d-flex row h-100">
             <div class="col-md-3">
                 <label for="filteredVehicleName">Name:</label>
-                <input ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.name" type="text"
+                <input ng-change="getVehiclesAndPriceSelected()" ng-model="filteredVehicle.name" type="text"
                        class="form-control"
                        id="filteredVehicleName">
             </div>
             <br>
             <div class="col-md-3">
                 <label for="filteredVehicleType">Type:</label>
-                <select ng-change="getVehiclesAndPrice()" ng-model="filteredVehicle.vehicleTypeId"
+                <select ng-change="getVehiclesAndPriceSelected()" ng-model="filteredVehicle.vehicleTypeId"
                         class="form-control" id="filteredVehicleType">
                     <option value=""></option>
                     <option ng-repeat="vt in vehicleTypes" value="{{vt.id}}">{{vt.name}}</option>
@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-3">
                 <label for="filteredVehiclePriceList">Select price list </label>
-                <select ng-change="getVehiclesAndPrice()" ng-model="currentPriceList.id" class="form-control"
+                <select ng-change="getVehiclesAndPriceSelected()" ng-model="pl.id" class="form-control"
                         id="filteredVehiclePriceList">
                     <option ng-repeat="pl in priceLists" value="{{pl.id}}">{{pl.startDate | date: 'dd.MM.yyyy.'}} -
                         {{pl.endDate | date: 'dd.MM.yyyy.'}}
@@ -122,4 +122,8 @@
             </tr>
         </table>
     </div>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
 </div>

@@ -1,6 +1,6 @@
 rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $location, $routeParams, AuthService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
 
     var redirect = function () {
@@ -26,7 +26,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
         $http.get(baseUrlCurrentPriceList)
             .then(function success(data) {
                 $scope.currentPriceList = data.data;
-                $scope.getVehiclesAndPrice();
+                $scope.getVehiclesAndPriceCurrent();
             });
 
     };
@@ -34,6 +34,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
     getCurrentPriceList();
 
     var priceListItemVehiclesUrl = "api/pricelistitems/vehicles";
+    var selectedPriceListUrl = "api/pricelistitems/priceListVehicles";
 
     $scope.vehiclesAndPrice = [];
 
@@ -44,7 +45,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
     $scope.pageNum = 0;
     $scope.totalPages = 1;
 
-    $scope.getVehiclesAndPrice = function () {
+    $scope.getVehiclesAndPriceCurrent = function () {
 
         var config = {params: {}};
 
@@ -72,6 +73,46 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
                 });
 
     };
+
+    $scope.pl = null;
+
+    $scope.getVehiclesAndPriceSelected = function () {
+
+        // $scope.vehiclesAndPrice = null;
+
+        var config = {params: {}};
+
+        config.params.pageNum = $scope.pageNum;
+
+        if ($scope.filteredVehicle.name != "") {
+            config.params.name = $scope.filteredVehicle.name;
+        }
+
+        if ($scope.filteredVehicle.vehicleTypeId != "") {
+            config.params.vehicleTypeId = $scope.filteredVehicle.vehicleTypeId;
+
+        }
+
+        if ($scope.pl) {
+            config.params.priceListId = $scope.pl.id;
+        }
+        else{
+            config.params.priceListId = $scope.currentPriceList.id;
+        }
+
+        config.params.agencyId = $routeParams.agencyId;
+
+        $http.get(selectedPriceListUrl, config)
+            .then(function success(data) {
+                    $scope.vehiclesAndPrice = data.data;
+                    $scope.totalPages = data.headers('totalPages');
+                },
+                function error(data) {
+
+                });
+
+    };
+
 
     $scope.go = function (direction) {
         $scope.pageNum = $scope.pageNum + direction;
@@ -160,7 +201,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
             .then(
                 function success(data) {
                     $scope.oldVehicle = {};
-                    $scope.getVehiclesAndPrice();
+                    $scope.getVehiclesAndPriceSelected();
                 },
                 function error(data) {
 
@@ -174,7 +215,7 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
         $http.put("api/vehicles/delete", vehicleAndPrice)
             .then(
                 function success(data) {
-                    $scope.getVehiclesAndPrice();
+                    $scope.getVehiclesAndPriceSelected();
                 },
                 function error(data) {
 
@@ -191,13 +232,11 @@ rentAVehicleApp.controller("agencyVehicleCtrl", function ($scope, $http, $locati
 
     };
 
-    console.log($scope)
-
 });
 
 rentAVehicleApp.controller("addVehicleCtrl", function ($scope, $http, $location, $routeParams, $rootScope, AuthService, vehicleImagesService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
     $scope.agency = {};
 
     var getAgency = function () {

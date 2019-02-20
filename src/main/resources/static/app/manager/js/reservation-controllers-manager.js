@@ -1,6 +1,6 @@
 rentAVehicleApp.controller("reservationsCtrl", function ($scope, $http, $location, $routeParams, AuthService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
     $scope.agency = {};
 
     var getAgency = function () {

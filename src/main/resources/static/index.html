@@ -51,7 +51,7 @@
                             <li>
                                 <a href="/#/agencies">Agencies</a>
                             </li>
-                            <li ng-show="user.roles[0] == 'ROLE_MANAGER' || user.roles[0] == 'ROLE_ADMIN'">
+                            <li ng-show="user.userRoleName == 'ROLE_MANAGER' || user.userRoleName[0] == 'ROLE_ADMIN'">
                                 <a href="/#/my-agencies">My agencies</a></li>
                             </li>
                             <li ng-show="!user.username">
@@ -90,6 +90,8 @@
 
 
 <!-- Including Scripts -->
+<script src="assets/js/sockjs.min.js"></script>
+<script src="assets/js/stomp.min.js"></script>
 <script src="assets/js/angular.js"></script>
 <script src="assets/js/angular-route.js"></script>
 <script src="assets/js/ng-map.js"></script>
@@ -104,19 +106,18 @@
 
 <!-- Including services -->
 <script type="text/javascript" src="app/js/services/auth-service.js"></script>
+<script type="text/javascript" src="app/js/services/socket-service.js"></script>
 <script type="text/javascript" src="app/manager/js/services/vehicle-images-service.js"></script>
 <script type="text/javascript" src="app/manager/js/services/branch-images-service.js"></script>
 <script type="text/javascript" src="app/manager/js/services/agency-logo-service.js"></script>
+<script type="text/javascript" src="app/manager/js/services/user-doc-service.js"></script>
 <script type="text/javascript" src="app/js/services/pricePerHour-service.js"></script>
 
 <!-- Including controllers -->
 <script type="text/javascript" src="app/js/auth/nav.js"></script>
 <script type="text/javascript" src="app/js/home/home.js"></script>
 <script type="text/javascript" src="app/js/auth/login.js"></script>
-<script type="text/javascript" src="app/js/auth/users.js"></script>
-<script type="text/javascript" src="app/js/auth/home.js"></script>
 <script type="text/javascript" src="app/js/auth/page-not-found.js"></script>
-<script type="text/javascript" src="app/js/auth/access-denied.js"></script>
 <script type="text/javascript" src="app/js/auth/register.js"></script>
 <script type="text/javascript" src="app/js/agency/agency-controllers.js"></script>
 <script type="text/javascript" src="app/js/branch/branch-controllers.js"></script>
@@ -126,6 +127,7 @@
 <script type="text/javascript" src="app/manager/js/agency-controllers-manager.js"></script>
 <script type="text/javascript" src="app/manager/js/reservation-controllers-manager.js"></script>
 <script type="text/javascript" src="app/manager/js/branch-controllers-manager.js"></script>
+<script type="text/javascript" src="app/admin/js/user-approval.js"></script>
 
 </body>
 </html>

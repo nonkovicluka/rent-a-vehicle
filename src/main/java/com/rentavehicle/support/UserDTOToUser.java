@@ -1,7 +1,6 @@
 package com.rentavehicle.support;
 
 import com.rentavehicle.model.User;
-import com.rentavehicle.model.UserRole;
 import com.rentavehicle.service.UserRoleService;
 import com.rentavehicle.service.UserService;
 import com.rentavehicle.web.dto.UserDTO;
@@ -27,19 +26,18 @@ public class UserDTOToUser implements Converter<UserDTO, User> {
         User user;
 
         if (dto.getId() == null) {
-            UserRole userRole = userRoleService.findOne(dto.getUserRoleId());
             user = new User();
-            user.setUserRole(userRole);
+
         } else {
             user = userService.findOne(dto.getId());
         }
 
+        user.setPassword(dto.getPassword());
         user.setUsername(dto.getUsername());
-        user.setProfileImage(dto.getProfileImage());
         user.setApproved(dto.isApproved());
         user.setBanned(dto.isBanned());
-        user.setBirthDate(dto.getBirthDate());
         user.setDeleted(dto.isDeleted());
+        user.setDocImage(dto.getDocImage());
 
 
         return user;

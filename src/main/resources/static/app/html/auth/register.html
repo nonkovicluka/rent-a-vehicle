@@ -5,7 +5,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 ml-auto mr-auto">
-                        <div class="card2 card-register2">
+                        <div class="card2 card-register2" style="max-width: 45rem;">
                             <h3 class="card-title text-center">Register</h3>
                             <br>
                             <form ng-submit="submit()">
@@ -21,16 +21,45 @@
                                 </div>
                                 <br>
                                 <div ng-class="{ 'has-error': register.confirmPassword.$invalid && register.confirmPassword.$dirty }">
-                                    <input placeholder="Confirm Password" type="password" name="confirmPassword" required
+                                    <input placeholder="Confirm Password" type="password" name="confirmPassword"
+                                           required
                                            class="form-control" id="cpwd" ng-model="confirmPassword">
                                 </div>
+                                <br>
+                                <div>
+                                    <label for="userRole">User type</label> <select
+                                        ng-model="userRole" class="form-control" id="userRole">
+                                    <option ng-value="User">User</option>
+                                    <option ng-value="Manager">Manager</option>
+                                </select>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-md-9 mb-3 custom-file">
+                                        <input class="custom-file-input" type="file" ngf-select ng-model="doc"
+                                               name="file"
+                                               accept="image/*" ngf-max-size="10MB"
+                                               ngf-model-invalid="errorFile" id="inputGroupFile02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                                    </div>
+                                </div>
+                                <br>
+                                <span class="d-flex row h-100" ng-show="doc">
+                                    <img ngf-thumbnail="doc" class="thumb "><span
+                                        class="align-self-center">&nbsp;&nbsp;{{doc.name | limitTo: 16 }}{{doc.name.length > 16 ? '...' : ''}}</span>
+                                    <button class="btn btn-outline-danger btn-just-icon ml-auto align-self-center"
+                                            ng-click="doc = null">
+                                     <i class="fa fa-remove"></i>
+                                    </button>
+                                </span>
                                 <div class="alert alert-warning margin-top-5"
                                      ng-show="confirmPassword != appUser.password ">Password Not
                                     Matching
                                 </div>
                                 <br>
                                 <div class="alert alert-info margin-top-5" ng-show="message">{{message}}</div>
-                                <button type="submit" class="btn btn-success btn-block btn-round"
+                                <button ng-click="uploadAndSave()" type="button"
+                                        class="btn btn-success btn-block btn-round"
                                         ng-disabled="register.$invalid || (confirmPassword != appUser.password)">
                                     Register
                                 </button>

@@ -1,9 +1,12 @@
 package com.rentavehicle.web.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rentavehicle.model.User;
 import com.rentavehicle.model.UserRole;
-import com.rentavehicle.repository.UserRepository;
 import com.rentavehicle.service.UserRoleService;
+import com.rentavehicle.service.UserService;
+import com.rentavehicle.support.UserDTOToUser;
 import com.rentavehicle.support.UserToUserDTO;
 import com.rentavehicle.web.dto.UserDTO;
 import io.jsonwebtoken.Jwts;
@@ -14,13 +17,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * All web services in this controller will be available for all the users
@@ -30,8 +38,10 @@ import java.util.*;
 @RestController
 public class HomeRestController {
 
+    private static String RELATIVE_ROOT = "images/user-doc";
+
     @Autowired
-    private UserRepository appUserRepository;
+    private UserService userService;
 
     @Autowired
     private UserRoleService userRoleService;
@@ -40,27 +50,57 @@ public class HomeRestController {
     private UserToUserDTO toUserDTO;
 
     @Autowired
+    private UserDTOToUser toUser;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    /**
-     * This method is used for user registration. Note: user registration is not
-     * require any authentication.
-     *
-     * @param appUser
-     * @return
-     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> createUser(@RequestBody User appUser) {
-        if (appUserRepository.findByUsername(appUser.getUsername()) != null) {
-            throw new RuntimeException("Username already exist");
+    public ResponseEntity<UserDTO> add(@RequestParam(required = false) MultipartFile doc, @RequestParam String userJson, @RequestParam String userRole) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        UserDTO userDTO = mapper.readValue(userJson, UserDTO.class);
+        User user = toUser.convert(userDTO);
+
+        if (userService.findByUsername(user.getUsername()) != null) {
+            throw new RuntimeException("Username already exists");
         }
-        UserRole userRole = userRoleService.findOne(3L); // ROLE_USER
-        userRole.addUser(appUser);
-        appUser.setUserRole(userRole);
-        appUser.setPassword(bCryptPasswordEncoder.encode(appUser.getPassword()));
-        appUserRepository.save(appUser);
-        return new ResponseEntity<UserDTO>(toUserDTO.convert(appUser), HttpStatus.CREATED);
+
+
+        if (userRole.equals("User")) {
+            UserRole roleUser = userRoleService.findOne(3L); // ROLE_USER
+            roleUser.addUser(user);
+            user.setUserRole(roleUser);
+
+        }
+        if (userRole.equals("Manager")) {
+            UserRole roleManager = userRoleService.findOne(2L); // ROLE_MANAGER
+            roleManager.addUser(user);
+            user.setUserRole(roleManager);
+        } else {
+            UserRole roleUser = userRoleService.findOne(3L); // ROLE_USER
+            roleUser.addUser(user);
+            user.setUserRole(roleUser);
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+
+        if (doc != null) {
+            user.setDocImage(RELATIVE_ROOT + "/" + user.getUsername() + "/" + doc.getOriginalFilename());
+            userService.createImage(doc, user.getUsername());
+        }
+
+        try {
+            userService.save(user);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(toUserDTO.convert(user), HttpStatus.CREATED);
     }
 
     /**
@@ -73,7 +113,7 @@ public class HomeRestController {
     public User user(Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedUsername = auth.getName();
-        return appUserRepository.findByUsername(loggedUsername);
+        return userService.findByUsername(loggedUsername);
     }
 
     /**
@@ -87,12 +127,16 @@ public class HomeRestController {
     public ResponseEntity<Map<String, Object>> login(@RequestParam String username, @RequestParam String password,
                                                      HttpServletResponse response) throws IOException {
         String token = null;
-        User appUser = appUserRepository.findByUsername(username);
+        User appUser = userService.findByUsername(username);
 
         String userPass = appUser.getPassword();
         Map<String, Object> tokenMap = new HashMap<String, Object>();
         if (appUser != null && bCryptPasswordEncoder.matches(password, userPass)) {
-            token = Jwts.builder().setSubject(username).claim("role", appUser.getUserRole().getAuthority()).setIssuedAt(new Date())
+            Date issuedDate = new Date();
+            Date expDate = new Date(issuedDate.getTime() + 600000); // 10 minutes
+
+            token = Jwts.builder().setSubject(username).claim("role", appUser.getUserRole().getAuthority()).setIssuedAt(issuedDate)
+//                    .setExpiration(expDate)
                     .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
             tokenMap.put("token", token);
 

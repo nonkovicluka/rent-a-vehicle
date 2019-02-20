@@ -19,5 +19,5 @@ public interface AgencyService {
 
     Page<Agency> findByOwnerId(int pageNum, Long userId);
 
-    void createImage(MultipartFile file,  Long agencyId) throws IOException;
+    void createImage(MultipartFile file,  String agencyName) throws IOException;
 }

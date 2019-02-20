@@ -30,6 +30,7 @@
                                     &nbsp;&nbsp;&nbsp;
                                     <span class="align-self-end">
                                            <button ng-click="rateAgency()" type="button"
+                                                   ng-disabled="!user.approved || user.banned"
                                                    class="btn btn-outline-primary btn-sm2">Rate
                                            </button>
                                         </span>
@@ -143,7 +144,7 @@
                             <div class="card-body text-center">
                                 <button class="btn btn-success"
                                         ng-click="reserve(v.vehicleId); getPricePerHour(v.pricePerHour)"
-                                        ng-disabled="!v.available">Reserve
+                                        ng-disabled="!v.available || (!user.approved || user.banned)">Reserve
                                 </button>
                             </div>
                         </div>

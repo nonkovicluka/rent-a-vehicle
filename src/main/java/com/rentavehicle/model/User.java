@@ -2,7 +2,6 @@ package com.rentavehicle.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.LocalDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,16 +29,13 @@ public class User implements UserDetails {
     private String password;
 
     @Column
-    private String profileImage;
-
-    @Column
     private boolean approved;
 
     @Column
     private boolean banned;
 
     @Column
-    private LocalDate birthDate;
+    private String docImage;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private UserRole userRole;
@@ -52,9 +48,6 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Agency> agencies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<DocImage> docImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -122,14 +115,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
-    }
-
     public boolean isApproved() {
         return approved;
     }
@@ -145,15 +130,6 @@ public class User implements UserDetails {
     public void setBanned(boolean banned) {
         this.banned = banned;
     }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
 
     public List<Reservation> getReservations() {
         return reservations;
@@ -171,13 +147,6 @@ public class User implements UserDetails {
         this.agencies = agencies;
     }
 
-    public List<DocImage> getDocImages() {
-        return docImages;
-    }
-
-    public void setDocImages(List<DocImage> docImages) {
-        this.docImages = docImages;
-    }
 
     public boolean isDeleted() {
         return deleted;
@@ -200,14 +169,6 @@ public class User implements UserDetails {
 
         if (!this.equals(agency.getOwner())) {
             agency.setOwner(this);
-        }
-    }
-
-    public void addDocImage(DocImage docImage) {
-        this.docImages.add(docImage);
-
-        if (!this.equals(docImage.getUser())) {
-            docImage.setUser(this);
         }
     }
 
@@ -238,5 +199,13 @@ public class User implements UserDetails {
         if (!this.equals(rating.getUser())) {
             rating.setUser(this);
         }
+    }
+
+    public String getDocImage() {
+        return docImage;
+    }
+
+    public void setDocImage(String docImage) {
+        this.docImage = docImage;
     }
 }

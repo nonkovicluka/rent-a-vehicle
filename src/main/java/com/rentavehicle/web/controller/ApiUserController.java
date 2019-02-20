@@ -19,8 +19,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class ApiUserController {
 
-//    @Autowired
-//    private UserService userService;
 
     @Autowired
     UserDTOToUser toUser;
@@ -56,6 +54,17 @@ public class ApiUserController {
             return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<UserDTO>(toDTO.convert(appUser), HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/usersApproval", method = RequestMethod.GET)
+    public ResponseEntity<List<UserDTO>> approvalUsers() {
+        List<User> users = userRepository.findByApprovedFalseAndBannedFalse();
+        if (users == null) {
+            return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<UserDTO>>(toDTO.convert(users), HttpStatus.OK);
         }
     }
 
@@ -117,6 +126,42 @@ public class ApiUserController {
 
 
         User converted = toUser.convert(editedUser);
+
+        userRepository.save(converted);
+
+        return toDTO.convert(converted);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/approve", method = RequestMethod.PUT)
+    public UserDTO approve(@RequestBody UserDTO approvedUser) {
+        if (userRepository.findByUsername(approvedUser.getUsername()) != null
+                && userRepository.findByUsername(approvedUser.getUsername()).getId() != approvedUser.getId()) {
+            throw new RuntimeException("Username already exist");
+        }
+
+
+        User converted = toUser.convert(approvedUser);
+
+        converted.setApproved(true);
+
+        userRepository.save(converted);
+
+        return toDTO.convert(converted);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/ban", method = RequestMethod.PUT)
+    public UserDTO banned(@RequestBody UserDTO bannedUser) {
+        if (userRepository.findByUsername(bannedUser.getUsername()) != null
+                && userRepository.findByUsername(bannedUser.getUsername()).getId() != bannedUser.getId()) {
+            throw new RuntimeException("Username already exist");
+        }
+
+
+        User converted = toUser.convert(bannedUser);
+
+        converted.setBanned(true);
 
         userRepository.save(converted);
 

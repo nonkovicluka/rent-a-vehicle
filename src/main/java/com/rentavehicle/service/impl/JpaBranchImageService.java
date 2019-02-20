@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class JpaBranchImageService implements BranchImageService {
 
-    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/src/main/resources/static/images/branch-images";
+    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/target/classes/static/images/branch-images";
     private static String RELATIVE_ROOT = "images/branch-images";
 
     @Autowired

@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class JpaVehicleImageService implements VehicleImageService {
 
-    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/src/main/resources/static/images/vehicle-images";
+    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/target/classes/static/images/vehicle-images";
     private static String RELATIVE_ROOT = "images/vehicle-images";
 
 

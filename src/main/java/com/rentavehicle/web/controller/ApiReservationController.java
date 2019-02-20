@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class ApiReservationController {
     @Autowired
     private ReservationToReservationDTO toDTO;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ReservationDTO> get(@PathVariable Long id) {
         Reservation reservation = reservationService.findOne(id);
@@ -39,6 +41,7 @@ public class ApiReservationController {
         return new ResponseEntity<>(toDTO.convert(reservation), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<ReservationDTO> add(@Validated @RequestBody ReservationDTO reservationDTO) {
 
@@ -65,6 +68,7 @@ public class ApiReservationController {
         return new ResponseEntity<>(toDTO.convert(reservation), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ReservationDTO> edit(@PathVariable Long id, @Validated @RequestBody ReservationDTO editedReservation) {
 
@@ -79,6 +83,7 @@ public class ApiReservationController {
         return new ResponseEntity<>(toDTO.convert(converted), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @RequestMapping(value = "/{vehicleId}r", method = RequestMethod.GET)
     public List<ReservationDTO> vehicleReservations(@PathVariable Long vehicleId) {
         List<Reservation> reservations = reservationService.findByVehicleId(vehicleId);
@@ -87,6 +92,7 @@ public class ApiReservationController {
         return toDTO.convert(reservations);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @RequestMapping(value = "/agencyReservations", method = RequestMethod.GET)
     public List<ReservationDTO> getAgencyReservations(@RequestParam Long agencyId) {
 
@@ -96,6 +102,7 @@ public class ApiReservationController {
         return toDTO.convert(reservations);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @RequestMapping(value = "/agencyTotalEarnings", method = RequestMethod.GET)
     public double getAgencyTotalEarning(@RequestParam Long agencyId) {
 

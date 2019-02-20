@@ -1,6 +1,6 @@
 rentAVehicleApp.controller("registerBranchCtrl", function ($scope, $http, $location, AuthService, NgMap, branchImagesService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     var redirect = function () {
         if (!$scope.user) {

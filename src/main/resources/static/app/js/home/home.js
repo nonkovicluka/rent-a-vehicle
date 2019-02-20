@@ -1,8 +1,6 @@
 rentAVehicleApp.controller("homeCtrl", function ($scope, $http, $location, AuthService, pricePerHourService) {
 
-    console.log($scope);
-
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     var baseUrlAgency = "/api/agencies/all";
     var baseUrlVehicle = "api/vehicles/top3";

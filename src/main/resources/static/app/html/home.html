@@ -8,7 +8,7 @@
                 <h5 class="description">Whether you own an agency or want to rent a vehicle, &nbsp;you can do it all
                     here.</h5>
                 <br/>
-                <a ng-show="!user.username" class="btn btn-outline-neutral btn-round" href="#/register">Join</a>
+                <a ng-show="!user" class="btn btn-outline-neutral btn-round" href="#/register">Join</a>
             </div>
         </div>
     </div>
@@ -113,7 +113,7 @@
                             <div class="card-body text-center">
                                 <button class="btn btn-success"
                                         ng-click="reserve(v.agencyId, v.id); getPricePerHour(pli.pricePerHour)"
-                                        ng-disabled="!v.available">Reserve
+                                        ng-disabled="!v.available || !user.approved || user.banned">Reserve
                                 </button>
                             </div>
 

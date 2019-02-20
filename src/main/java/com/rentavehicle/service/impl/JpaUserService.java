@@ -6,12 +6,18 @@ import com.rentavehicle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
 public class JpaUserService implements UserService {
+
+    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/target/classes/static/images/user-doc";
 
     @Autowired
     private UserRepository userRepository;
@@ -40,4 +46,21 @@ public class JpaUserService implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public void createImage(MultipartFile file, String username) throws IOException {
+        if (!file.isEmpty()) {
+            String path = UPLOUD_ROOT + "/" + username;
+            File theDir = new File(path);
+
+            if (!theDir.exists()) {
+                theDir.mkdirs();
+            }
+            Files.copy(file.getInputStream(), Paths.get(path, file.getOriginalFilename()));
+        }
+    }
+
+    @Override
+    public List<User> findByApprovedFalseAndBannedFalse() {
+        return userRepository.findByApprovedFalseAndBannedFalse();
+    }
 }

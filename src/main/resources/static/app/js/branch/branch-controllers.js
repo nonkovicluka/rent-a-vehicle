@@ -1,6 +1,6 @@
 rentAVehicleApp.controller("branchByAgencyCtrl", function ($scope, $http, $routeParams, $location, AuthService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     $scope.branchesByAgency = [];
 

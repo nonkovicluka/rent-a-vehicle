@@ -1,6 +1,6 @@
 rentAVehicleApp.controller("agencySearchCtrl", function ($scope, $http, $location, AuthService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     var baseUrlAgency = "/api/agencies/all";
 
@@ -45,7 +45,7 @@ rentAVehicleApp.controller("agencySearchCtrl", function ($scope, $http, $locatio
 
 rentAVehicleApp.controller("rateAgencyCtrl", function ($scope, $location, $http, $routeParams, AuthService) {
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     var redirect = function () {
         if (!$scope.user) {

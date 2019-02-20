@@ -1,7 +1,6 @@
 package com.rentavehicle.service.impl;
 
 import com.rentavehicle.model.Agency;
-import com.rentavehicle.model.VehicleImage;
 import com.rentavehicle.repository.AgencyRepository;
 import com.rentavehicle.service.AgencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.List;
 @Service
 public class JpaAgencyService implements AgencyService {
 
-    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/src/main/resources/static/images/agency-logo";
+    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/target/classes/static/images/agency-logo";
 
 
     @Autowired
@@ -57,9 +56,9 @@ public class JpaAgencyService implements AgencyService {
     }
 
     @Override
-    public void createImage(MultipartFile file, Long agencyId) throws IOException {
+    public void createImage(MultipartFile file, String agencyName) throws IOException {
         if (!file.isEmpty()) {
-            String path = UPLOUD_ROOT + "/" + agencyId;
+            String path = UPLOUD_ROOT + "/" + agencyName;
             File theDir = new File(path);
 
             if (!theDir.exists()) {

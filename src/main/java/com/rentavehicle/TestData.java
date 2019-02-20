@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class TestData {
@@ -76,12 +74,14 @@ public class TestData {
         u1.setUsername("user1");
         u1.setPassword("$2a$10$dChX5BFdvueSIvxs/x7SfuO6g.tqzuzI1YS3DST/3AULnFczc5JxK"); // pass
         u1.setUserRole(ur1); // ADMIN
+        u1.setApproved(true);
         userService.save(u1);
 
         User u2 = new User();
         u2.setUsername("user2");
         u2.setPassword("$2a$10$RYSS4hATtXM/yA/mQQ81MuUGlaDJdbulS4JeV9Kmrk.sXMpYATa92"); // pass
         u2.setUserRole(ur2); // MANAGER
+        u2.setApproved(true);
         userService.save(u2);
 
         User u3 = new User();

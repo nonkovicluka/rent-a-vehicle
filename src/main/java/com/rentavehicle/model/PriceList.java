@@ -29,7 +29,7 @@ public class PriceList {
     @ManyToOne(fetch = FetchType.EAGER)
     private Agency agency;
 
-    @OneToMany(mappedBy = "priceList", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "priceList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PriceListItem> priceListItems = new ArrayList<>();
 
 

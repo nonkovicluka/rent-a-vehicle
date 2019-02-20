@@ -68,8 +68,8 @@ public class ApiAgencyController {
         Agency agency = toAgency.convert(dto);
 
         if (logo != null) {
-            agency.setLogo(RELATIVE_ROOT + "/" + agency.getId() + "/" + logo.getOriginalFilename());
-            agencyService.createImage(logo, agency.getId());
+            agency.setLogo(RELATIVE_ROOT + "/" + agency.getName() + "/" + logo.getOriginalFilename());
+            agencyService.createImage(logo, agency.getName());
         }
 
         try {

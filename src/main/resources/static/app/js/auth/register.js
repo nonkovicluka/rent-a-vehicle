@@ -1,15 +1,33 @@
-rentAVehicleApp.controller('RegisterController', function ($http, $scope, $location) {
-    $scope.submit = function () {
-        $http.post('register', $scope.appUser).success(function (res) {
+rentAVehicleApp.controller('RegisterController', function ($http, $scope, $location, userDoc, AuthService) {
+
+    $scope.user = AuthService.getUser();
+
+    var redirect = function () {
+
+        if ($scope.user) {
             $location.path("/");
-            $scope.appUser = null;
-            $scope.confirmPassword = null;
-            $scope.register.$setPristine();
-            $scope.message = "Registration successfull !";
-
-
-        }).error(function (error) {
-            $scope.message = error.message;
-        });
+        }
     };
+
+    redirect();
+
+    var baseUrlRegister = "/register";
+
+    $scope.appUser = {};
+    $scope.appUser.username = "";
+    $scope.appUser.password = "";
+    $scope.appUser.docImage = "";
+
+    $scope.userRole = "";
+
+    $scope.confirmPassword = "";
+
+    $scope.doc = null;
+
+    $scope.message = null;
+
+    $scope.uploadAndSave = function () {
+        userDoc.post(baseUrlRegister, $scope.doc, $scope.appUser, $scope.userRole);
+    };
+
 });

@@ -1,4 +1,6 @@
-rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, pricePerHourService) {
+rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $location, $routeParams, pricePerHourService, AuthService) {
+
+    $scope.user = AuthService.getUser();
 
     var priceListItemVehiclesUrl = "api/pricelistitems/vehicles";
 
@@ -119,6 +121,7 @@ rentAVehicleApp.controller("vehicleSearchCtrl", function ($scope, $http, $locati
 
     };
 
+    console.log($scope);
 
     $scope.reserve = function (vehicleId) {
 
@@ -164,11 +167,15 @@ rentAVehicleApp.controller("reserveVehicleCtrl", function ($scope, $http, $locat
 
     // redirect
 
-    $scope.user = AuthService.user;
+    $scope.user = AuthService.getUser();
 
     var redirect = function () {
         if (!$scope.user) {
             $location.path("/login");
+        }
+
+        if ($scope.user.approved === false){
+            $location.path("/page-not-found")
         }
     };
 

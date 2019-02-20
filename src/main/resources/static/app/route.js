@@ -8,17 +8,9 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'app/html/auth/login.html',
             controller: 'LoginController'
         })
-        .when('/users', {
-            templateUrl: 'app/html/auth/users.html',
-            controller: 'UsersController'
-        })
         .when('/page-not-found', {
             templateUrl: 'app/html/auth/page-not-found.html',
             controller: 'PageNotFoundController'
-        })
-        .when('/access-denied', {
-            templateUrl: 'app/html/auth/access-denied.html',
-            controller: 'AccessDeniedController'
         })
         .when('/register', {
             templateUrl: 'app/html/auth/register.html',
@@ -73,7 +65,20 @@ rentAVehicleApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: "/app/html/agency/agency-rate.html",
             controller: "rateAgencyCtrl"
         })
+        .when('/users', {
+            templateUrl: "/app/admin/html/user-approval.html",
+            controller: "userApprovalCtrl"
+        })
         .otherwise({
             redirectTo: '/page-not-found'
         });
 }]);
+
+rentAVehicleApp.run(["$http", "AuthService", function ($http) {
+    if (localStorage.token) {
+        $http.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.token;
+    }
+
+
+}])
+;
