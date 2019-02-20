@@ -47,14 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // If you want to ignore some request or request patterns then you can
     // specify that inside this method
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
 
         web.ignoring()
                 // ignoring the "/", "/index.html", "/app/**", "/register",
                 // "/favicon.ico"
                 .antMatchers("/", "/index.html", "/app/**", "/api/agencies/all", "/api/agencies/{agencyId}",
                         "/api/vehicles/{agencyId}v", "/api/vehicles/{agencyId}/all", "/api/vehicleTypes/all", "/api/vehicles/top3", "/api/vehicleImages/top3",
-                        "/api/branches/{agencyId}bPages", "/api/branches/all", "/api/ratings/avgScore", "/api/vehicleImages/allByAgency", "/api/branchImages/allByAgency", "/assets/**", "/images/**", "/register", "/authenticate",
+                        "/api/branches/{agencyId}bPages", "/api/branches/all", "/api/ratings/avgScore", "/api/vehicleImages/allByAgency", "/api/branchImages/allByAgency",
+                        "/assets/**", "/images/**", "/register", "/authenticate",
                         "/api/pricelistitems/vehicles", "/api/pricelistitems/top3",
                         "/favicon.ico", "/websocket/**");
     }
