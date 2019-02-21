@@ -42,3 +42,9 @@ branches, vehicles, price lists, edit vehicles and price per hour, and monitor r
 ##### Admin Features
 Admin has all features as previous users, but also receives a web-socket message in console when a new user is registered. 
 On 'Users' page, admin can manage newly registered users by approving or banning them.
+
+**NOTE**: To be able to upload images for vehicles, branches etc. you will need to change upload root to your local root in several files:  
+* _~/RentAVehicle/src/main/java/com/rentavehicle/service/impl/JpaAgencyService.java_
+* _~/RentAVehicle/src/main/java/com/rentavehicle/service/impl/JpaBranchImageService.java_
+* _~/RentAVehicle/src/main/java/com/rentavehicle/service/impl/JpaUserService.java_
+* _~/RentAVehicle/src/main/java/com/rentavehicle/service/impl/JpaVehicleImageService.java_
