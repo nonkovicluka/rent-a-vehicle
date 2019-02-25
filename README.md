@@ -42,3 +42,4 @@ branches, vehicles, price lists, edit vehicles and price per hour, and monitor r
 ##### Admin Features
 Admin has all features as previous users, but also receives a web-socket message in console when a new user is registered. 
 On 'Users' page, admin can manage newly registered users by approving or banning them.
+

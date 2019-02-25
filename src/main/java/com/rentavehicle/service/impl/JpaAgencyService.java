@@ -12,13 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 @Service
 public class JpaAgencyService implements AgencyService {
 
-    private static String UPLOUD_ROOT = "/Users/lukanonkovic/RentAVehicle/target/classes/static/images/agency-logo";
+    private static Path currentRelativePath = Paths.get("");
+    private static String currentPath = currentRelativePath.toAbsolutePath().toString();
+
+    private static String UPLOUD_ROOT = currentPath + "/target/classes/static/images/agency-logo";
 
 
     @Autowired
